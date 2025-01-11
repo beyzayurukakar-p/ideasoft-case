@@ -1,5 +1,5 @@
 import { createStaticNavigation, StaticParamList } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import LandingScreen from '../screens/landing-screen/LandingScreen';
 import { storefrontNavigator } from './storefrontNavigator';
 import { adminPanelNavigator } from './adminPanelNavigator';
@@ -23,3 +23,5 @@ declare global {
     interface RootParamList extends RootStackParamList {}
   }
 }
+
+export type RootStackNavigationProp = StackNavigationProp<RootStackParamList>;
