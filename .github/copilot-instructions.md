@@ -1,0 +1,1 @@
+The branch and commit message prefixes we use are: feature, fix, hotfix, release, improvement, refactor, experiment, config, design, docs, test, chore
