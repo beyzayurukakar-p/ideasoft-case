@@ -1,9 +1,15 @@
 import { createStaticNavigation, StaticParamList } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import LandingScreen from '../screens/landing-screen/LandingScreen';
 
 const RootStack = createStackNavigator({
   screens: {
-    Temp: () => null,
+    Landing: {
+      screen: LandingScreen,
+      options: {
+        headerShown: false,
+      },
+    },
   },
 });
 
