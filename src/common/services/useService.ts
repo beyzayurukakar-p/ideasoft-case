@@ -28,7 +28,7 @@ export const useService = <RF extends RequesterFunction>(requesterFunc: RF) => {
   const [data, setData] = useState<AsyncReturnType<RF> | null>(null);
 
   const request = useCallback(
-    (args: Parameters<RF>[0], options?: Options<AsyncReturnType<RF>>) => {
+    (args?: Parameters<RF>[0], options?: Options<AsyncReturnType<RF>>) => {
       setLoading(true);
       requesterFunc(args)
         .then((returnedData: AsyncReturnType<RF>) => {
