@@ -7,7 +7,7 @@ const URL = 'admin-api/products';
 
 /**
  * Fetches products
- * @returns Array of products. Or throws error.
+ * @returns Array of products (Promise). Or throws error.
  */
 export const readProducts = async (): Promise<any> => {
   try {
