@@ -1,10 +1,19 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { landingScreenStyles as styles } from './LandingScreen.styles';
+import { useNavigation } from '@react-navigation/native';
 
 const LandingScreen: React.FC = () => {
-  const _onPressStorefront = () => {};
-  const _onPressAdminPanel = () => {};
+  const nav = useNavigation();
+
+  const _onPressStorefront = () => {
+    nav.navigate('Storefront');
+  };
+
+  const _onPressAdminPanel = () => {
+    nav.navigate('AdminPanel');
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
