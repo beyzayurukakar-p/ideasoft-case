@@ -43,8 +43,8 @@ export const dimensions = {
 
   /** A function to get the height of the screen. */
   height,
-  pageMarginLarge: measure(40),
-  pageMargin: measure(25),
+  pageMarginLarge: measure(30),
+  pageMargin: measure(15),
   elevation,
   isScreenRatioSmall,
   isScreenRatioLarge,

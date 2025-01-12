@@ -49,6 +49,7 @@ const ProductScreen: React.FC = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderProductItem}
         estimatedItemSize={250}
+        numColumns={2}
       />
     </View>
   );
