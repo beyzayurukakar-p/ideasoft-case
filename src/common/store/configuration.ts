@@ -8,7 +8,7 @@ import { startAllListeners } from './listeners';
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+    getDefaultMiddleware({ serializableCheck: false }).prepend(listenerMiddleware.middleware),
 });
 
 startAllListeners(listenerMiddleware.startListening);

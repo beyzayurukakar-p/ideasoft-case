@@ -1,33 +1,61 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import { useAppDispatch, useAppSelector } from '../../../common/store';
 import { productSelectors, productSlice } from '../../states/productSlice';
+import { Product } from '../../types/product';
+import ProductItem from '../../components/product-item/ProductItem';
+import { productScreenStyles as styles } from './ProductScreen.styles';
+import FullscreenLoading from '../../../common/components/loading/FullscreenLoading';
+import FullscreenReload from '../../../common/components/loading/FullscreenReload';
 
 const ProductScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const products = useAppSelector(productSelectors.products);
   const isLoading = useAppSelector(productSelectors.isLoadingGetProducts);
+  const [isFailed, setIsFailed] = React.useState<boolean>(false);
 
-  useEffect(() => {
-    dispatch(productSlice.actions.getProducts({}));
+  const _fetch = useCallback(() => {
+    dispatch(
+      productSlice.actions.getProducts({
+        onError: () => {
+          setIsFailed(true);
+        },
+      })
+    );
   }, [dispatch]);
 
-  console.log(products);
+  useEffect(() => {
+    _fetch();
+  }, [_fetch]);
+
+  const _reload = () => {
+    setIsFailed(false);
+    _fetch();
+  };
+
+  if (isLoading) {
+    return <FullscreenLoading />;
+  }
+
+  if (isFailed) {
+    return <FullscreenReload onPressReload={_reload} />;
+  }
 
   return (
     <View style={styles.container}>
-      <Text>{isLoading ? 'loading' : 'Product Screen'}</Text>
+      <FlashList
+        data={products}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderProductItem}
+        estimatedItemSize={250}
+      />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-});
+const renderProductItem = (params: { item: Product }) => {
+  return <ProductItem product={params.item} />;
+};
 
 export default ProductScreen;

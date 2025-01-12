@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { ProductResponse } from '../types/responses';
 import { client } from '../../common/services/client';
 
-const URL = 'admin-api/produasdcts';
+const URL = 'admin-api/products';
 
 /**
  * Fetches products
