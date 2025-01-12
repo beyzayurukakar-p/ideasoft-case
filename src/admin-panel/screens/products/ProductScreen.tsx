@@ -8,6 +8,7 @@ import ProductItem from '../../components/product-item/ProductItem';
 import { productScreenStyles as styles } from './ProductScreen.styles';
 import FullscreenLoading from '../../../common/components/loading/FullscreenLoading';
 import FullscreenReload from '../../../common/components/loading/FullscreenReload';
+import FloatingAddButton from '../../../common/components/floating-button/FloatingAddButton';
 
 const ProductScreen: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +35,8 @@ const ProductScreen: React.FC = () => {
     _fetch();
   };
 
+  const _onPressAddProduct = () => {};
+
   if (isLoading) {
     return <FullscreenLoading />;
   }
@@ -51,6 +54,7 @@ const ProductScreen: React.FC = () => {
         estimatedItemSize={250}
         numColumns={2}
       />
+      <FloatingAddButton onPress={_onPressAddProduct} />
     </View>
   );
 };
