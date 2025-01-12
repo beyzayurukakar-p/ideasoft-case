@@ -13,6 +13,7 @@ export type ProductResponse = {
   stockTypeLabel: StockTypeLabels;
   images: ImageResponse[];
   categories: CategoryResponse[];
+  createdAt: string;
 };
 
 /** Category's shape in the API response */
@@ -20,6 +21,7 @@ export type CategoryResponse = {
   id: number;
   name: string;
   status: number; // 1: Active, 0: Inactive
+  createdAt: string;
 };
 
 /** Currency's shape in the API response */

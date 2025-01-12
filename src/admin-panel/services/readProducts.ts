@@ -1,20 +1,15 @@
 import { AxiosResponse } from 'axios';
 import { ProductResponse } from '../types/responses';
 import { client } from '../../common/services/client';
-import { GENERIC_ERROR_MESSAGE } from '../../common/services/constants';
 
-const URL = 'admin-api/products';
+const URL = 'admin-api/produasdcts';
 
 /**
  * Fetches products
  * @returns Array of products (Promise). Or throws error.
  */
-export const readProducts = async (): Promise<any> => {
-  try {
-    const response: AxiosResponse<ProductResponse[]> = await client.get(URL);
+export const readProducts = async () => {
+  const response: AxiosResponse<ProductResponse[]> = await client.get(URL);
 
-    return response.data;
-  } catch (err) {
-    throw GENERIC_ERROR_MESSAGE;
-  }
+  return response.data;
 };

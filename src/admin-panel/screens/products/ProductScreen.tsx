@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { readProducts } from '../../services/readProducts';
-import { useService } from '../../../common/services/useService';
+import { useAppDispatch, useAppSelector } from '../../../common/store';
+import { productSelectors, productSlice } from '../../states/productSlice';
 
 const ProductScreen: React.FC = () => {
-  const { data, request: requestReadProducts } = useService(readProducts);
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(productSelectors.products);
+  const isLoading = useAppSelector(productSelectors.isLoadingGetProducts);
 
   useEffect(() => {
-    requestReadProducts();
-  }, [requestReadProducts]);
+    dispatch(productSlice.actions.getProducts({}));
+  }, [dispatch]);
 
-  console.log(data);
+  console.log(products);
 
   return (
     <View style={styles.container}>
-      <Text>Product Screen</Text>
+      <Text>{isLoading ? 'loading' : 'Product Screen'}</Text>
     </View>
   );
 };
