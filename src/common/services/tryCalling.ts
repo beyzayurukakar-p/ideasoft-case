@@ -13,6 +13,7 @@ export const tryCalling = async <Args extends Array<any>, ReturnValue>(
     const data = await fn(...args);
     returnVal[0] = data;
   } catch (error) {
+    console.error(error);
     Toast.show({
       type: 'error',
       text1: GENERIC_ERROR_MESSAGE,

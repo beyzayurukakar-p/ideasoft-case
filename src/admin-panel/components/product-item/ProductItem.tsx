@@ -8,7 +8,7 @@ type ProductItemProps = {
 };
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
-  const { name, price1, sku, currency } = product;
+  const { name, price, sku, currencyAbbr } = product;
   return (
     <TouchableOpacity
       style={styles.container}
@@ -29,8 +29,8 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           {sku}
         </Text>
         <Text style={styles.priceText}>
-          {price1.toFixed(2) + ' '}
-          <Text style={styles.currencyText}>{currency.abbr}</Text>
+          {price.toFixed(2) + ' '}
+          <Text style={styles.currencyText}>{currencyAbbr}</Text>
         </Text>
       </View>
     </TouchableOpacity>
