@@ -4,6 +4,7 @@ import { deleteCategory } from '../services/deleteCategory';
 import { readCategories } from '../services/readCategories';
 import { CategoriesNormalized } from '../types/category';
 import { categorySlice } from './categorySlice';
+import { productSlice } from './productSlice';
 
 export const startCategoryListeners = (startAppListening: StartAppListening) => {
   readCategoriesListener(startAppListening);
@@ -51,11 +52,13 @@ const deleteCategoryListener = (startAppListening: StartAppListening) => {
   startAppListening({
     actionCreator: categorySlice.actions.deleteCategory,
     effect: async (action, listenerApi) => {
+      const categoryId = action.payload.id;
+
       // Start loading
       listenerApi.dispatch(categorySlice.actions._setLoading('delete'));
 
       // Call service
-      const [_, error] = await tryCalling(deleteCategory, action.payload.id);
+      const [_, error] = await tryCalling(deleteCategory, categoryId);
 
       // End loading
       listenerApi.dispatch(categorySlice.actions._setLoading(null));
@@ -66,8 +69,11 @@ const deleteCategoryListener = (startAppListening: StartAppListening) => {
         return;
       }
 
-      // Update state and call onSuccess
-      listenerApi.dispatch(categorySlice.actions._deleteCategory(action.payload.id));
+      // Update categories in state
+      listenerApi.dispatch(categorySlice.actions._deleteCategory(categoryId));
+      // Also remove this category from products
+      listenerApi.dispatch(productSlice.actions._categoryRemoved(categoryId));
+
       action.payload.onSuccess?.();
     },
   });

@@ -48,6 +48,20 @@ export const productSlice = createSlice({
     _setLoading: (state, action: PayloadAction<ProductState['loading']>) => {
       state.loading = action.payload;
     },
+    _categoryRemoved: (state, action: PayloadAction<number>) => {
+      // When a category is removed, also remove it from its products
+      const categoryId = action.payload;
+      if (state.categoryProducts?.[categoryId]) {
+        const productsInCateogry = state.categoryProducts[categoryId];
+        delete state.categoryProducts[categoryId];
+        productsInCateogry.map((productId) => {
+          const categoryIndex = state.products?.[productId].categories.findIndex(
+            (category) => category.id === categoryId
+          ) as number;
+          state.products?.[productId].categories.splice(categoryIndex, 1);
+        });
+      }
+    },
   },
 });
 
@@ -65,6 +79,9 @@ export const productSelectors = {
   ),
   productById: (state: RootState, productId: number) => {
     return state.product.products ? state.product.products[productId] : undefined;
+  },
+  productsOfCategory: (state: RootState, categoryId: number) => {
+    return state.product.categoryProducts ? state.product.categoryProducts[categoryId] : undefined;
   },
   isLoadingReadProducts: (state: RootState) => state.product.loading === 'read',
   isLoadingAddProduct: (state: RootState) => state.product.loading === 'add',
