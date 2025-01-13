@@ -12,4 +12,5 @@ export const COLORS = {
   danger: '#E55B6F',
 
   border: '#C2C2C2',
+  borderShadowy: '#E6E6E6',
 };

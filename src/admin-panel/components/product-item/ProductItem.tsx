@@ -57,7 +57,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, demonstrateSwipeOnSt
           <View style={styles.rightContainer}>
             {/* name */}
             <Text
-              style={styles.productNameText}
+              style={styles.primaryText}
               numberOfLines={1}
             >
               {name}
@@ -76,17 +76,17 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, demonstrateSwipeOnSt
               {price.toFixed(2) + ' '}
               <Text style={styles.currencyText}>{currencyAbbr}</Text>
             </Text>
-
-            {/* status as a red/green circle */}
-            <View
-              style={[
-                styles.statusCircle,
-                {
-                  backgroundColor: status === 0 ? COLORS.danger : COLORS.success,
-                },
-              ]}
-            />
           </View>
+
+          {/* status as a red/green circle */}
+          <View
+            style={[
+              styles.statusCircle,
+              {
+                backgroundColor: status === 0 ? COLORS.danger : COLORS.success,
+              },
+            ]}
+          />
         </TouchableOpacity>
       </SwipeableWithDelete>
     </View>

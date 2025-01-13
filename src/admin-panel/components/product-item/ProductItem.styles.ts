@@ -1,22 +1,16 @@
 import { StyleSheet } from 'react-native';
 import { dimensions } from '../../../common/styling/dimensions';
 import { COLORS } from '../../../common/styling/colors';
+import { commonStyles } from '../common.styles';
 
 export const ITEM_HEIGHT = dimensions.measure(100);
 const IMAGE_SIZE = ITEM_HEIGHT * 0.7;
 
 export const productItemStyles = StyleSheet.create({
+  ...commonStyles,
   container: {
-    flexGrow: 1,
-    backgroundColor: COLORS.elevated,
-    borderRadius: dimensions.borderRadius,
-    marginVertical: dimensions.measure(3),
+    ...commonStyles.container,
     padding: dimensions.measure(7),
-    flexDirection: 'row',
-    marginHorizontal: dimensions.pageMargin,
-  },
-  disabledContainer: {
-    opacity: 0.5,
   },
   imageContainer: {
     borderRadius: dimensions.borderRadius,
@@ -35,12 +29,6 @@ export const productItemStyles = StyleSheet.create({
     flexShrink: 1,
     rowGap: dimensions.measure(3),
     paddingHorizontal: dimensions.measure(10),
-  },
-  productNameText: {
-    fontSize: dimensions.measure(16),
-    color: COLORS.textOnBackground,
-    fontWeight: '500',
-    marginRight: dimensions.measure(15),
   },
   stockCodeText: {
     fontSize: dimensions.measure(14),
@@ -62,11 +50,9 @@ export const productItemStyles = StyleSheet.create({
     opacity: 0.7,
   },
   statusCircle: {
-    width: dimensions.measure(10),
-    height: dimensions.measure(10),
-    borderRadius: dimensions.measure(5),
+    ...commonStyles.statusCircle,
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: dimensions.measure(7),
+    right: dimensions.measure(7),
   },
 });

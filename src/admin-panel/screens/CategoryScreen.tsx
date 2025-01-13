@@ -61,7 +61,12 @@ const CategoryScreen: React.FC = () => {
 };
 
 const renderCategoryItem = (params: { item: Category; index: number }) => {
-  return <CategoryItem category={params.item} />;
+  return (
+    <CategoryItem
+      category={params.item}
+      demonstrateSwipeOnStart={params.index === 0}
+    />
+  );
 };
 
 export default CategoryScreen;
