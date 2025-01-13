@@ -6,6 +6,7 @@ import { categorySlice } from '../../states/categorySlice';
 import { categoryItemStyles as styles } from './CategoryItem.styles';
 import SwipeableWithDelete from '../../../common/components/swipeable/SwipeableWithDelete';
 import { COLORS } from '../../../common/styling/colors';
+import { useNavigation } from '@react-navigation/native';
 
 type CategoryItemProps = {
   category: Category;
@@ -16,6 +17,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ category, demonstrateSwipeO
   const { id, name, status } = category;
 
   const dispatch = useDispatch();
+  const nav = useNavigation();
   const [disabled, setDisabled] = useState<boolean>(false);
 
   const _onPressDelete = () => {
@@ -30,6 +32,15 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ category, demonstrateSwipeO
     );
   };
 
+  const _onPressItem = () => {
+    nav.navigate('AdminPanel', {
+      screen: 'CategoryDetail',
+      params: {
+        categoryId: id,
+      },
+    });
+  };
+
   return (
     <View style={disabled ? styles.disabledContainer : null}>
       <SwipeableWithDelete
@@ -38,6 +49,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ category, demonstrateSwipeO
         onPressDelete={_onPressDelete}
       >
         <TouchableOpacity
+          onPress={_onPressItem}
           style={styles.container}
           activeOpacity={0.6}
           disabled={disabled}
