@@ -16,9 +16,13 @@ export const createProductItemStyles = StyleSheet.create({
   },
   imageContainer: {
     borderRadius: dimensions.borderRadius,
-    backgroundColor: COLORS.primary,
     height: IMAGE_SIZE,
     width: IMAGE_SIZE,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   rightContainer: {
     flexGrow: 1,

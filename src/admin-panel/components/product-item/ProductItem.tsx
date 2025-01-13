@@ -1,21 +1,29 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Product } from '../../types/product';
 import { createProductItemStyles as styles } from './ProductItem.styles';
 import { COLORS } from '../../../common/styling/colors';
+import { IMAGES } from '../../../common/assets';
 
 type ProductItemProps = {
   product: Product;
 };
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
-  const { name, price, sku, currencyAbbr, status } = product;
+  const { name, price, sku, currencyAbbr, status, imageThumbUrl } = product;
+
+  console.log(imageThumbUrl);
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={0.6}
     >
-      <View style={styles.imageContainer} />
+      <View style={styles.imageContainer}>
+        <Image
+          source={imageThumbUrl ? { uri: imageThumbUrl } : IMAGES.nopic_image()}
+          style={styles.image}
+        />
+      </View>
       <View style={styles.rightContainer}>
         <Text
           style={styles.productNameText}
