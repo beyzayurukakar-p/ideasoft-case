@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CategoriesNormalized, Category } from '../types/category';
 import { ServiceCallbacks } from '../../common/services/types';
+import { RootState } from '../../common/store/types';
 
 type CategoryState = {
   categories?: CategoriesNormalized;
@@ -41,3 +42,24 @@ export const categorySlice = createSlice({
     },
   },
 });
+
+export const categorySelectors = {
+  // Memoized selector to get all categories
+  categories: createSelector(
+    (state: RootState) => state.category.categories,
+    (categories) => {
+      if (!categories) return undefined;
+      // Sort categories by createdAt date
+      return Object.values(categories).sort((p1, p2) => {
+        return new Date(p2.createdAt).getTime() - new Date(p1.createdAt).getTime();
+      });
+    }
+  ),
+  categoryById: (state: RootState, categoryId: number) => {
+    return state.category.categories ? state.category.categories[categoryId] : undefined;
+  },
+  isLoadingReadCategories: (state: RootState) => state.category.loading === 'read',
+  isLoadingAddCategory: (state: RootState) => state.category.loading === 'add',
+  isLoadingDeleteCategory: (state: RootState) => state.category.loading === 'delete',
+  isLoadingUpdateCategory: (state: RootState) => state.category.loading === 'update',
+};
