@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { useAppDispatch, useAppSelector } from '../../../common/store';
-import { productSelectors, productSlice } from '../../states/productSlice';
-import { Product } from '../../types/product';
-import ProductItem from '../../components/product-item/ProductItem';
-import { productScreenStyles as styles } from './ProductScreen.styles';
-import FullscreenLoading from '../../../common/components/loading/FullscreenLoading';
-import FullscreenReload from '../../../common/components/loading/FullscreenReload';
-import FloatingAddButton from '../../../common/components/floating-button/FloatingAddButton';
+import { useAppDispatch, useAppSelector } from '../../common/store';
+import { productSelectors, productSlice } from '../states/productSlice';
+import { Product } from '../types/product';
+import ProductItem from '../components/product-item/ProductItem';
+import { listScreenStyles as styles } from './listScreen.styles';
+import FullscreenLoading from '../../common/components/loading/FullscreenLoading';
+import FullscreenReload from '../../common/components/loading/FullscreenReload';
+import FloatingAddButton from '../../common/components/floating-button/FloatingAddButton';
 
 const ProductScreen: React.FC = () => {
   const dispatch = useAppDispatch();

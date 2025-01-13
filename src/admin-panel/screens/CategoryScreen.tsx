@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
-import { useAppDispatch, useAppSelector } from '../../../common/store';
-import { categorySelectors, categorySlice } from '../../states/categorySlice';
-import { Category } from '../../types/category';
-import CategoryItem from '../../components/category-item/CategoryItem';
-import { categoryScreenStyles as styles } from './CategoryScreen.styles';
-import FullscreenLoading from '../../../common/components/loading/FullscreenLoading';
-import FullscreenReload from '../../../common/components/loading/FullscreenReload';
-import FloatingAddButton from '../../../common/components/floating-button/FloatingAddButton';
+import { useAppDispatch, useAppSelector } from '../../common/store';
+import { categorySelectors, categorySlice } from '../states/categorySlice';
+import { Category } from '../types/category';
+import CategoryItem from '../components/category-item/CategoryItem';
+import { listScreenStyles as styles } from './listScreen.styles';
+import FullscreenLoading from '../../common/components/loading/FullscreenLoading';
+import FullscreenReload from '../../common/components/loading/FullscreenReload';
+import FloatingAddButton from '../../common/components/floating-button/FloatingAddButton';
 
 const CategoryScreen: React.FC = () => {
   const dispatch = useAppDispatch();

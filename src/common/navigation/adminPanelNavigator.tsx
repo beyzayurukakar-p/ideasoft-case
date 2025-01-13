@@ -1,5 +1,5 @@
-import ProductScreen from '../../admin-panel/screens/products/ProductScreen';
-import CategoryScreen from '../../admin-panel/screens/categories/CategoryScreen';
+import ProductScreen from '../../admin-panel/screens/ProductScreen';
+import CategoryScreen from '../../admin-panel/screens/CategoryScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { dimensions } from '../styling/dimensions';
 import { COLORS } from '../styling/colors';

@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from '../../../common/styling/colors';
-import { dimensions } from '../../../common/styling/dimensions';
+import { COLORS } from '../../common/styling/colors';
+import { dimensions } from '../../common/styling/dimensions';
 
-export const categoryScreenStyles = StyleSheet.create({
+export const listScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
