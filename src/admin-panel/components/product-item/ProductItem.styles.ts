@@ -16,6 +16,8 @@ export const createProductItemStyles = StyleSheet.create({
   },
   imageContainer: {
     borderRadius: dimensions.borderRadius,
+    borderWidth: dimensions.measure(2),
+    borderColor: COLORS.border,
     height: IMAGE_SIZE,
     width: IMAGE_SIZE,
   },
@@ -26,6 +28,7 @@ export const createProductItemStyles = StyleSheet.create({
   },
   rightContainer: {
     flexGrow: 1,
+    flexShrink: 1,
     rowGap: dimensions.measure(3),
     paddingHorizontal: dimensions.measure(10),
   },
@@ -33,6 +36,7 @@ export const createProductItemStyles = StyleSheet.create({
     fontSize: dimensions.measure(16),
     color: COLORS.textOnBackground,
     fontWeight: '500',
+    marginRight: dimensions.measure(15),
   },
   stockCodeText: {
     fontSize: dimensions.measure(14),

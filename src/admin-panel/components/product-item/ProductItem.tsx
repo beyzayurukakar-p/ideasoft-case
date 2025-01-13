@@ -9,6 +9,9 @@ type ProductItemProps = {
   product: Product;
 };
 
+/**
+ * This component is used by the product list as an item component.
+ */
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const { name, price, sku, currencyAbbr, status, imageThumbUrl } = product;
 
@@ -17,6 +20,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
       style={styles.container}
       activeOpacity={0.6}
     >
+      {/* image */}
       <View style={styles.imageContainer}>
         <Image
           source={imageThumbUrl ? { uri: imageThumbUrl } : IMAGES.nopic_image()}
@@ -24,22 +28,29 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         />
       </View>
       <View style={styles.rightContainer}>
+        {/* name */}
         <Text
           style={styles.productNameText}
           numberOfLines={1}
         >
           {name}
         </Text>
+
+        {/* stock code */}
         <Text
           style={styles.stockCodeText}
           numberOfLines={1}
         >
           {sku}
         </Text>
+
+        {/* price */}
         <Text style={styles.priceText}>
           {price.toFixed(2) + ' '}
           <Text style={styles.currencyText}>{currencyAbbr}</Text>
         </Text>
+
+        {/* status as a red/green circle */}
         <View
           style={[
             styles.statusCircle,
