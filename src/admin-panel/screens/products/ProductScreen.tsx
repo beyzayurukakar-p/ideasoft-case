@@ -60,8 +60,13 @@ const ProductScreen: React.FC = () => {
   );
 };
 
-const renderProductItem = (params: { item: Product }) => {
-  return <ProductItem product={params.item} />;
+const renderProductItem = (params: { item: Product; index: number }) => {
+  return (
+    <ProductItem
+      product={params.item}
+      flashSwipeable={params.index === 0}
+    />
+  );
 };
 
 export default ProductScreen;

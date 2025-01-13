@@ -13,6 +13,7 @@ export const createProductItemStyles = StyleSheet.create({
     marginVertical: dimensions.measure(3),
     padding: dimensions.measure(7),
     flexDirection: 'row',
+    marginHorizontal: dimensions.pageMargin,
   },
   imageContainer: {
     borderRadius: dimensions.borderRadius,
@@ -64,5 +65,14 @@ export const createProductItemStyles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0,
+  },
+  deleteTouchable: {
+    backgroundColor: COLORS.danger,
+    borderRadius: dimensions.borderRadius,
+    marginVertical: dimensions.measure(3),
+    marginRight: dimensions.pageMargin,
+    width: dimensions.measure(70),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
