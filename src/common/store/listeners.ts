@@ -7,5 +7,5 @@ export const startAllListeners = (startListening: ListenerMiddlewareInstance['st
   const startAppListening = startListening as StartAppListening;
 
   startProductListeners(startAppListening);
-  startCategoryListeners();
+  startCategoryListeners(startAppListening);
 };

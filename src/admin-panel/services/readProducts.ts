@@ -28,8 +28,7 @@ export const readProducts = async () => {
       stockAmount: productRes.stockAmount,
       stockTypeLabel: productRes.stockTypeLabel,
       currencyAbbr: productRes.currency.abbr,
-      categoryId: productRes.categories[0]?.id,
-      categoryName: productRes.categories[0]?.name,
+      categories: productRes.categories,
       createdAt: productRes.createdAt,
     };
   });

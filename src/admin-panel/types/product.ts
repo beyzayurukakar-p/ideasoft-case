@@ -1,5 +1,5 @@
 import { StockTypeLabels } from '../constants/stockTypeLabels';
-import { CategoryResponse } from './category';
+import { Category, CategoryResponse } from './category';
 import { WithId, WithoutId } from './typeUtils';
 
 /* For requests */
@@ -61,8 +61,14 @@ export type Product = {
   stockTypeLabel: StockTypeLabels;
   imageThumbUrl: string;
   imageOriginalUrl: string;
-  categoryId: number;
-  categoryName: string;
+  categories: Category[];
   createdAt: string;
 };
-export type ProductsNormalized = Record<string, Product>;
+
+export type ProductsNormalized = Record<number, Product>;
+
+/**
+ * A record such that keys are category ID
+ * and values are the IDs of that category's products
+ */
+export type CategoryProducts = Record<number, number[]>;

@@ -2,20 +2,20 @@ import { tryCalling } from '../../common/services/tryCalling';
 import { StartAppListening } from '../../common/store/types';
 import { deleteProduct } from '../services/deleteProduct';
 import { readProducts } from '../services/readProducts';
-import { ProductsNormalized } from '../types/product';
+import { CategoryProducts, ProductsNormalized } from '../types/product';
 import { productSlice } from './productSlice';
 
 export const startProductListeners = (startAppListening: StartAppListening) => {
-  getProductsListener(startAppListening);
+  readProductsListener(startAppListening);
   deleteProductListener(startAppListening);
 };
 
-const getProductsListener = (startAppListening: StartAppListening) => {
+const readProductsListener = (startAppListening: StartAppListening) => {
   startAppListening({
     actionCreator: productSlice.actions.readProducts,
     effect: async (action, listenerApi) => {
       // Check if products have already been fetched
-      if (listenerApi.getState().product.productsNormalized) {
+      if (listenerApi.getState().product.products) {
         return;
       }
 
@@ -35,13 +35,26 @@ const getProductsListener = (startAppListening: StartAppListening) => {
       }
 
       // Normalize products to an object with id as key and value as product
+      // Also extract each product's categories into the collective CategoryProducts object.
+      const categoryProducts: CategoryProducts = {};
       const productsNormalized = products.reduce((acc, product) => {
         acc[product.id] = product;
+        product.categories.map((category) => {
+          if (!categoryProducts[category.id]) {
+            categoryProducts[category.id] = [];
+          }
+          categoryProducts[category.id].push(product.id);
+        });
         return acc;
       }, {} as ProductsNormalized);
 
       // Set products in state and call onSuccess callback
-      listenerApi.dispatch(productSlice.actions._setProducts(productsNormalized));
+      listenerApi.dispatch(
+        productSlice.actions._setProducts({
+          products: productsNormalized,
+          categoryProducts: categoryProducts,
+        })
+      );
       action.payload.onSuccess?.(products);
     },
   });
