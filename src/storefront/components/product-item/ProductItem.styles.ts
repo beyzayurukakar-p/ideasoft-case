@@ -2,51 +2,41 @@ import { StyleSheet } from 'react-native';
 import { dimensions } from '../../../common/styling/dimensions';
 import { COLORS } from '../../../common/styling/colors';
 
-export const ITEM_HEIGHT = dimensions.measure(100);
-const IMAGE_SIZE = ITEM_HEIGHT * 0.7;
+const IMAGE_HEIGHT = dimensions.measure(200);
+const BOTTOM_HEIGHT = dimensions.measure(70);
+export const ITEM_HEIGHT = IMAGE_HEIGHT + BOTTOM_HEIGHT;
 
 export const createProductItemStyles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: COLORS.elevated,
     borderRadius: dimensions.borderRadius,
-    marginVertical: dimensions.measure(3),
-    padding: dimensions.measure(7),
-    flexDirection: 'row',
+    margin: dimensions.measure(7),
   },
   imageContainer: {
-    borderRadius: dimensions.borderRadius,
+    height: IMAGE_HEIGHT,
+    overflow: 'hidden',
+    borderTopLeftRadius: dimensions.borderRadius,
+    borderTopRightRadius: dimensions.borderRadius,
     backgroundColor: COLORS.primary,
-    height: IMAGE_SIZE,
-    width: IMAGE_SIZE,
   },
-  rightContainer: {
-    flexGrow: 1,
+  bottomContainer: {
+    height: BOTTOM_HEIGHT,
+    justifyContent: 'space-between',
     rowGap: dimensions.measure(3),
     paddingHorizontal: dimensions.measure(10),
+    paddingTop: dimensions.measure(7),
+    paddingBottom: dimensions.measure(10),
   },
   productNameText: {
     fontSize: dimensions.measure(16),
     color: COLORS.textOnBackground,
     fontWeight: '500',
   },
-  stockCodeText: {
-    fontSize: dimensions.measure(14),
-    color: COLORS.subtextOnBackground,
-    fontWeight: '600',
-  },
   priceText: {
-    position: 'absolute',
-    fontSize: dimensions.measure(16),
+    fontSize: dimensions.measure(22),
     color: COLORS.primary,
+    alignSelf: 'flex-end',
     fontWeight: '500',
-    bottom: 0,
-    right: 0,
-  },
-  currencyText: {
-    fontSize: dimensions.measure(14),
-    color: COLORS.primary,
-    fontWeight: '500',
-    opacity: 0.7,
   },
 });

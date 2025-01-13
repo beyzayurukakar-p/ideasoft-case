@@ -6,6 +6,10 @@ export const productScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
-    paddingHorizontal: dimensions.pageMargin - dimensions.measure(7),
+    paddingHorizontal: dimensions.pageMargin,
+    paddingVertical: dimensions.measure(5),
+  },
+  listContentContainer: {
+    paddingBottom: dimensions.measure(200),
   },
 });
