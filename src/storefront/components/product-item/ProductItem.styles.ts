@@ -6,7 +6,7 @@ const IMAGE_HEIGHT = dimensions.measure(200);
 const BOTTOM_HEIGHT = dimensions.measure(70);
 export const ITEM_HEIGHT = IMAGE_HEIGHT + BOTTOM_HEIGHT;
 
-export const createProductItemStyles = StyleSheet.create({
+export const productItemStyles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: COLORS.elevated,

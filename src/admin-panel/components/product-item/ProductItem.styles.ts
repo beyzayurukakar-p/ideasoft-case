@@ -5,7 +5,7 @@ import { COLORS } from '../../../common/styling/colors';
 export const ITEM_HEIGHT = dimensions.measure(100);
 const IMAGE_SIZE = ITEM_HEIGHT * 0.7;
 
-export const createProductItemStyles = StyleSheet.create({
+export const productItemStyles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: COLORS.elevated,

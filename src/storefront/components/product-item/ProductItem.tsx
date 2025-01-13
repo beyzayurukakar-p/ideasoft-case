@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 // import { Product } from '../../types/product';
-import { createProductItemStyles as styles } from './ProductItem.styles';
+import { productItemStyles as styles } from './ProductItem.styles';
 
 type Product = any;
 

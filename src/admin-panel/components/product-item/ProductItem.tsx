@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Product } from '../../types/product';
-import { createProductItemStyles as styles } from './ProductItem.styles';
+import { productItemStyles as styles } from './ProductItem.styles';
 import { COLORS } from '../../../common/styling/colors';
 import { IMAGES } from '../../../common/assets';
 import { useDispatch } from 'react-redux';
