@@ -12,7 +12,6 @@ type ProductItemProps = {
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const { name, price, sku, currencyAbbr, status, imageThumbUrl } = product;
 
-  console.log(imageThumbUrl);
   return (
     <TouchableOpacity
       style={styles.container}
