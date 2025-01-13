@@ -6,7 +6,8 @@ export const swipeableWithDeleteStyles = StyleSheet.create({
   deleteTouchable: {
     backgroundColor: COLORS.danger,
     borderRadius: dimensions.borderRadius,
-    marginVertical: dimensions.measure(6),
+    marginTop: dimensions.measure(2),
+    marginBottom: dimensions.measure(11),
     marginRight: dimensions.pageMargin,
     width: dimensions.measure(70),
     justifyContent: 'center',

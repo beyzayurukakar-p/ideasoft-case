@@ -6,9 +6,9 @@ export const listScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
-    paddingVertical: dimensions.measure(5),
   },
   listContentContainer: {
     paddingBottom: dimensions.measure(200),
+    paddingTop: dimensions.measure(8),
   },
 });

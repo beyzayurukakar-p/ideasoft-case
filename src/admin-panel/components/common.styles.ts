@@ -6,7 +6,7 @@ export const commonStyles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.elevated,
     borderRadius: dimensions.borderRadius,
-    marginVertical: dimensions.measure(4),
+    marginBottom: dimensions.measure(8),
     flexDirection: 'row',
     marginHorizontal: dimensions.pageMargin,
     borderWidth: dimensions.measure(1),
