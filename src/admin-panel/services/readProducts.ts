@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { ProductResponse } from '../types/responses';
+import { ProductResponse } from '../types/product';
 import { client } from '../../common/services/client';
 import { Product } from '../types/product';
 

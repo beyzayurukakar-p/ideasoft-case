@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { CategoryResponse } from '../types/responses';
+import { CategoryResponse } from '../types/category';
 import { client } from '../../common/services/client';
 import { Category } from '../types/category';
 
