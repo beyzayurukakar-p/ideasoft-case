@@ -15,6 +15,9 @@ export const createProductItemStyles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: dimensions.pageMargin,
   },
+  disabledContainer: {
+    opacity: 0.5,
+  },
   imageContainer: {
     borderRadius: dimensions.borderRadius,
     borderWidth: dimensions.measure(2),

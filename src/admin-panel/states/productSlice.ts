@@ -19,7 +19,10 @@ export const productSlice = createSlice({
     // These four are dispatched by UI and listened by listeners
     getProducts: (_state, _action: PayloadAction<ServiceCallbacks<Product[]>>) => {},
     addProduct: () => {},
-    deleteProduct: () => {},
+    deleteProduct: (
+      _state,
+      _action: PayloadAction<{ id: Product['id'] } & ServiceCallbacks<void>>
+    ) => {},
     updateProduct: () => {},
 
     // These four are dispatched by listeners and update state
@@ -27,7 +30,12 @@ export const productSlice = createSlice({
       state.productsNormalized = action.payload;
     },
     _addProduct: () => {},
-    _deleteProduct: () => {},
+    _deleteProduct: (state, action: PayloadAction<number>) => {
+      const productId = action.payload;
+      if (state.productsNormalized?.[productId]) {
+        delete state.productsNormalized[productId];
+      }
+    },
     _updateProduct: () => {},
     _setLoading: (state, action: PayloadAction<ProductState['loading']>) => {
       state.loading = action.payload;

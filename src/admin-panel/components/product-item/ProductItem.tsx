@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Product } from '../../types/product';
 import { createProductItemStyles as styles } from './ProductItem.styles';
@@ -7,6 +7,8 @@ import { IMAGES } from '../../../common/assets';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { dimensions } from '../../../common/styling/dimensions';
+import { useDispatch } from 'react-redux';
+import { productSlice } from '../../states/productSlice';
 
 type ProductItemProps = {
   product: Product;
@@ -18,13 +20,18 @@ type ProductItemProps = {
  * Supports swiping left to view delete button.
  */
 const ProductItem: React.FC<ProductItemProps> = ({ product, flashSwipeable }) => {
-  const { name, price, sku, currencyAbbr, status, imageThumbUrl } = product;
+  const { id, name, price, sku, currencyAbbr, status, imageThumbUrl } = product;
 
+  // To prevent flashes when order of products change
+  const flashSwipeableRef = useRef(flashSwipeable);
+
+  const dispatch = useDispatch();
   const swipeableRef = useRef<Swipeable>(null);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
     // Show a quick demo that item can be swiped
-    if (!flashSwipeable) return;
+    if (!flashSwipeableRef.current) return;
     setTimeout(() => {
       swipeableRef?.current?.openRight();
 
@@ -32,10 +39,25 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, flashSwipeable }) =>
         swipeableRef?.current?.close();
       }, 1000);
     }, 500);
-  }, [flashSwipeable]);
+  }, []);
+
+  const _onSwipeableOpen = () => {
+    setTimeout(() => {
+      swipeableRef?.current?.close();
+    }, 2000);
+  };
 
   const _onPressDelete = () => {
+    setDisabled(true);
     swipeableRef.current?.close();
+    dispatch(
+      productSlice.actions.deleteProduct({
+        id,
+        onError: () => {
+          setDisabled(false);
+        },
+      })
+    );
   };
 
   const _renderRightActions = () => {
@@ -43,6 +65,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, flashSwipeable }) =>
       <TouchableOpacity
         onPress={_onPressDelete}
         style={styles.deleteTouchable}
+        disabled={disabled}
       >
         <FontAwesome5
           name="trash-alt"
@@ -54,61 +77,65 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, flashSwipeable }) =>
   };
 
   return (
-    /*
-      Using deprecated component because
-      there is an unfixed bugon new component
+    <View style={disabled ? styles.disabledContainer : null}>
+      {/* 
+      Using deprecated component 
+      because there is an unfixed bug on new component
       that prevents running animations on mount
-    */
-    <Swipeable
-      renderRightActions={_renderRightActions}
-      ref={swipeableRef}
-    >
-      <TouchableOpacity
-        style={styles.container}
-        activeOpacity={0.6}
+      */}
+      <Swipeable
+        renderRightActions={_renderRightActions}
+        onSwipeableOpen={_onSwipeableOpen}
+        ref={swipeableRef}
       >
-        {/* image */}
-        <View style={styles.imageContainer}>
-          <Image
-            source={imageThumbUrl ? { uri: imageThumbUrl } : IMAGES.nopic_image()}
-            style={styles.image}
-          />
-        </View>
-        <View style={styles.rightContainer}>
-          {/* name */}
-          <Text
-            style={styles.productNameText}
-            numberOfLines={1}
-          >
-            {name}
-          </Text>
+        <TouchableOpacity
+          style={styles.container}
+          activeOpacity={0.6}
+          disabled={disabled}
+        >
+          {/* image */}
+          <View style={styles.imageContainer}>
+            <Image
+              source={imageThumbUrl ? { uri: imageThumbUrl } : IMAGES.nopic_image()}
+              style={styles.image}
+            />
+          </View>
+          <View style={styles.rightContainer}>
+            {/* name */}
+            <Text
+              style={styles.productNameText}
+              numberOfLines={1}
+            >
+              {name}
+            </Text>
 
-          {/* stock code */}
-          <Text
-            style={styles.stockCodeText}
-            numberOfLines={1}
-          >
-            {sku}
-          </Text>
+            {/* stock code */}
+            <Text
+              style={styles.stockCodeText}
+              numberOfLines={1}
+            >
+              {sku}
+            </Text>
 
-          {/* price */}
-          <Text style={styles.priceText}>
-            {price.toFixed(2) + ' '}
-            <Text style={styles.currencyText}>{currencyAbbr}</Text>
-          </Text>
+            {/* price */}
+            <Text style={styles.priceText}>
+              {price.toFixed(2) + ' '}
+              <Text style={styles.currencyText}>{currencyAbbr}</Text>
+            </Text>
 
-          {/* status as a red/green circle */}
-          <View
-            style={[
-              styles.statusCircle,
-              {
-                backgroundColor: status === 0 ? COLORS.danger : COLORS.success,
-              },
-            ]}
-          />
-        </View>
-      </TouchableOpacity>
-    </Swipeable>
+            {/* status as a red/green circle */}
+            <View
+              style={[
+                styles.statusCircle,
+                {
+                  backgroundColor: status === 0 ? COLORS.danger : COLORS.success,
+                },
+              ]}
+            />
+          </View>
+        </TouchableOpacity>
+      </Swipeable>
+    </View>
   );
 };
 
