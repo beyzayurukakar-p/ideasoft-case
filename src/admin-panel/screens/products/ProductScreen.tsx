@@ -64,7 +64,7 @@ const renderProductItem = (params: { item: Product; index: number }) => {
   return (
     <ProductItem
       product={params.item}
-      flashSwipeable={params.index === 0}
+      demonstrateSwipeOnStart={params.index === 0}
     />
   );
 };

@@ -69,13 +69,4 @@ export const createProductItemStyles = StyleSheet.create({
     top: 0,
     right: 0,
   },
-  deleteTouchable: {
-    backgroundColor: COLORS.danger,
-    borderRadius: dimensions.borderRadius,
-    marginVertical: dimensions.measure(3),
-    marginRight: dimensions.pageMargin,
-    width: dimensions.measure(70),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });
