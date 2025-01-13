@@ -18,7 +18,7 @@ const ProductScreen: React.FC = () => {
 
   const _fetch = useCallback(() => {
     dispatch(
-      productSlice.actions.getProducts({
+      productSlice.actions.readProducts({
         onError: () => {
           setIsFailed(true);
         },

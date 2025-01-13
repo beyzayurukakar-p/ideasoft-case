@@ -5,7 +5,7 @@ import { RootState } from '../../common/store/types';
 
 type ProductState = {
   productsNormalized?: ProductsNormalized;
-  loading: 'getProducts' | 'addProduct' | 'deleteProduct' | 'updateProduct' | null;
+  loading: 'read' | 'add' | 'update' | 'delete' | null;
 };
 
 const initialState: ProductState = {
@@ -17,7 +17,7 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     // These four are dispatched by UI and listened by listeners
-    getProducts: (_state, _action: PayloadAction<ServiceCallbacks<Product[]>>) => {},
+    readProducts: (_state, _action: PayloadAction<ServiceCallbacks<Product[]>>) => {},
     addProduct: () => {},
     deleteProduct: (
       _state,
@@ -60,8 +60,8 @@ export const productSelectors = {
       ? state.product.productsNormalized[productId]
       : undefined;
   },
-  isLoadingGetProducts: (state: RootState) => state.product.loading === 'getProducts',
-  isLoadingAddProduct: (state: RootState) => state.product.loading === 'addProduct',
-  isLoadingDeleteProduct: (state: RootState) => state.product.loading === 'deleteProduct',
-  isLoadingUpdateProduct: (state: RootState) => state.product.loading === 'updateProduct',
+  isLoadingGetProducts: (state: RootState) => state.product.loading === 'read',
+  isLoadingAddProduct: (state: RootState) => state.product.loading === 'add',
+  isLoadingDeleteProduct: (state: RootState) => state.product.loading === 'delete',
+  isLoadingUpdateProduct: (state: RootState) => state.product.loading === 'update',
 };

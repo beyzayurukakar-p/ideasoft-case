@@ -12,7 +12,7 @@ export const startProductListeners = (startAppListening: StartAppListening) => {
 
 const getProductsListener = (startAppListening: StartAppListening) => {
   startAppListening({
-    actionCreator: productSlice.actions.getProducts,
+    actionCreator: productSlice.actions.readProducts,
     effect: async (action, listenerApi) => {
       // Check if products have already been fetched
       if (listenerApi.getState().product.productsNormalized) {
@@ -20,7 +20,7 @@ const getProductsListener = (startAppListening: StartAppListening) => {
       }
 
       // Start loading
-      listenerApi.dispatch(productSlice.actions._setLoading('getProducts'));
+      listenerApi.dispatch(productSlice.actions._setLoading('read'));
 
       // Call service
       const [products, error] = await tryCalling(readProducts);
@@ -52,7 +52,7 @@ const deleteProductListener = (startAppListening: StartAppListening) => {
     actionCreator: productSlice.actions.deleteProduct,
     effect: async (action, listenerApi) => {
       // Start loading
-      listenerApi.dispatch(productSlice.actions._setLoading('deleteProduct'));
+      listenerApi.dispatch(productSlice.actions._setLoading('delete'));
 
       // Call service
       const [_, error] = await tryCalling(deleteProduct, action.payload.id);
