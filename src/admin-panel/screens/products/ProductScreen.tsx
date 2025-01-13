@@ -13,7 +13,7 @@ import FloatingAddButton from '../../../common/components/floating-button/Floati
 const ProductScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const products = useAppSelector(productSelectors.products);
-  const isLoading = useAppSelector(productSelectors.isLoadingGetProducts);
+  const isLoading = useAppSelector(productSelectors.isLoadingReadProducts);
   const [isFailed, setIsFailed] = React.useState<boolean>(false);
 
   const _fetch = useCallback(() => {

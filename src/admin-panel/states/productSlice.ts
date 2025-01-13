@@ -66,7 +66,7 @@ export const productSelectors = {
   productById: (state: RootState, productId: number) => {
     return state.product.products ? state.product.products[productId] : undefined;
   },
-  isLoadingGetProducts: (state: RootState) => state.product.loading === 'read',
+  isLoadingReadProducts: (state: RootState) => state.product.loading === 'read',
   isLoadingAddProduct: (state: RootState) => state.product.loading === 'add',
   isLoadingDeleteProduct: (state: RootState) => state.product.loading === 'delete',
   isLoadingUpdateProduct: (state: RootState) => state.product.loading === 'update',
