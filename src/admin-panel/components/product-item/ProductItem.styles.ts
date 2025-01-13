@@ -49,4 +49,12 @@ export const createProductItemStyles = StyleSheet.create({
     fontWeight: '500',
     opacity: 0.7,
   },
+  statusCircle: {
+    width: dimensions.measure(10),
+    height: dimensions.measure(10),
+    borderRadius: dimensions.measure(5),
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
 });

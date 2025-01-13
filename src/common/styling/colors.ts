@@ -6,4 +6,7 @@ export const COLORS = {
 
   primary: '#7D53DE',
   textOnPrimary: '#FFFFFF',
+
+  success: '#6CD76C',
+  danger: '#E55B6F',
 };

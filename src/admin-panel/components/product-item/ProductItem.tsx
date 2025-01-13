@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Product } from '../../types/product';
 import { createProductItemStyles as styles } from './ProductItem.styles';
+import { COLORS } from '../../../common/styling/colors';
 
 type ProductItemProps = {
   product: Product;
 };
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
-  const { name, price, sku, currencyAbbr } = product;
+  const { name, price, sku, currencyAbbr, status } = product;
   return (
     <TouchableOpacity
       style={styles.container}
@@ -32,6 +33,14 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           {price.toFixed(2) + ' '}
           <Text style={styles.currencyText}>{currencyAbbr}</Text>
         </Text>
+        <View
+          style={[
+            styles.statusCircle,
+            {
+              backgroundColor: status === 0 ? COLORS.danger : COLORS.success,
+            },
+          ]}
+        />
       </View>
     </TouchableOpacity>
   );
