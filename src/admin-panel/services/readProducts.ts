@@ -2,15 +2,14 @@ import { AxiosResponse } from 'axios';
 import { ProductResponse } from '../types/product';
 import { client } from '../../common/services/client';
 import { Product } from '../types/product';
-
-const URL = 'admin-api/products';
+import { PRODUCTS_URL } from './urls';
 
 /**
  * Fetches products
  * @returns Array of products (Promise). Or throws error.
  */
 export const readProducts = async () => {
-  const response: AxiosResponse<ProductResponse[]> = await client.get(URL);
+  const response: AxiosResponse<ProductResponse[]> = await client.get(PRODUCTS_URL);
 
   const data = response.data;
 

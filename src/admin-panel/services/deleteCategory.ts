@@ -1,10 +1,9 @@
 import { client } from '../../common/services/client';
-
-const URL = 'admin-api/categories';
+import { CATEGORIES_URL } from './urls';
 
 /**
  * Deletes a category by ID
  */
 export const deleteCategory = async (categoryId: number): Promise<void> => {
-  await client.delete(`${URL}/${categoryId}`);
+  await client.delete(`${CATEGORIES_URL}/${categoryId}`);
 };
