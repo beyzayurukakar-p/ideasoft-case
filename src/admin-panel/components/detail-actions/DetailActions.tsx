@@ -1,8 +1,8 @@
 import { ActivityIndicator, View } from 'react-native';
 import { detailActionsStyles as styles } from './DetailActions.styles';
-import AppButton from '../../../common/components/button/AppButton';
+import AppButton from '../../../common/components/buttons/AppButton';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import TouchableText from '../../../common/components/button/TouchableText';
+import TouchableText from '../../../common/components/buttons/TouchableText';
 import { COLORS } from '../../../common/styling/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import React from 'react';

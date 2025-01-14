@@ -8,7 +8,7 @@ import CategoryItem from '../components/category-item/CategoryItem';
 import { listScreenStyles as styles } from './listScreen.styles';
 import FullscreenLoading from '../../common/components/loading/FullscreenLoading';
 import FullscreenReload from '../../common/components/loading/FullscreenReload';
-import FloatingAddButton from '../../common/components/floating-button/FloatingAddButton';
+import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 
 const CategoryScreen: React.FC = () => {

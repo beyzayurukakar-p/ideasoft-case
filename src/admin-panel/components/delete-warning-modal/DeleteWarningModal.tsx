@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Modal } from 'react-native';
 import { deleteWarningModalStyles as styles } from './DeleteWarningModal.styles';
-import AppButton from '../../../common/components/button/AppButton';
+import AppButton from '../../../common/components/buttons/AppButton';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { dimensions } from '../../../common/styling/dimensions';
 import { COLORS } from '../../../common/styling/colors';

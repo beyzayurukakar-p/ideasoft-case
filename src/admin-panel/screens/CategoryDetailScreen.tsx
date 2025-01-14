@@ -8,7 +8,7 @@ import { COLORS } from '../../common/styling/colors';
 import { formatDateExtensive } from '../../common/utils/dateUtils';
 import DetailActions from '../components/detail-actions/DetailActions';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
-import TouchableText from '../../common/components/button/TouchableText';
+import TouchableText from '../../common/components/buttons/TouchableText';
 
 type ScreenProps = StaticScreenProps<{
   categoryId: number;

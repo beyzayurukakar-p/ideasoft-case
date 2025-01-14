@@ -8,7 +8,7 @@ import ProductItem from '../components/product-item/ProductItem';
 import { listScreenStyles as styles } from './listScreen.styles';
 import FullscreenLoading from '../../common/components/loading/FullscreenLoading';
 import FullscreenReload from '../../common/components/loading/FullscreenReload';
-import FloatingAddButton from '../../common/components/floating-button/FloatingAddButton';
+import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
 
 const ProductScreen: React.FC = () => {
   const dispatch = useAppDispatch();

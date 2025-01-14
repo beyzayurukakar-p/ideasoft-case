@@ -8,7 +8,7 @@ import { formatDateExtensive } from '../../common/utils/dateUtils';
 import DetailActions from '../components/detail-actions/DetailActions';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 import { productSelectors, productSlice } from '../states/productSlice';
-import AppButton from '../../common/components/button/AppButton';
+import AppButton from '../../common/components/buttons/AppButton';
 import { Category } from '../types/category';
 
 type ScreenProps = StaticScreenProps<{
