@@ -1,5 +1,6 @@
 import { tryCalling } from '../../common/services/tryCalling';
 import { StartAppListening } from '../../common/store/types';
+import { addCategory } from '../services/addCategory';
 import { deleteCategory } from '../services/deleteCategory';
 import { readCategories } from '../services/readCategories';
 import { CategoriesNormalized } from '../types/category';
@@ -9,6 +10,7 @@ import { productSlice } from './productSlice';
 export const startCategoryListeners = (startAppListening: StartAppListening) => {
   readCategoriesListener(startAppListening);
   deleteCategoryListener(startAppListening);
+  addCategoryListener(startAppListening);
 };
 
 const readCategoriesListener = (startAppListening: StartAppListening) => {
@@ -75,6 +77,34 @@ const deleteCategoryListener = (startAppListening: StartAppListening) => {
       listenerApi.dispatch(productSlice.actions._categoryRemoved(categoryId));
 
       action.payload.onSuccess?.();
+    },
+  });
+};
+
+const addCategoryListener = (startAppListening: StartAppListening) => {
+  startAppListening({
+    actionCreator: categorySlice.actions.addCategory,
+    effect: async (action, listenerApi) => {
+      const category = action.payload.category;
+
+      // Start loading
+      listenerApi.dispatch(categorySlice.actions._setLoading('add'));
+
+      // Call service
+      const [categoryAdded, error] = await tryCalling(addCategory, category);
+
+      // End loading
+      listenerApi.dispatch(categorySlice.actions._setLoading(null));
+
+      // Handle error
+      if (error || !categoryAdded) {
+        action.payload.onError?.();
+        return;
+      }
+
+      // Update state and call onSuccess callback
+      listenerApi.dispatch(categorySlice.actions._addCategory(categoryAdded));
+      action.payload.onSuccess?.(categoryAdded);
     },
   });
 };

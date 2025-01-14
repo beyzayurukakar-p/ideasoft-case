@@ -1,5 +1,10 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CategoriesNormalized, Category } from '../types/category';
+import {
+  CategoriesNormalized,
+  Category,
+  CategoryAddPayload,
+  CategoryUpdatePayload,
+} from '../types/category';
 import { ServiceCallbacks } from '../../common/services/types';
 import { RootState } from '../../common/store/types';
 
@@ -18,25 +23,41 @@ export const categorySlice = createSlice({
   reducers: {
     // The first four are dispatched by UI and trigger listeners
     readCategories: (_state, _action: PayloadAction<ServiceCallbacks<Category[]>>) => {},
-    addCategory: () => {},
+    addCategory: (
+      _state,
+      _action: PayloadAction<ServiceCallbacks<Category> & { category: CategoryAddPayload }>
+    ) => {},
     deleteCategory: (
       _state,
       _action: PayloadAction<{ id: Category['id'] } & ServiceCallbacks<void>>
     ) => {},
-    updateCategory: () => {},
+    updateCategory: (
+      _state,
+      _action: PayloadAction<ServiceCallbacks<Category> & { category: CategoryUpdatePayload }>
+    ) => {},
 
     // The next four are dispatched by listeners and update state
     _setCategories: (state, action: PayloadAction<CategoriesNormalized>) => {
       state.categories = action.payload;
     },
-    _addCategory: () => {},
+    _addCategory: (state, action: PayloadAction<Category>) => {
+      const category = action.payload;
+      if (state.categories) {
+        state.categories[category.id] = category;
+      }
+    },
     _deleteCategory: (state, action: PayloadAction<number>) => {
       const categoryId = action.payload;
       if (state.categories?.[categoryId]) {
         delete state.categories[categoryId];
       }
     },
-    _updateCategory: () => {},
+    _updateCategory: (state, action: PayloadAction<Category>) => {
+      const category = action.payload;
+      if (state.categories && state.categories[category.id]) {
+        Object.assign(state.categories[category.id], category);
+      }
+    },
     _setLoading: (state, action: PayloadAction<CategoryState['loading']>) => {
       state.loading = action.payload;
     },

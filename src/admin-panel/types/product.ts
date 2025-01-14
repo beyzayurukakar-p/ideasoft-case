@@ -1,18 +1,24 @@
 import { StockTypeLabels } from '../constants/stockTypeLabels';
 import { Category, CategoryResponse } from './category';
-import { WithId, WithoutId } from './typeUtils';
+import { WithId, WithoutIdCreatedAt } from './typeUtils';
 
 /* For requests */
 
 // Product's shape in the API request body for 'add'
-export type ProductAddRequest = WithoutId<
+export type ProductAddRequest = WithoutIdCreatedAt<
   ProductResponse & {
-    images: Array<WithoutId<ImageResponse & { attachment: string }>>;
+    images: Array<WithoutIdCreatedAt<ImageResponse & { attachment: string }>>;
   }
 >;
 
+/** Product's shape in the redux 'add' action's payload */
+export type ProductAddPayload = ProductAddRequest;
+
 /** Product's shape in the API request body for 'update' */
 export type ProductUpdateRequest = WithId<ProductAddRequest>;
+
+/** Product's shape in the redux 'update' action's payload */
+export type ProductUpdatePayload = ProductUpdateRequest;
 
 /* For responses */
 

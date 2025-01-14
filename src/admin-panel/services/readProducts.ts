@@ -8,13 +8,13 @@ import { PRODUCTS_URL } from './urls';
  * Fetches products
  * @returns Array of products (Promise). Or throws error.
  */
-export const readProducts = async () => {
-  const response: AxiosResponse<ProductResponse[]> = await client.get(PRODUCTS_URL);
+export const readProducts = async (): Promise<Product[]> => {
+  const response: AxiosResponse<ProductResponse[]> = await client.get(PRODUCTS_URL + '?limit=100');
 
-  const data = response.data;
+  const productsResponse = response.data;
 
   // Convert data
-  const convertedData: Product[] = data.map((productRes) => {
+  const convertedProducts: Product[] = productsResponse.map((productRes) => {
     return {
       id: productRes.id,
       name: productRes.name,
@@ -32,5 +32,5 @@ export const readProducts = async () => {
     };
   });
 
-  return convertedData;
+  return convertedProducts;
 };

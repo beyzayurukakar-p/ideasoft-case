@@ -1,2 +1,2 @@
 export type WithId<T> = T & { id: number };
-export type WithoutId<T> = Omit<T, 'id'>;
+export type WithoutIdCreatedAt<T> = Omit<T, 'id' | 'createdAt'>;
