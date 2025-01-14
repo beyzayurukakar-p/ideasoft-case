@@ -13,6 +13,7 @@ export const detailScreenStyles = StyleSheet.create({
     fontSize: dimensions.measure(13),
     color: COLORS.primary,
     fontWeight: '600',
+    opacity: 0.8,
   },
   valueText: {
     fontSize: dimensions.measure(16),
@@ -50,5 +51,15 @@ export const detailScreenStyles = StyleSheet.create({
   },
   editButton: {
     flexGrow: 1,
+  },
+  statusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: dimensions.measure(5),
+  },
+  statusCircle: {
+    width: dimensions.measure(15),
+    height: dimensions.measure(15),
+    borderRadius: dimensions.measure(10),
   },
 });

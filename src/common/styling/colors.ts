@@ -20,4 +20,7 @@ export const COLORS = {
   borderShadowy: '#E6E6E6',
 
   backdrop: 'rgba(0, 0, 0, 0.5)',
+  whiteBackdrop: 'rgba(255,255,255, 0.7)',
+
+  textLink: '#4D9CFF',
 };

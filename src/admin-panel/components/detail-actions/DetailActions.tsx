@@ -42,12 +42,14 @@ const DetailActions: React.FC<DetailActionsProps> = ({ onPressDelete, onPressEdi
       ) : (
         <>
           <View style={styles.innerContainer}>
-            <TouchableText
-              label="Sil"
-              onPress={onPressDelete}
-              leftIcon={[FontAwesome5, 'trash-alt']}
-              color={COLORS.dangerTextOnBackground}
-            />
+            <View style={styles.deleteButtonContainer}>
+              <TouchableText
+                label="Sil"
+                onPress={onPressDelete}
+                leftIcon={[FontAwesome5, 'trash-alt']}
+                color={COLORS.dangerTextOnBackground}
+              />
+            </View>
             <AppButton
               label="Düzenle"
               onPress={onPressEdit}

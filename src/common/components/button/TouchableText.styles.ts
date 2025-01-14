@@ -9,7 +9,7 @@ export const touchableTextStyles = StyleSheet.create({
     flexDirection: 'row',
   },
   labelText: {
-    color: COLORS.primary,
+    color: COLORS.textLink,
     fontWeight: '600',
     fontSize: dimensions.measure(14),
     marginHorizontal: dimensions.measure(7),

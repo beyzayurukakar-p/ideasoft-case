@@ -6,6 +6,7 @@ import { COLORS } from '../styling/colors';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import CategoryDetailScreen from '../../admin-panel/screens/CategoryDetailScreen';
 import { StaticParamList } from '@react-navigation/native';
+import ProductDetailScreen from '../../admin-panel/screens/ProductDetailScreen';
 
 const tabs = createBottomTabNavigator({
   screens: {
@@ -44,16 +45,22 @@ export const adminPanelNavigator = createStackNavigator({
       screen: CategoryDetailScreen,
       options: {
         title: 'Kategori Detayı',
-        headerBackTitle: '',
-        headerTitleStyle: {
-          color: COLORS.subtextOnBackground,
-        },
-        headerTitleAlign: 'center',
+      },
+    },
+    ProductDetail: {
+      screen: ProductDetailScreen,
+      options: {
+        title: 'Ürün Detayı',
       },
     },
   },
   screenOptions: {
     headerTintColor: COLORS.primary,
+    headerBackTitle: '',
+    headerTitleStyle: {
+      color: COLORS.subtextOnBackground,
+    },
+    headerTitleAlign: 'center',
   },
 });
 

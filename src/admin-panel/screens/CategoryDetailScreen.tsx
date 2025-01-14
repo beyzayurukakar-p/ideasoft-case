@@ -8,6 +8,7 @@ import { COLORS } from '../../common/styling/colors';
 import { formatDateExtensive } from '../../common/utils/dateUtils';
 import DetailActions from '../components/detail-actions/DetailActions';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
+import TouchableText from '../../common/components/button/TouchableText';
 
 type ScreenProps = StaticScreenProps<{
   categoryId: number;
@@ -56,7 +57,7 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
         <View style={styles.statusContainer}>
           <Text
             style={[
-              styles.statusText,
+              styles.valueText,
               {
                 color: isActive ? COLORS.successTextOnBackground : COLORS.dangerTextOnBackground,
               },
@@ -79,6 +80,13 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
         <Text style={styles.labelText}>{'Oluşturma Tarihi:'}</Text>
         <Text style={styles.valueText}>{formatDateExtensive(category?.createdAt as string)}</Text>
       </View>
+      <View style={styles.separator} />
+      <TouchableText
+        label="Kategorideki Ürünleri Gör"
+        // TODO: Create a screen for products of the category
+        onPress={() => {}}
+        style={styles.seeProductTouchable}
+      />
       <DetailActions
         onPressDelete={warnBeforeDelete}
         onPressEdit={_onPressEdit}

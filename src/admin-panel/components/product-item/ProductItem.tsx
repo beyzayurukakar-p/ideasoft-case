@@ -7,6 +7,7 @@ import { IMAGES } from '../../../common/assets';
 import { useDispatch } from 'react-redux';
 import { productSlice } from '../../states/productSlice';
 import SwipeableWithDelete from '../../../common/components/swipeable/SwipeableWithDelete';
+import { useNavigation } from '@react-navigation/native';
 
 type ProductItemProps = {
   product: Product;
@@ -21,6 +22,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, demonstrateSwipeOnSt
   const { id, name, price, sku, currencyAbbr, status, imageThumbUrl } = product;
 
   const dispatch = useDispatch();
+  const nav = useNavigation();
   const [disabled, setDisabled] = useState<boolean>(false);
 
   const _onPressDelete = () => {
@@ -35,6 +37,15 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, demonstrateSwipeOnSt
     );
   };
 
+  const _onPressItem = () => {
+    nav.navigate('AdminPanel', {
+      screen: 'ProductDetail',
+      params: {
+        productId: id,
+      },
+    });
+  };
+
   return (
     <View style={disabled ? styles.disabledContainer : null}>
       <SwipeableWithDelete
@@ -43,6 +54,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, demonstrateSwipeOnSt
         onPressDelete={_onPressDelete}
       >
         <TouchableOpacity
+          onPress={_onPressItem}
           style={styles.container}
           activeOpacity={0.6}
           disabled={disabled}
