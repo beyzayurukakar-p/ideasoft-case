@@ -10,9 +10,11 @@ import FullscreenLoading from '../../common/components/loading/FullscreenLoading
 import FullscreenReload from '../../common/components/loading/FullscreenReload';
 import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
+import { useNavigation } from '@react-navigation/native';
 
 const CategoryScreen: React.FC = () => {
   const dispatch = useAppDispatch();
+  const nav = useNavigation();
   const categories = useAppSelector(categorySelectors.categories);
   const isLoading = useAppSelector(categorySelectors.isLoadingReadCategories);
   const [isFailed, setIsFailed] = React.useState<boolean>(false);
@@ -38,7 +40,11 @@ const CategoryScreen: React.FC = () => {
     _fetch();
   };
 
-  const _onPressAddCategory = () => {};
+  const _onPressAddCategory = () => {
+    nav.navigate('AdminPanel', {
+      screen: 'CategoryForm',
+    });
+  };
 
   const renderCategoryItem = useCallback(
     (params: { item: Category; index: number }) => {
