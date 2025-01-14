@@ -9,13 +9,35 @@ const CategoryFormScreen: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [status, setStatus] = useState<boolean>(true);
 
+  const [nameValidationError, setNameValidationError] = useState<string | null>(null);
+
+  const _validate = (callback: () => void) => {
+    if (name.length === 0) {
+      setNameValidationError('Bu alan zorunludur.');
+    } else {
+      callback();
+    }
+  };
+
+  const _onPressAddUpdate = () => {
+    _validate(() => {
+      console.log({ name, status });
+    });
+  };
+
+  const _onChangeName = (text: string) => {
+    setName(text);
+    setNameValidationError(null);
+  };
+
   return (
     <View style={styles.container}>
       <AppTextInput
         label="İsim"
         value={name}
-        onChangeText={setName}
+        onChangeText={_onChangeName}
         placeholder="Kategorinin ismini yazın..."
+        errorText={nameValidationError}
       />
       <AppSwitch
         label="Durum"
@@ -23,8 +45,8 @@ const CategoryFormScreen: React.FC = () => {
         onValueChange={setStatus}
       />
       <FormActions
-        actionType="update"
-        onPressAction={() => {}}
+        actionType="add"
+        onPressAction={_onPressAddUpdate}
         isLoading={false}
       />
     </View>
