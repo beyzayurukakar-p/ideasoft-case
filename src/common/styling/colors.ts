@@ -4,7 +4,7 @@ export const COLORS = {
   elevated2: '#F2F2F2',
   textOnBackground: '#000000',
   subtextOnBackground: '#6A6A6A',
-  labelTextOnBackground: '#878787',
+  labelTextOnBackground: '#6A6A6A',
 
   primary: '#7D53DE',
   textOnPrimary: '#FFFFFF',
