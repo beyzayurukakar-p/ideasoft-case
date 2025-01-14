@@ -12,23 +12,26 @@ type FloatingAddButtonProps = {
 const FloatingAddButton: React.FC<FloatingAddButtonProps> = ({ onPress }) => {
   const { bottom } = useSafeAreaInsets();
   return (
-    <TouchableOpacity
-      onPress={onPress}
+    <View
       style={[
-        styles.touchableContainer,
+        styles.container,
         {
-          bottom: styles.touchableContainer.bottom + bottom,
+          bottom: styles.container.bottom + bottom,
         },
       ]}
     >
-      <View style={styles.innerContainer}>
+      <TouchableOpacity
+        onPress={onPress}
+        activeOpacity={0.7}
+        style={styles.touchable}
+      >
         <FontAwesome5
           name="plus"
           size={dimensions.measure(35)}
           color={COLORS.textOnPrimary}
         />
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 };
 

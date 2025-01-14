@@ -3,13 +3,13 @@ import { dimensions } from '../../styling/dimensions';
 import { COLORS } from '../../styling/colors';
 
 export const floatingAddButtonStyles = StyleSheet.create({
-  touchableContainer: {
+  container: {
     position: 'absolute',
     bottom: dimensions.measure(30),
     right: dimensions.measure(30),
     zIndex: 1000,
   },
-  innerContainer: {
+  touchable: {
     backgroundColor: COLORS.primary,
     width: dimensions.measure(80),
     height: dimensions.measure(80),
