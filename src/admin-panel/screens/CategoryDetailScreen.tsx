@@ -1,19 +1,22 @@
 import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { categoryDetailScreenStyles as styles } from './CategoryDetailScreen.styles';
 import { useAppDispatch, useAppSelector } from '../../common/store';
 import { categorySelectors, categorySlice } from '../states/categorySlice';
-import { COLORS } from '../../common/styling/colors';
 import { formatDateExtensive } from '../../common/utils/dateUtils';
 import DetailActions from '../components/detail-actions/DetailActions';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 import TouchableText from '../../common/components/buttons/TouchableText';
+import TextField from '../components/detail-fields/TextField';
+import Separator from '../components/detail-fields/Separator';
+import StatusField from '../components/detail-fields/StatusField';
 
 type ScreenProps = StaticScreenProps<{
   categoryId: number;
 }>;
 
+/** Screen component to display all the fields of a category */
 const CategoryDetailScreen: React.FC<ScreenProps> = ({
   route: {
     params: { categoryId },
@@ -21,7 +24,6 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
 }) => {
   const category = useAppSelector((state) => categorySelectors.categoryById(state, categoryId));
   const isLoading = useAppSelector(categorySelectors.isLoadingDeleteCategory);
-  const isActive = category?.status === 1;
 
   const dispatch = useAppDispatch();
   const nav = useNavigation();
@@ -47,40 +49,22 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.labelValueContainerVertical}>
-        <Text style={styles.labelText}>{'İsim:'}</Text>
-        <Text style={styles.valueTextLarge}>{category?.name}</Text>
-      </View>
-      <View style={styles.separator} />
-      <View style={styles.labelValueContainerHorizontal}>
-        <Text style={styles.labelText}>{'Durum:'}</Text>
-        <View style={styles.statusContainer}>
-          <Text
-            style={[
-              styles.valueText,
-              {
-                color: isActive ? COLORS.successTextOnBackground : COLORS.dangerTextOnBackground,
-              },
-            ]}
-          >
-            {isActive ? 'Aktif' : 'İnaktif'}
-          </Text>
-          <View
-            style={[
-              styles.statusCircle,
-              {
-                backgroundColor: isActive ? COLORS.success : COLORS.danger,
-              },
-            ]}
-          />
-        </View>
-      </View>
-      <View style={styles.separator} />
-      <View style={styles.labelValueContainerVertical}>
-        <Text style={styles.labelText}>{'Oluşturma Tarihi:'}</Text>
-        <Text style={styles.valueText}>{formatDateExtensive(category?.createdAt as string)}</Text>
-      </View>
-      <View style={styles.separator} />
+      <TextField
+        label="İsim:"
+        value={category.name}
+        largeValue
+      />
+      <Separator />
+      <StatusField
+        label="Durum:"
+        status={category.status}
+      />
+      <Separator />
+      <TextField
+        label="Oluşturma Tarihi:"
+        value={formatDateExtensive(category.createdAt)}
+      />
+      <Separator />
       <TouchableText
         label="Kategorideki Ürünleri Gör"
         // TODO: Create a screen for products of the category
