@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { appTextInputStyles as styles } from './AppTextInput.styles';
 
-interface AppTextInputProps {
+type AppTextInputProps = {
   label: string;
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
-}
+};
 
 const AppTextInput: React.FC<AppTextInputProps> = ({ label, value, onChangeText, placeholder }) => {
   return (
