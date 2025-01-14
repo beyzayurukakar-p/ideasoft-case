@@ -85,18 +85,6 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
           <Text style={styles.labelText}>{'Tam isim:'}</Text>
           <Text style={styles.valueText}>{product?.fullName}</Text>
         </View>
-        <View style={styles.labelValueContainerVertical}>
-          <Text style={styles.labelText}>{'Tam isim:'}</Text>
-          <Text style={styles.valueText}>{product?.fullName}</Text>
-        </View>
-        <View style={styles.labelValueContainerVertical}>
-          <Text style={styles.labelText}>{'Tam isim:'}</Text>
-          <Text style={styles.valueText}>{product?.fullName}</Text>
-        </View>
-        <View style={styles.labelValueContainerVertical}>
-          <Text style={styles.labelText}>{'Tam isim:'}</Text>
-          <Text style={styles.valueText}>{product?.fullName}</Text>
-        </View>
         <View style={styles.separator} />
         <View style={styles.labelValueContainerVertical}>
           <Text style={styles.labelText}>{'Stok kodu:'}</Text>
