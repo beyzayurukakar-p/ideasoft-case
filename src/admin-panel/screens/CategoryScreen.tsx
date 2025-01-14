@@ -9,12 +9,15 @@ import { listScreenStyles as styles } from './listScreen.styles';
 import FullscreenLoading from '../../common/components/loading/FullscreenLoading';
 import FullscreenReload from '../../common/components/loading/FullscreenReload';
 import FloatingAddButton from '../../common/components/floating-button/FloatingAddButton';
+import { useWarnedDelete } from '../hooks/useWarnedDelete';
 
 const CategoryScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(categorySelectors.categories);
   const isLoading = useAppSelector(categorySelectors.isLoadingReadCategories);
   const [isFailed, setIsFailed] = React.useState<boolean>(false);
+
+  const { warnBeforeDelete, renderWarningModal } = useWarnedDelete();
 
   const _fetch = useCallback(() => {
     dispatch(
@@ -37,6 +40,19 @@ const CategoryScreen: React.FC = () => {
 
   const _onPressAddCategory = () => {};
 
+  const renderCategoryItem = useCallback(
+    (params: { item: Category; index: number }) => {
+      return (
+        <CategoryItem
+          category={params.item}
+          demonstrateSwipeOnStart={params.index === 0}
+          warnBeforeDelete={warnBeforeDelete}
+        />
+      );
+    },
+    [warnBeforeDelete]
+  );
+
   if (isLoading) {
     return <FullscreenLoading />;
   }
@@ -56,16 +72,8 @@ const CategoryScreen: React.FC = () => {
         contentContainerStyle={styles.listContentContainer}
       />
       <FloatingAddButton onPress={_onPressAddCategory} />
+      {renderWarningModal()}
     </View>
-  );
-};
-
-const renderCategoryItem = (params: { item: Category; index: number }) => {
-  return (
-    <CategoryItem
-      category={params.item}
-      demonstrateSwipeOnStart={params.index === 0}
-    />
   );
 };
 

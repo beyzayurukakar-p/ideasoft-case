@@ -9,6 +9,8 @@ export const COLORS = {
   primary: '#7D53DE',
   textOnPrimary: '#FFFFFF',
 
+  primaryPale: '#9A8CBB',
+
   success: '#6CD76C',
   successTextOnBackground: '#44AB44',
   danger: '#E55B6F',
@@ -16,4 +18,6 @@ export const COLORS = {
 
   border: '#C2C2C2',
   borderShadowy: '#E6E6E6',
+
+  backdrop: 'rgba(0, 0, 0, 0.5)',
 };

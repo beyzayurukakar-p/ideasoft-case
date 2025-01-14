@@ -11,9 +11,14 @@ import { useNavigation } from '@react-navigation/native';
 type CategoryItemProps = {
   category: Category;
   demonstrateSwipeOnStart: boolean;
+  warnBeforeDelete: (onDelete: () => void) => void;
 };
 
-const CategoryItem: React.FC<CategoryItemProps> = ({ category, demonstrateSwipeOnStart }) => {
+const CategoryItem: React.FC<CategoryItemProps> = ({
+  category,
+  demonstrateSwipeOnStart,
+  warnBeforeDelete,
+}) => {
   const { id, name, status } = category;
 
   const dispatch = useDispatch();
@@ -21,15 +26,17 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ category, demonstrateSwipeO
   const [disabled, setDisabled] = useState<boolean>(false);
 
   const _onPressDelete = () => {
-    setDisabled(true);
-    dispatch(
-      categorySlice.actions.deleteCategory({
-        id,
-        onError: () => {
-          setDisabled(false);
-        },
-      })
-    );
+    warnBeforeDelete(() => {
+      setDisabled(true);
+      dispatch(
+        categorySlice.actions.deleteCategory({
+          id,
+          onError: () => {
+            setDisabled(false);
+          },
+        })
+      );
+    });
   };
 
   const _onPressItem = () => {

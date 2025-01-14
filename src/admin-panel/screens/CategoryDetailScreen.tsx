@@ -1,12 +1,13 @@
-import { StaticScreenProps } from '@react-navigation/native';
+import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text } from 'react-native';
 import { categoryDetailScreenStyles as styles } from './CategoryDetailScreen.styles';
-import { useAppSelector } from '../../common/store';
-import { categorySelectors } from '../states/categorySlice';
+import { useAppDispatch, useAppSelector } from '../../common/store';
+import { categorySelectors, categorySlice } from '../states/categorySlice';
 import { COLORS } from '../../common/styling/colors';
 import { formatDateExtensive } from '../../common/utils/dateUtils';
 import DetailActions from '../components/detail-actions/DetailActions';
+import { useWarnedDelete } from '../hooks/useWarnedDelete';
 
 type ScreenProps = StaticScreenProps<{
   categoryId: number;
@@ -18,11 +19,30 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
   },
 }) => {
   const category = useAppSelector((state) => categorySelectors.categoryById(state, categoryId));
+  const isLoading = useAppSelector(categorySelectors.isLoadingDeleteCategory);
   const isActive = category?.status === 1;
 
-  const _onPressDelete = () => {};
+  const dispatch = useAppDispatch();
+  const nav = useNavigation();
+
+  const _onDelete = () => {
+    dispatch(
+      categorySlice.actions.deleteCategory({
+        id: categoryId,
+        onSuccess: () => {
+          nav.goBack();
+        },
+      })
+    );
+  };
 
   const _onPressEdit = () => {};
+
+  const { warnBeforeDelete, renderWarningModal } = useWarnedDelete(_onDelete);
+
+  if (!category) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -60,9 +80,11 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
         <Text style={styles.valueText}>{formatDateExtensive(category?.createdAt as string)}</Text>
       </View>
       <DetailActions
-        onPressDelete={_onPressDelete}
+        onPressDelete={warnBeforeDelete}
         onPressEdit={_onPressEdit}
+        isLoading={isLoading}
       />
+      {renderWarningModal()}
     </View>
   );
 };
