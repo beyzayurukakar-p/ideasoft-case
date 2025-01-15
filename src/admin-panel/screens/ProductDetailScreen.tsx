@@ -71,6 +71,7 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
       <View style={styles.categoriesContainer}>
         {product?.categories.map((category) => (
           <AppButton
+            key={category.id}
             label={category.name}
             onPress={() => _onPressCategory(category.id)}
             appearance="outlined"
