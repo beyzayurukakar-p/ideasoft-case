@@ -15,7 +15,7 @@ export type ProductAddRequest = WithoutIdCreatedAt<
 export type ProductAddPayload = ProductAddRequest;
 
 /** Product's shape in the API request body for 'update' */
-export type ProductUpdateRequest = WithId<ProductAddRequest>;
+export type ProductUpdateRequest = WithId<Partial<ProductAddRequest>>;
 
 /** Product's shape in the redux 'update' action's payload */
 export type ProductUpdatePayload = ProductUpdateRequest;
