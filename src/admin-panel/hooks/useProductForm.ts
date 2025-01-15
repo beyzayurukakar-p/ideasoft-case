@@ -28,11 +28,15 @@ export const useProductForm = (productId?: number) => {
     product?.stockTypeLabel || undefined
   );
   const [price, setPrice] = useState<number | undefined>(product?.price || undefined);
+  const [currency, setCurrency] = useState<number | string | undefined>(
+    product?.currencyId || undefined
+  );
   // Error states
   const [nameError, setNameError] = useState<string | null>(null);
   const [stockCodeError, setStockCodeError] = useState<string | null>(null);
   const [stockAmountError, setStockAmountError] = useState<string | null>(null);
   const [priceError, setPriceError] = useState<string | null>(null);
+  const [currencyError, setCurrencyError] = useState<string | null>(null);
 
   // Derived values
   const formType: 'update' | 'add' = productId ? 'update' : 'add';
@@ -62,6 +66,10 @@ export const useProductForm = (productId?: number) => {
     }
     if (!price || price < 0) {
       setPriceError('Bu alan zorunludur.');
+      validated = false;
+    }
+    if (!currency) {
+      setCurrencyError('Bu alan zorunludur.');
       validated = false;
     }
     if (validated) {
@@ -111,7 +119,7 @@ export const useProductForm = (productId?: number) => {
             sku: (stockCode as string).trim(),
             status: status ? 1 : 0,
             price: price as number,
-            currencyId: 1,
+            currencyId: currency as number,
             stockAmount: stockAmount as number,
           },
           onSuccess: _goBackToList,
@@ -130,7 +138,7 @@ export const useProductForm = (productId?: number) => {
             sku: (stockCode as string).trim(),
             status: status ? 1 : 0,
             price: price as number,
-            currencyId: 1,
+            currencyId: currency as number,
             stockAmount: stockAmount as number,
             id: productId as number,
           },
@@ -168,6 +176,10 @@ export const useProductForm = (productId?: number) => {
     price,
     priceError,
     onChangePrice: _onChangePrice,
+
+    currency,
+    currencyError,
+    onChangeCurrency: setCurrency,
 
     isLoading,
     onPressAddUpdate: _onPressAddUpdate,

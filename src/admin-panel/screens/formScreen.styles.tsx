@@ -8,4 +8,7 @@ export const formScreenStyles = StyleSheet.create({
     padding: dimensions.pageMargin,
     backgroundColor: COLORS.background,
   },
+  scrollContentContainer: {
+    paddingBottom: dimensions.percentOfHeight(40),
+  },
 });
