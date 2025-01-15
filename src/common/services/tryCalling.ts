@@ -1,5 +1,5 @@
 import Toast from 'react-native-toast-message';
-import { GENERIC_ERROR_MESSAGE } from './constants';
+import { GENERIC_ERROR_MESSAGE, GENERIC_SUCCESS_MESSAGE } from './constants';
 
 /** This function is used to call an async function and handle the error */
 export const tryCalling = async <Args extends Array<any>, ReturnValue>(
@@ -22,4 +22,19 @@ export const tryCalling = async <Args extends Array<any>, ReturnValue>(
   }
 
   return returnVal;
+};
+
+export const tryCallingWithSuccess = async <Args extends Array<any>, ReturnValue>(
+  fn: (...args: Args) => Promise<ReturnValue>,
+  ...args: Args
+) => {
+  const [data, error] = await tryCalling(fn, ...args);
+  if (!error && data) {
+    Toast.show({
+      type: 'success',
+      text1: GENERIC_SUCCESS_MESSAGE,
+    });
+  }
+
+  return [data, error];
 };
