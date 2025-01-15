@@ -29,20 +29,19 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
   const dispatch = useAppDispatch();
   const nav = useNavigation<RootStackNavigationProp>();
 
-  const _onDelete = () => {
-    dispatch(
-      categorySlice.actions.deleteCategory({
-        id: categoryId,
-        onSuccess: () => {
-          nav.popTo('AdminPanel', {
-            screen: 'Tabs',
-            params: {
-              screen: 'Category',
-            },
-          });
-        },
-      })
-    );
+  const { warnBeforeDelete, renderWarningModal } = useWarnedDelete();
+
+  const _onPressDelete = () => {
+    warnBeforeDelete(() => {
+      dispatch(
+        categorySlice.actions.deleteCategory({
+          id: categoryId,
+          onSuccess: () => {
+            nav.popToTop();
+          },
+        })
+      );
+    });
   };
 
   const _onPressEdit = () => {
@@ -53,8 +52,6 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
       },
     });
   };
-
-  const { warnBeforeDelete, renderWarningModal } = useWarnedDelete(_onDelete);
 
   if (!category) {
     return null;
@@ -85,7 +82,7 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
         style={styles.seeProductTouchable}
       />
       <DetailActions
-        onPressDelete={warnBeforeDelete}
+        onPressDelete={_onPressDelete}
         onPressEdit={_onPressEdit}
         isLoading={isLoading}
       />

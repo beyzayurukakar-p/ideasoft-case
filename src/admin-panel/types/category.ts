@@ -27,6 +27,6 @@ export type CategoryResponse = {
 /* For the rest of the app */
 
 /** Category's shape after being converted */
-export type Category = CategoryResponse;
+export type Category = CategoryResponse & { deleted?: boolean };
 
 export type CategoriesNormalized = Record<string, Category>;

@@ -1,15 +1,21 @@
 import { AxiosResponse } from 'axios';
 import { client } from '../../common/services/client';
-import { Category, CategoryResponse, CategoryUpdateRequest } from '../types/category';
+import {
+  Category,
+  CategoryResponse,
+  CategoryUpdatePayload,
+  CategoryUpdateRequest,
+} from '../types/category';
 import { CATEGORIES_URL } from './urls';
 
 /**
  * Updates a category
  */
-export const updateCategory = async (category: CategoryUpdateRequest): Promise<Category> => {
+export const updateCategory = async (category: CategoryUpdatePayload): Promise<Category> => {
+  const body: CategoryUpdateRequest = category;
   const response: AxiosResponse<CategoryResponse> = await client.put(
     `${CATEGORIES_URL}/${category.id}`,
-    category
+    body
   );
 
   const categoryResponse = response.data;

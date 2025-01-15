@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { dimensions } from '../../../common/styling/dimensions';
 import { COLORS } from '../../../common/styling/colors';
 
-export const categoryListHeaderStyles = StyleSheet.create({
+export const listHeaderStyles = StyleSheet.create({
   container: {
     borderBottomWidth: dimensions.measure(1),
     borderBottomColor: COLORS.border,

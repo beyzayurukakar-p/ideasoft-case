@@ -11,14 +11,15 @@ import FullscreenRetry from '../../common/components/feedbacks/FullscreenRetry';
 import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 import { useNavigation } from '@react-navigation/native';
-import CategoryListHeader from '../components/category-list-header/CategoryListHeader';
+import CategoryListHeader from '../components/list-header/CategoryListHeader';
+import { dimensions } from '../../common/styling/dimensions';
 
 const CategoryScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const nav = useNavigation();
   const categories = useAppSelector(categorySelectors.categories);
   const isLoading = useAppSelector(categorySelectors.isLoadingReadCategories);
-  const isRefreshing = useAppSelector(categorySelectors.isLoadingRefreshCategories);
+  const isRefreshing = useAppSelector(categorySelectors.isRefreshing);
   const isLastPage = useAppSelector(categorySelectors.isLastPage);
 
   const [isFailed, setIsFailed] = React.useState<boolean>(false);
@@ -86,7 +87,7 @@ const CategoryScreen: React.FC = () => {
         data={categories}
         keyExtractor={(item) => item.id.toString()}
         renderItem={_renderCategoryItem}
-        estimatedItemSize={250}
+        estimatedItemSize={dimensions.measure(50)}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContentContainer}
         ListHeaderComponent={CategoryListHeader}

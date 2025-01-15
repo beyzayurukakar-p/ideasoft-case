@@ -38,20 +38,20 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
       dispatch(
         productSlice.actions.deleteProduct({
           id: productId,
-          onSuccess: () => {
-            nav.popTo('AdminPanel', {
-              screen: 'Tabs',
-              params: {
-                screen: 'Product',
-              },
-            });
-          },
+          onSuccess: nav.popToTop,
         })
       );
     });
   };
 
-  const _onPressEdit = () => {};
+  const _onPressEdit = () => {
+    nav.navigate('AdminPanel', {
+      screen: 'ProductForm',
+      params: {
+        productId,
+      },
+    });
+  };
 
   const _onPressCategory = (categoryId: number) => {
     nav.navigate('AdminPanel', {

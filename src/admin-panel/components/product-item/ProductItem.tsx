@@ -12,13 +12,18 @@ import { useAppDispatch } from '../../../common/store';
 type ProductItemProps = {
   product: Product;
   demonstrateSwipeOnStart: boolean;
+  warnBeforeDelete: (onDelete: () => void) => void;
 };
 
 /**
  * This component is used by the product list as an item component.
  * Supports swiping left to view delete button.
  */
-const ProductItem: React.FC<ProductItemProps> = ({ product, demonstrateSwipeOnStart }) => {
+const ProductItem: React.FC<ProductItemProps> = ({
+  product,
+  demonstrateSwipeOnStart,
+  warnBeforeDelete,
+}) => {
   const { id, name, price, sku, currencyAbbr, status, imageThumbUrl } = product;
 
   const dispatch = useAppDispatch();
@@ -26,15 +31,17 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, demonstrateSwipeOnSt
   const [disabled, setDisabled] = useState<boolean>(false);
 
   const _onPressDelete = () => {
-    setDisabled(true);
-    dispatch(
-      productSlice.actions.deleteProduct({
-        id,
-        onError: () => {
-          setDisabled(false);
-        },
-      })
-    );
+    warnBeforeDelete(() => {
+      setDisabled(true);
+      dispatch(
+        productSlice.actions.deleteProduct({
+          id,
+          onError: () => {
+            setDisabled(false);
+          },
+        })
+      );
+    });
   };
 
   const _onPressItem = () => {

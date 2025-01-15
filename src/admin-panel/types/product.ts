@@ -5,11 +5,15 @@ import { WithId, WithoutIdCreatedAt } from './typeUtils';
 /* For requests */
 
 // Product's shape in the API request body for 'add'
-export type ProductAddRequest = WithoutIdCreatedAt<
-  ProductResponse & {
-    images: Array<WithoutIdCreatedAt<ImageResponse & { attachment: string }>>;
-  }
->;
+export type ProductAddRequest = Pick<
+  ProductResponse,
+  'name' | 'price1' | 'sku' | 'status' | 'stockAmount'
+> &
+  Partial<Pick<ProductResponse, 'categories' | 'stockTypeLabel'>> & {
+    images?: Array<WithoutIdCreatedAt<ImageResponse & { attachment?: string }>>;
+  } & {
+    currency: WithId<Partial<CurrencyResponse>>;
+  };
 
 /** Product's shape in the redux 'add' action's payload */
 export type ProductAddPayload = Pick<
@@ -74,6 +78,7 @@ export type Product = {
   imageOriginalUrl: string;
   categories: Category[];
   createdAt: string;
+  deleted?: boolean;
 };
 
 export type ProductsNormalized = Record<number, Product>;

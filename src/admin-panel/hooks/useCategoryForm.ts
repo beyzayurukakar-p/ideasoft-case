@@ -47,16 +47,6 @@ export const useCategoryForm = (categoryId?: number) => {
     setNameValidationError(null);
   };
 
-  const _goBackToList = () => {
-    // Goes back to category list
-    nav.popTo('AdminPanel', {
-      screen: 'Tabs',
-      params: {
-        screen: 'Category',
-      },
-    });
-  };
-
   // Add action
   const _add = () => {
     _validate(() => {
@@ -66,7 +56,7 @@ export const useCategoryForm = (categoryId?: number) => {
             name: (name as string).trim(),
             status: status ? 1 : 0,
           },
-          onSuccess: _goBackToList,
+          onSuccess: nav.popToTop,
         })
       );
     });
@@ -82,7 +72,7 @@ export const useCategoryForm = (categoryId?: number) => {
             status: status ? 1 : 0,
             id: categoryId as number,
           },
-          onSuccess: _goBackToList,
+          onSuccess: nav.popToTop,
         })
       );
     });

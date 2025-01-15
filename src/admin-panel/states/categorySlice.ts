@@ -65,7 +65,7 @@ export const categorySlice = createSlice({
       state.categoriesNormalized = categoriesNormalized;
       state.categoryIds = categoryIdList;
       state.currentPage = page;
-      state.recentlyAddedIds.length = 0;
+      state.recentlyAddedIds.length = 0; // Empty recently added list
     },
     _addNextPage: (
       state,
@@ -95,16 +95,16 @@ export const categorySlice = createSlice({
     _deleteCategory: (state, action: PayloadAction<number>) => {
       const categoryId = action.payload;
       if (state.categoriesNormalized[categoryId]) {
-        delete state.categoriesNormalized[categoryId];
+        state.categoriesNormalized[categoryId].deleted = true;
       }
-      const indexOfId = state.categoryIds.indexOf(categoryId);
-      if (indexOfId > -1) {
-        state.categoryIds.splice(indexOfId, 1);
-      }
-      const indexOfIdInRecents = state.recentlyAddedIds.indexOf(categoryId);
-      if (indexOfIdInRecents > -1) {
-        state.recentlyAddedIds.splice(indexOfIdInRecents, 1);
-      }
+      // const indexOfId = state.categoryIds.indexOf(categoryId);
+      // if (indexOfId > -1) {
+      //   state.categoryIds.splice(indexOfId, 1);
+      // }
+      // const indexOfIdInRecents = state.recentlyAddedIds.indexOf(categoryId);
+      // if (indexOfIdInRecents > -1) {
+      //   state.recentlyAddedIds.splice(indexOfIdInRecents, 1);
+      // }
     },
     _updateCategory: (state, action: PayloadAction<Category>) => {
       const category = action.payload;
@@ -127,26 +127,38 @@ export const categorySelectors = {
     (state: RootState) => state.category.categoryIds,
     (state: RootState) => state.category.categoriesNormalized,
     (idList, normalized) => {
-      return idList.map((categoryId) => {
-        return normalized[categoryId];
+      const categories: Category[] = [];
+      idList.forEach((categoryId) => {
+        const category = normalized[categoryId];
+        if (!category.deleted) {
+          categories.push(category);
+        }
       });
+
+      return categories;
     }
   ),
   recentlyAddedCategories: createSelector(
     (state: RootState) => state.category.recentlyAddedIds,
     (state: RootState) => state.category.categoriesNormalized,
     (idList, normalized) => {
-      return idList.map((categoryId) => {
-        return normalized[categoryId];
+      const categories: Category[] = [];
+      idList.forEach((categoryId) => {
+        const category = normalized[categoryId];
+        if (!category.deleted) {
+          categories.push(category);
+        }
       });
+
+      return categories;
     }
   ),
   categoryById: (state: RootState, categoryId: number) => {
     return state.category.categoriesNormalized[categoryId];
   },
   isLastPage: (state: RootState) => state.category.isLastPage,
+  isRefreshing: (state: RootState) => state.category.loading === 'refresh',
   isLoadingReadCategories: (state: RootState) => state.category.loading === 'read',
-  isLoadingRefreshCategories: (state: RootState) => state.category.loading === 'refresh',
   isLoadingAddCategory: (state: RootState) => state.category.loading === 'add',
   isLoadingDeleteCategory: (state: RootState) => state.category.loading === 'delete',
   isLoadingUpdateCategory: (state: RootState) => state.category.loading === 'update',

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useAppDispatch, useAppSelector } from '../../common/store';
 import { productSelectors, productSlice } from '../states/productSlice';
@@ -11,13 +11,21 @@ import FullscreenRetry from '../../common/components/feedbacks/FullscreenRetry';
 import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
+import { useWarnedDelete } from '../hooks/useWarnedDelete';
+import ProductListHeader from '../components/list-header/ProductListHeader';
+import { dimensions } from '../../common/styling/dimensions';
 
 const ProductScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const nav = useNavigation<RootStackNavigationProp>();
   const products = useAppSelector(productSelectors.products);
   const isLoading = useAppSelector(productSelectors.isLoadingReadProducts);
+  const isRefreshing = useAppSelector(productSelectors.isRefreshing);
+  const isLastPage = useAppSelector(productSelectors.isLastPage);
+
   const [isFailed, setIsFailed] = React.useState<boolean>(false);
+
+  const { warnBeforeDelete, renderWarningModal } = useWarnedDelete();
 
   const _fetch = useCallback(() => {
     dispatch(
@@ -45,6 +53,27 @@ const ProductScreen: React.FC = () => {
     });
   };
 
+  const _onRefresh = () => {
+    dispatch(productSlice.actions.refresh({}));
+  };
+
+  const _onNextPage = () => {
+    dispatch(productSlice.actions.readNextPage({}));
+  };
+
+  const _renderProductItem = useCallback(
+    (params: { item: Product; index: number }) => {
+      return (
+        <ProductItem
+          product={params.item}
+          demonstrateSwipeOnStart={params.index === 0}
+          warnBeforeDelete={warnBeforeDelete}
+        />
+      );
+    },
+    [warnBeforeDelete]
+  );
+
   if (isLoading) {
     return <FullscreenLoading />;
   }
@@ -58,23 +87,24 @@ const ProductScreen: React.FC = () => {
       <FlashList
         data={products}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={renderProductItem}
-        estimatedItemSize={250}
+        renderItem={_renderProductItem}
+        estimatedItemSize={dimensions.measure(95)}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContentContainer}
+        ListHeaderComponent={ProductListHeader}
+        ListFooterComponent={isLastPage ? null : ListFooterComponent}
+        refreshing={isRefreshing}
+        onRefresh={_onRefresh}
+        onEndReached={_onNextPage}
       />
+      {renderWarningModal()}
       <FloatingAddButton onPress={_onPressAddProduct} />
     </View>
   );
 };
 
-const renderProductItem = (params: { item: Product; index: number }) => {
-  return (
-    <ProductItem
-      product={params.item}
-      demonstrateSwipeOnStart={params.index === 0}
-    />
-  );
+const ListFooterComponent = () => {
+  return <ActivityIndicator />;
 };
 
 export default ProductScreen;

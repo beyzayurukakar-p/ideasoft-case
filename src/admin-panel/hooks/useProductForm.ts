@@ -108,16 +108,6 @@ export const useProductForm = (productId?: number) => {
     }
   };
 
-  const _goBackToList = () => {
-    // Goes back to category list
-    nav.popTo('AdminPanel', {
-      screen: 'Tabs',
-      params: {
-        screen: 'Product',
-      },
-    });
-  };
-
   // Add action
   const _add = () => {
     _validate(() => {
@@ -132,7 +122,7 @@ export const useProductForm = (productId?: number) => {
             stockAmount: stockAmount as number,
             categories,
           },
-          onSuccess: _goBackToList,
+          onSuccess: nav.popToTop,
         })
       );
     });
@@ -154,7 +144,7 @@ export const useProductForm = (productId?: number) => {
             categories,
             stockTypeLabel: stockTypeLabel as StockTypeLabels,
           },
-          onSuccess: _goBackToList,
+          onSuccess: nav.popToTop,
         })
       );
     });

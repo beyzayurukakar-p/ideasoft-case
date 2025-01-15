@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../common/store';
 import { categorySelectors } from '../../states/categorySlice';
 import CategoryItem from '../category-item/CategoryItem';
 import { useWarnedDelete } from '../../hooks/useWarnedDelete';
-import { categoryListHeaderStyles as styles } from './CategoryListHeader.styles';
+import { listHeaderStyles as styles } from './listHeaderStyles';
 
 const CategoryListHeader: React.FC = () => {
   const recentlyAddedCategories = useAppSelector(categorySelectors.recentlyAddedCategories);

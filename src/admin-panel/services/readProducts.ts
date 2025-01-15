@@ -4,12 +4,16 @@ import { client } from '../../common/services/client';
 import { Product } from '../types/product';
 import { PRODUCTS_URL } from './urls';
 
+export const PAGE_LIMIT = 20;
+
 /**
  * Fetches products
  * @returns Array of products (Promise). Or throws error.
  */
-export const readProducts = async (): Promise<Product[]> => {
-  const response: AxiosResponse<ProductResponse[]> = await client.get(PRODUCTS_URL + '?limit=100');
+export const readProducts = async (params: { page: number }): Promise<Product[]> => {
+  const response: AxiosResponse<ProductResponse[]> = await client.get(
+    `${PRODUCTS_URL}?page=${params.page}&limit=${PAGE_LIMIT}`
+  );
 
   const productsResponse = response.data;
 

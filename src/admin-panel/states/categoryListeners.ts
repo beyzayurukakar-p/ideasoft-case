@@ -83,16 +83,13 @@ const addNextPageListener = (startAppListening: StartAppListening) => {
         return;
       }
 
-      // Check if it could be the last page
-      const currentCount = listenerApi.getState().category.categoryIds.length;
       const currentPage = listenerApi.getState().category.currentPage;
-      if (!currentPage || currentCount < currentPage * PAGE_LIMIT) {
-        listenerApi.dispatch(categorySlice.actions._setIsLastPage(true));
-        return;
-      }
+      const nextPage = currentPage ? currentPage + 1 : 1;
 
       // Call service
-      const [categories, error] = await tryCalling(readCategories, { page: currentPage + 1 });
+      const [categories, error] = await tryCalling(readCategories, {
+        page: nextPage,
+      });
 
       // Handle error
       if (error || !categories) {
@@ -101,7 +98,7 @@ const addNextPageListener = (startAppListening: StartAppListening) => {
       }
 
       // Set categories in state
-      listenerApi.dispatch(categorySlice.actions._addNextPage({ categories, page: 1 }));
+      listenerApi.dispatch(categorySlice.actions._addNextPage({ categories, page: nextPage }));
 
       // Check again if this is now the last page
       if (categories.length < PAGE_LIMIT) {
