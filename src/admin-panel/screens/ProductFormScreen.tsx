@@ -10,6 +10,7 @@ import Dropdown from '../../common/components/inputs/Dropdown';
 import { stockTypeLabelOptions } from '../constants/stockTypeLabels';
 import { currencyOptions } from '../constants/currencies';
 import { dimensions } from '../../common/styling/dimensions';
+import CategoryInput from '../components/category-input/CategoryInput';
 
 type ScreenProps = StaticScreenProps<{
   productId?: number;
@@ -133,6 +134,10 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
           selectedValue={currency?.toString()}
           placeholder="Para birimini seçin..."
           errorText={currencyError}
+        />
+        <CategoryInput
+          value={[]}
+          onChangeValue={() => {}}
         />
       </ScrollView>
       <FormActions
