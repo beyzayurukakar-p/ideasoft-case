@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text, TextInput, KeyboardTypeOptions } from 'react-native';
+import { View, Text, TextInput, TextInputProps, LayoutChangeEvent } from 'react-native';
 import { appTextInputStyles as styles } from './AppTextInput.styles';
 
-type AppTextInputProps = {
+type AppTextInputProps = TextInputProps & {
   label: string;
   value?: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
   errorText?: string | null;
-  keyboardType?: KeyboardTypeOptions;
+  onLayout?: (event: LayoutChangeEvent) => void;
 };
 
 const AppTextInput: React.FC<AppTextInputProps> = ({
@@ -17,17 +17,21 @@ const AppTextInput: React.FC<AppTextInputProps> = ({
   onChangeText,
   placeholder,
   errorText,
-  keyboardType,
+  onLayout,
+  ...restProps
 }) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onLayout={onLayout}
+    >
       <Text style={styles.label}>{label}</Text>
       <TextInput
         style={[styles.input, errorText ? styles.inputWithError : null]}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        keyboardType={keyboardType}
+        {...restProps}
       />
       {errorText ? <Text style={styles.errorText}>{errorText}</Text> : null}
     </View>
