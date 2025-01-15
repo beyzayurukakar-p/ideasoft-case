@@ -9,11 +9,16 @@ import { ServiceCallbacks } from '../../common/services/types';
 import { RootState } from '../../common/store/types';
 
 type CategoryState = {
-  categories?: CategoriesNormalized;
+  categoryIds: number[];
+  recentlyAddedIds: number[];
+  categoriesNormalized: CategoriesNormalized;
   loading: 'read' | 'add' | 'update' | 'delete' | null;
 };
 
 const initialState: CategoryState = {
+  categoryIds: [],
+  recentlyAddedIds: [],
+  categoriesNormalized: {},
   loading: null,
 };
 
@@ -37,25 +42,41 @@ export const categorySlice = createSlice({
     ) => {},
 
     // The next four are dispatched by listeners and update state
-    _setCategories: (state, action: PayloadAction<CategoriesNormalized>) => {
-      state.categories = action.payload;
+    _setCategories: (state, action: PayloadAction<Category[]>) => {
+      const categories = action.payload;
+      // Normalize categories to an object with id as key and value as category
+      const categoriesNormalized: CategoriesNormalized = {};
+      const categoryIdList: number[] = [];
+      categories.forEach((category) => {
+        categoriesNormalized[category.id] = category;
+        categoryIdList.push(category.id);
+      });
+      state.categoriesNormalized = categoriesNormalized;
+      state.categoryIds = categoryIdList;
     },
     _addCategory: (state, action: PayloadAction<Category>) => {
       const category = action.payload;
-      if (state.categories) {
-        state.categories[category.id] = category;
-      }
+      state.categoriesNormalized[category.id] = category;
+      state.recentlyAddedIds.push(category.id);
     },
     _deleteCategory: (state, action: PayloadAction<number>) => {
       const categoryId = action.payload;
-      if (state.categories?.[categoryId]) {
-        delete state.categories[categoryId];
+      if (state.categoriesNormalized[categoryId]) {
+        delete state.categoriesNormalized[categoryId];
+      }
+      const indexOfId = state.categoryIds.indexOf(categoryId);
+      if (indexOfId > -1) {
+        state.categoryIds.splice(indexOfId, 1);
+      }
+      const indexOfIdInRecents = state.recentlyAddedIds.indexOf(categoryId);
+      if (indexOfIdInRecents > -1) {
+        state.recentlyAddedIds.splice(indexOfIdInRecents, 1);
       }
     },
     _updateCategory: (state, action: PayloadAction<Category>) => {
       const category = action.payload;
-      if (state.categories && state.categories[category.id]) {
-        Object.assign(state.categories[category.id], category);
+      if (state.categoriesNormalized[category.id]) {
+        Object.assign(state.categoriesNormalized[category.id], category);
       }
     },
     _setLoading: (state, action: PayloadAction<CategoryState['loading']>) => {
@@ -67,17 +88,25 @@ export const categorySlice = createSlice({
 export const categorySelectors = {
   // Memoized selector to get all categories
   categories: createSelector(
-    (state: RootState) => state.category.categories,
-    (categories) => {
-      if (!categories) return undefined;
-      // Sort categories by createdAt date
-      return Object.values(categories).sort((p1, p2) => {
-        return new Date(p2.createdAt).getTime() - new Date(p1.createdAt).getTime();
+    (state: RootState) => state.category.categoryIds,
+    (state: RootState) => state.category.categoriesNormalized,
+    (idList, normalized) => {
+      return idList.map((categoryId) => {
+        return normalized[categoryId];
+      });
+    }
+  ),
+  recentlyAddedCategories: createSelector(
+    (state: RootState) => state.category.recentlyAddedIds,
+    (state: RootState) => state.category.categoriesNormalized,
+    (idList, normalized) => {
+      return idList.map((categoryId) => {
+        return normalized[categoryId];
       });
     }
   ),
   categoryById: (state: RootState, categoryId: number) => {
-    return state.category.categories ? state.category.categories[categoryId] : undefined;
+    return state.category.categoriesNormalized[categoryId];
   },
   isLoadingReadCategories: (state: RootState) => state.category.loading === 'read',
   isLoadingAddCategory: (state: RootState) => state.category.loading === 'add',

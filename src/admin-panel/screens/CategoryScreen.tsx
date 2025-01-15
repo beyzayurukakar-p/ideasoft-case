@@ -11,6 +11,7 @@ import FullscreenReload from '../../common/components/loading/FullscreenReload';
 import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 import { useNavigation } from '@react-navigation/native';
+import CategoryListHeader from '../components/category-list-header/CategoryListHeader';
 
 const CategoryScreen: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -47,7 +48,7 @@ const CategoryScreen: React.FC = () => {
     });
   };
 
-  const renderCategoryItem = useCallback(
+  const _renderCategoryItem = useCallback(
     (params: { item: Category; index: number }) => {
       return (
         <CategoryItem
@@ -73,10 +74,11 @@ const CategoryScreen: React.FC = () => {
       <FlashList
         data={categories}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={renderCategoryItem}
+        renderItem={_renderCategoryItem}
         estimatedItemSize={250}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContentContainer}
+        ListHeaderComponent={CategoryListHeader}
       />
       <FloatingAddButton onPress={_onPressAddCategory} />
       {renderWarningModal()}

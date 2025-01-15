@@ -4,7 +4,6 @@ import { addCategory } from '../services/addCategory';
 import { deleteCategory } from '../services/deleteCategory';
 import { readCategories } from '../services/readCategories';
 import { updateCategory } from '../services/updateCategory';
-import { CategoriesNormalized } from '../types/category';
 import { categorySlice } from './categorySlice';
 import { productSlice } from './productSlice';
 
@@ -20,7 +19,7 @@ const readCategoriesListener = (startAppListening: StartAppListening) => {
     actionCreator: categorySlice.actions.readCategories,
     effect: async (action, listenerApi) => {
       // Check if categories have already been fetched
-      if (listenerApi.getState().category.categories) {
+      if (listenerApi.getState().category.categoryIds.length > 0) {
         return;
       }
 
@@ -39,14 +38,8 @@ const readCategoriesListener = (startAppListening: StartAppListening) => {
         return;
       }
 
-      // Normalize categories to an object with id as key and value as category
-      const categoriesNormalized = categories.reduce((acc, category) => {
-        acc[category.id] = category;
-        return acc;
-      }, {} as CategoriesNormalized);
-
       // Set categories in state and call onSuccess callback
-      listenerApi.dispatch(categorySlice.actions._setCategories(categoriesNormalized));
+      listenerApi.dispatch(categorySlice.actions._setCategories(categories));
       action.payload.onSuccess?.(categories);
     },
   });
