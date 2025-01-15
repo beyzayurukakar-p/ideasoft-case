@@ -12,8 +12,6 @@ export const updateCategory = async (category: CategoryUpdateRequest): Promise<C
     category
   );
 
-  await mockDelay(5000);
-
   const categoryResponse = response.data;
   const convertedCategory: Category = {
     id: categoryResponse.id,
@@ -23,12 +21,4 @@ export const updateCategory = async (category: CategoryUpdateRequest): Promise<C
   };
 
   return convertedCategory;
-};
-
-export const mockDelay = async (customDuration?: number) => {
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, customDuration || 500);
-  });
 };
