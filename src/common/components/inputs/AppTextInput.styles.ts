@@ -6,12 +6,6 @@ export const appTextInputStyles = StyleSheet.create({
   container: {
     marginVertical: dimensions.measure(10),
   },
-  label: {
-    marginBottom: dimensions.measure(5),
-    fontSize: dimensions.measure(14),
-    color: COLORS.labelTextOnBackground,
-    fontWeight: '600',
-  },
   input: {
     fontSize: dimensions.measure(16),
     color: COLORS.textOnBackground,
@@ -25,12 +19,5 @@ export const appTextInputStyles = StyleSheet.create({
   },
   inputWithError: {
     borderColor: COLORS.danger,
-  },
-  errorText: {
-    fontSize: dimensions.measure(14),
-    color: COLORS.dangerTextOnBackground,
-    fontWeight: '500',
-    marginTop: dimensions.measure(3),
-    marginLeft: dimensions.measure(1),
   },
 });

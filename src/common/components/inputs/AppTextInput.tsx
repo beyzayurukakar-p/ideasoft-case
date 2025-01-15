@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, TextInput, TextInputProps, LayoutChangeEvent } from 'react-native';
+import { View, TextInput, TextInputProps, LayoutChangeEvent } from 'react-native';
 import { appTextInputStyles as styles } from './AppTextInput.styles';
+import Label from './Label';
+import ErrorText from './ErrorText';
 
 type AppTextInputProps = TextInputProps & {
   label: string;
@@ -25,7 +27,7 @@ const AppTextInput: React.FC<AppTextInputProps> = ({
       style={styles.container}
       onLayout={onLayout}
     >
-      <Text style={styles.label}>{label}</Text>
+      <Label>{label}</Label>
       <TextInput
         style={[styles.input, errorText ? styles.inputWithError : null]}
         value={value}
@@ -33,7 +35,7 @@ const AppTextInput: React.FC<AppTextInputProps> = ({
         placeholder={placeholder}
         {...restProps}
       />
-      {errorText ? <Text style={styles.errorText}>{errorText}</Text> : null}
+      {errorText ? <ErrorText>{errorText}</ErrorText> : null}
     </View>
   );
 };

@@ -6,12 +6,6 @@ export const dropdownStyles = StyleSheet.create({
   container: {
     marginVertical: dimensions.measure(10),
   },
-  label: {
-    marginBottom: dimensions.measure(5),
-    fontSize: dimensions.measure(14),
-    color: COLORS.labelTextOnBackground,
-    fontWeight: '600',
-  },
   input: {
     fontSize: dimensions.measure(16),
     color: COLORS.textOnBackground,

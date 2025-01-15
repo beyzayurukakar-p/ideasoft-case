@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, Switch } from 'react-native';
+import { View, Switch } from 'react-native';
 import { COLORS } from '../../styling/colors';
 import { appSwitchStyles as styles } from './AppSwitch.styles';
+import Label from './Label';
 
 type AppSwitchProps = {
   label: string;
@@ -12,7 +13,7 @@ type AppSwitchProps = {
 const AppSwitch: React.FC<AppSwitchProps> = ({ label, value, onValueChange }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Label style={styles.label}>{label}</Label>
       <Switch
         value={value}
         onValueChange={onValueChange}

@@ -4,6 +4,8 @@ import { dropdownStyles as styles } from './Dropdown.styles';
 import Entypo from '@expo/vector-icons/Entypo';
 import { dimensions } from '../../styling/dimensions';
 import { COLORS } from '../../styling/colors';
+import Label from './Label';
+import ErrorText from './ErrorText';
 
 type Option = { label: string; value: string };
 type DropdownProps = {
@@ -87,7 +89,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Label>{label}</Label>
       <TouchableOpacity
         style={[styles.input, errorText ? styles.inputWithError : null]}
         onPress={() => setIsVisible(true)}
@@ -96,7 +98,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           {options.find((option) => option.value === selectedValue)?.label || placeholder}
         </Text>
       </TouchableOpacity>
-      {errorText ? <Text style={styles.errorText}>{errorText}</Text> : null}
+      {errorText ? <ErrorText>{errorText}</ErrorText> : null}
       {_renderSelectionModal()}
     </View>
   );
