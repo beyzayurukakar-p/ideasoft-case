@@ -11,6 +11,7 @@ import TouchableText from '../../common/components/buttons/TouchableText';
 import TextField from '../components/detail-fields/TextField';
 import Separator from '../components/detail-fields/Separator';
 import StatusField from '../components/detail-fields/StatusField';
+import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 
 type ScreenProps = StaticScreenProps<{
   categoryId: number;
@@ -26,20 +27,32 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
   const isLoading = useAppSelector(categorySelectors.isLoadingDeleteCategory);
 
   const dispatch = useAppDispatch();
-  const nav = useNavigation();
+  const nav = useNavigation<RootStackNavigationProp>();
 
   const _onDelete = () => {
     dispatch(
       categorySlice.actions.deleteCategory({
         id: categoryId,
         onSuccess: () => {
-          nav.goBack();
+          nav.popTo('AdminPanel', {
+            screen: 'Tabs',
+            params: {
+              screen: 'Category',
+            },
+          });
         },
       })
     );
   };
 
-  const _onPressEdit = () => {};
+  const _onPressEdit = () => {
+    nav.navigate('AdminPanel', {
+      screen: 'CategoryForm',
+      params: {
+        categoryId,
+      },
+    });
+  };
 
   const { warnBeforeDelete, renderWarningModal } = useWarnedDelete(_onDelete);
 

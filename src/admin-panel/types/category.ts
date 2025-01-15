@@ -1,4 +1,4 @@
-import { WithoutIdCreatedAt } from './typeUtils';
+import { WithId, WithoutIdCreatedAt } from './typeUtils';
 
 /* For requests */
 
@@ -9,7 +9,7 @@ export type CategoryAddRequest = WithoutIdCreatedAt<CategoryResponse>;
 export type CategoryAddPayload = CategoryAddRequest;
 
 /** Category's shape in the API request body for 'update' */
-export type CategoryUpdateRequest = CategoryResponse;
+export type CategoryUpdateRequest = WithId<Partial<Omit<CategoryResponse, 'id'>>>;
 
 /** Category's shape in the redux 'update' action's payload */
 export type CategoryUpdatePayload = CategoryUpdateRequest;

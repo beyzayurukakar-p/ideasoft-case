@@ -1,8 +1,9 @@
-import { tryCalling } from '../../common/services/tryCalling';
+import { tryCalling, tryCallingWithSuccess } from '../../common/services/tryCalling';
 import { StartAppListening } from '../../common/store/types';
 import { addCategory } from '../services/addCategory';
 import { deleteCategory } from '../services/deleteCategory';
 import { readCategories } from '../services/readCategories';
+import { updateCategory } from '../services/updateCategory';
 import { CategoriesNormalized } from '../types/category';
 import { categorySlice } from './categorySlice';
 import { productSlice } from './productSlice';
@@ -11,6 +12,7 @@ export const startCategoryListeners = (startAppListening: StartAppListening) => 
   readCategoriesListener(startAppListening);
   deleteCategoryListener(startAppListening);
   addCategoryListener(startAppListening);
+  updateCategoryListener(startAppListening);
 };
 
 const readCategoriesListener = (startAppListening: StartAppListening) => {
@@ -91,7 +93,7 @@ const addCategoryListener = (startAppListening: StartAppListening) => {
       listenerApi.dispatch(categorySlice.actions._setLoading('add'));
 
       // Call service
-      const [categoryAdded, error] = await tryCalling(addCategory, category);
+      const [categoryAdded, error] = await tryCallingWithSuccess(addCategory, category);
 
       // End loading
       listenerApi.dispatch(categorySlice.actions._setLoading(null));
@@ -105,6 +107,34 @@ const addCategoryListener = (startAppListening: StartAppListening) => {
       // Update state and call onSuccess callback
       listenerApi.dispatch(categorySlice.actions._addCategory(categoryAdded));
       action.payload.onSuccess?.(categoryAdded);
+    },
+  });
+};
+
+const updateCategoryListener = (startAppListening: StartAppListening) => {
+  startAppListening({
+    actionCreator: categorySlice.actions.updateCategory,
+    effect: async (action, listenerApi) => {
+      const category = action.payload.category;
+
+      // Start loading
+      listenerApi.dispatch(categorySlice.actions._setLoading('update'));
+
+      // Call service
+      const [categoryUpdated, error] = await tryCallingWithSuccess(updateCategory, category);
+
+      // End loading
+      listenerApi.dispatch(categorySlice.actions._setLoading(null));
+
+      // Handle error
+      if (error || !categoryUpdated) {
+        action.payload.onError?.();
+        return;
+      }
+
+      // Update state and call onSuccess callback
+      listenerApi.dispatch(categorySlice.actions._updateCategory(categoryUpdated));
+      action.payload.onSuccess?.(categoryUpdated);
     },
   });
 };

@@ -4,7 +4,7 @@ import { appTextInputStyles as styles } from './AppTextInput.styles';
 
 type AppTextInputProps = {
   label: string;
-  value: string;
+  value?: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
   errorText?: string | null;

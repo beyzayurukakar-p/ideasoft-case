@@ -7,7 +7,12 @@ import { CATEGORIES_URL } from './urls';
  * Updates a category
  */
 export const updateCategory = async (category: CategoryUpdateRequest): Promise<Category> => {
-  const response: AxiosResponse<CategoryResponse> = await client.post(CATEGORIES_URL, category);
+  const response: AxiosResponse<CategoryResponse> = await client.put(
+    `${CATEGORIES_URL}/${category.id}`,
+    category
+  );
+
+  await mockDelay(5000);
 
   const categoryResponse = response.data;
   const convertedCategory: Category = {
@@ -18,4 +23,12 @@ export const updateCategory = async (category: CategoryUpdateRequest): Promise<C
   };
 
   return convertedCategory;
+};
+
+export const mockDelay = async (customDuration?: number) => {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, customDuration || 500);
+  });
 };

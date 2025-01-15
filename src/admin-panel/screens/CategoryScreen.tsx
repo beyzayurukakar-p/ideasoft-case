@@ -43,6 +43,7 @@ const CategoryScreen: React.FC = () => {
   const _onPressAddCategory = () => {
     nav.navigate('AdminPanel', {
       screen: 'CategoryForm',
+      params: {},
     });
   };
 

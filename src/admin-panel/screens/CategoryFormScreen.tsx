@@ -4,22 +4,40 @@ import AppTextInput from '../../common/components/inputs/AppTextInput';
 import { categoryFormScreenStyles as styles } from './CategoryFormScreen.styles';
 import AppSwitch from '../../common/components/inputs/AppSwitch';
 import FormActions from '../components/form-actions/FormActions';
-import { useNavigation } from '@react-navigation/native';
+import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../common/store';
 import { categorySelectors, categorySlice } from '../states/categorySlice';
+import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 
-const CategoryFormScreen: React.FC = () => {
+type ScreenProps = StaticScreenProps<{
+  categoryId?: number;
+}>;
+
+const CategoryFormScreen: React.FC<ScreenProps> = ({
+  route: {
+    params: { categoryId },
+  },
+}) => {
   const dispatch = useAppDispatch();
-  const nav = useNavigation();
+  const nav = useNavigation<RootStackNavigationProp>();
 
-  const isLoading = useAppSelector(categorySelectors.isLoadingAddCategory);
-  const [name, setName] = useState<string>('');
-  const [status, setStatus] = useState<boolean>(true);
+  const isAddLoading = useAppSelector(categorySelectors.isLoadingAddCategory);
+  const isUpdateLoading = useAppSelector(categorySelectors.isLoadingUpdateCategory);
+
+  const category = useAppSelector((state) =>
+    categoryId ? categorySelectors.categoryById(state, categoryId) : undefined
+  );
+  const formType = category ? 'update' : 'add';
+
+  const [name, setName] = useState<string | undefined>(category?.name || undefined);
+  const [status, setStatus] = useState<boolean>(
+    category?.status !== undefined ? category?.status === 1 : true
+  );
 
   const [nameValidationError, setNameValidationError] = useState<string | null>(null);
 
   const _validate = (callback: () => void) => {
-    if (name.length === 0) {
+    if (!name || name.trim().length === 0) {
       setNameValidationError('Bu alan zorunludur.');
     } else {
       callback();
@@ -28,18 +46,37 @@ const CategoryFormScreen: React.FC = () => {
 
   const _onPressAddUpdate = () => {
     _validate(() => {
-      dispatch(
-        categorySlice.actions.addCategory({
-          category: {
-            name,
-            status: status ? 1 : 0,
+      const _onSuccess = () => {
+        nav.popTo('AdminPanel', {
+          screen: 'Tabs',
+          params: {
+            screen: 'Category',
           },
-          onSuccess: () => {
-            console.log('add successful, going back');
-            nav.goBack();
-          },
-        })
-      );
+        });
+      };
+      const _formData = {
+        name: (name as string).trim(),
+        status: status ? 1 : 0,
+      };
+
+      if (formType === 'add') {
+        dispatch(
+          categorySlice.actions.addCategory({
+            category: _formData,
+            onSuccess: _onSuccess,
+          })
+        );
+      } else if (formType === 'update') {
+        dispatch(
+          categorySlice.actions.updateCategory({
+            category: {
+              ..._formData,
+              id: category?.id as number,
+            },
+            onSuccess: _onSuccess,
+          })
+        );
+      }
     });
   };
 
@@ -63,9 +100,9 @@ const CategoryFormScreen: React.FC = () => {
         onValueChange={setStatus}
       />
       <FormActions
-        actionType="add"
+        actionType={category ? 'update' : 'add'}
         onPressAction={_onPressAddUpdate}
-        isLoading={isLoading}
+        isLoading={category ? isUpdateLoading : isAddLoading}
       />
     </View>
   );
