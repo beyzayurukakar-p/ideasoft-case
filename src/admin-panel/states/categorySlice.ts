@@ -12,13 +12,16 @@ type CategoryState = {
   categoryIds: number[];
   recentlyAddedIds: number[];
   categoriesNormalized: CategoriesNormalized;
-  loading: 'read' | 'add' | 'update' | 'delete' | null;
+  currentPage?: number;
+  isLastPage: boolean;
+  loading: 'read' | 'refresh' | 'add' | 'update' | 'delete' | null;
 };
 
 const initialState: CategoryState = {
   categoryIds: [],
   recentlyAddedIds: [],
   categoriesNormalized: {},
+  isLastPage: false,
   loading: null,
 };
 
@@ -28,6 +31,8 @@ export const categorySlice = createSlice({
   reducers: {
     // The first four are dispatched by UI and trigger listeners
     readCategories: (_state, _action: PayloadAction<ServiceCallbacks<Category[]>>) => {},
+    refresh: (_state, _action: PayloadAction<ServiceCallbacks<Category[]>>) => {},
+    readNextPage: (_state, _action: PayloadAction<ServiceCallbacks<Category[]>>) => {},
     addCategory: (
       _state,
       _action: PayloadAction<ServiceCallbacks<Category> & { category: CategoryAddPayload }>
@@ -42,8 +47,14 @@ export const categorySlice = createSlice({
     ) => {},
 
     // The next four are dispatched by listeners and update state
-    _setCategories: (state, action: PayloadAction<Category[]>) => {
-      const categories = action.payload;
+    _setCategories: (
+      state,
+      action: PayloadAction<{
+        categories: Category[];
+        page: number;
+      }>
+    ) => {
+      const { categories, page } = action.payload;
       // Normalize categories to an object with id as key and value as category
       const categoriesNormalized: CategoriesNormalized = {};
       const categoryIdList: number[] = [];
@@ -53,6 +64,28 @@ export const categorySlice = createSlice({
       });
       state.categoriesNormalized = categoriesNormalized;
       state.categoryIds = categoryIdList;
+      state.currentPage = page;
+      state.recentlyAddedIds.length = 0;
+    },
+    _addNextPage: (
+      state,
+      action: PayloadAction<{
+        categories: Category[];
+        page: number;
+      }>
+    ) => {
+      const { categories, page } = action.payload;
+      // Normalize categories to an object with id as key and value as category
+      const categoriesNormalized: CategoriesNormalized = {};
+      const categoryIdList: number[] = [];
+      categories.forEach((category) => {
+        categoriesNormalized[category.id] = category;
+        categoryIdList.push(category.id);
+      });
+      Object.assign(state.categoriesNormalized, categoriesNormalized);
+      state.categoryIds.push(...categoryIdList);
+      state.currentPage = page;
+      state.recentlyAddedIds.length = 0;
     },
     _addCategory: (state, action: PayloadAction<Category>) => {
       const category = action.payload;
@@ -82,6 +115,9 @@ export const categorySlice = createSlice({
     _setLoading: (state, action: PayloadAction<CategoryState['loading']>) => {
       state.loading = action.payload;
     },
+    _setIsLastPage: (state, action: PayloadAction<boolean>) => {
+      state.isLastPage = action.payload;
+    },
   },
 });
 
@@ -108,7 +144,9 @@ export const categorySelectors = {
   categoryById: (state: RootState, categoryId: number) => {
     return state.category.categoriesNormalized[categoryId];
   },
+  isLastPage: (state: RootState) => state.category.isLastPage,
   isLoadingReadCategories: (state: RootState) => state.category.loading === 'read',
+  isLoadingRefreshCategories: (state: RootState) => state.category.loading === 'refresh',
   isLoadingAddCategory: (state: RootState) => state.category.loading === 'add',
   isLoadingDeleteCategory: (state: RootState) => state.category.loading === 'delete',
   isLoadingUpdateCategory: (state: RootState) => state.category.loading === 'update',

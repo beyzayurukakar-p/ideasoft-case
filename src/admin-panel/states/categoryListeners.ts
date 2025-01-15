@@ -2,16 +2,18 @@ import { tryCalling, tryCallingWithSuccess } from '../../common/services/tryCall
 import { StartAppListening } from '../../common/store/types';
 import { addCategory } from '../services/addCategory';
 import { deleteCategory } from '../services/deleteCategory';
-import { readCategories } from '../services/readCategories';
+import { PAGE_LIMIT, readCategories } from '../services/readCategories';
 import { updateCategory } from '../services/updateCategory';
 import { categorySlice } from './categorySlice';
 import { productSlice } from './productSlice';
 
 export const startCategoryListeners = (startAppListening: StartAppListening) => {
   readCategoriesListener(startAppListening);
+  refreshCategoriesListener(startAppListening);
   deleteCategoryListener(startAppListening);
   addCategoryListener(startAppListening);
   updateCategoryListener(startAppListening);
+  addNextPageListener(startAppListening);
 };
 
 const readCategoriesListener = (startAppListening: StartAppListening) => {
@@ -27,7 +29,7 @@ const readCategoriesListener = (startAppListening: StartAppListening) => {
       listenerApi.dispatch(categorySlice.actions._setLoading('read'));
 
       // Call service
-      const [categories, error] = await tryCalling(readCategories);
+      const [categories, error] = await tryCalling(readCategories, { page: 1 });
 
       // End loading
       listenerApi.dispatch(categorySlice.actions._setLoading(null));
@@ -39,7 +41,74 @@ const readCategoriesListener = (startAppListening: StartAppListening) => {
       }
 
       // Set categories in state and call onSuccess callback
-      listenerApi.dispatch(categorySlice.actions._setCategories(categories));
+      listenerApi.dispatch(categorySlice.actions._setCategories({ categories, page: 1 }));
+      action.payload.onSuccess?.(categories);
+    },
+  });
+};
+
+const refreshCategoriesListener = (startAppListening: StartAppListening) => {
+  startAppListening({
+    actionCreator: categorySlice.actions.refresh,
+    effect: async (action, listenerApi) => {
+      // Start loading
+      listenerApi.dispatch(categorySlice.actions._setLoading('refresh'));
+
+      // Call service
+      const [categories, error] = await tryCalling(readCategories, { page: 1 });
+
+      // End loading
+      listenerApi.dispatch(categorySlice.actions._setLoading(null));
+
+      // Handle error
+      if (error || !categories) {
+        action.payload.onError?.();
+        return;
+      }
+
+      // Set categories in state and call onSuccess callback
+      listenerApi.dispatch(categorySlice.actions._setCategories({ categories, page: 1 }));
+      listenerApi.dispatch(categorySlice.actions._setIsLastPage(false));
+      action.payload.onSuccess?.(categories);
+    },
+  });
+};
+
+const addNextPageListener = (startAppListening: StartAppListening) => {
+  startAppListening({
+    actionCreator: categorySlice.actions.readNextPage,
+    effect: async (action, listenerApi) => {
+      // Check if this is the last page
+      if (listenerApi.getState().category.isLastPage) {
+        return;
+      }
+
+      // Check if it could be the last page
+      const currentCount = listenerApi.getState().category.categoryIds.length;
+      const currentPage = listenerApi.getState().category.currentPage;
+      if (!currentPage || currentCount < currentPage * PAGE_LIMIT) {
+        listenerApi.dispatch(categorySlice.actions._setIsLastPage(true));
+        return;
+      }
+
+      // Call service
+      const [categories, error] = await tryCalling(readCategories, { page: currentPage + 1 });
+
+      // Handle error
+      if (error || !categories) {
+        action.payload.onError?.();
+        return;
+      }
+
+      // Set categories in state
+      listenerApi.dispatch(categorySlice.actions._addNextPage({ categories, page: 1 }));
+
+      // Check again if this is now the last page
+      if (categories.length < PAGE_LIMIT) {
+        listenerApi.dispatch(categorySlice.actions._setIsLastPage(true));
+      }
+
+      // Call onSuccess callback
       action.payload.onSuccess?.(categories);
     },
   });

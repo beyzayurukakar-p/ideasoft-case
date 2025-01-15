@@ -4,13 +4,16 @@ import { client } from '../../common/services/client';
 import { Category } from '../types/category';
 import { CATEGORIES_URL } from './urls';
 
+export const PAGE_LIMIT = 20;
+
 /**
  * Fetches categories
  * @returns Array of categories (Promise). Or throws error.
  */
-export const readCategories = async (): Promise<Category[]> => {
+export const readCategories = async (params: { page: number }): Promise<Category[]> => {
+  console.log('reading categories');
   const response: AxiosResponse<CategoryResponse[]> = await client.get(
-    CATEGORIES_URL + '?limit=100'
+    `${CATEGORIES_URL}?page=${params.page}&limit=${PAGE_LIMIT}`
   );
 
   const categoriesResponse = response.data;

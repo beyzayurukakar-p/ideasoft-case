@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useAppDispatch, useAppSelector } from '../../common/store';
 import { categorySelectors, categorySlice } from '../states/categorySlice';
@@ -18,6 +18,9 @@ const CategoryScreen: React.FC = () => {
   const nav = useNavigation();
   const categories = useAppSelector(categorySelectors.categories);
   const isLoading = useAppSelector(categorySelectors.isLoadingReadCategories);
+  const isRefreshing = useAppSelector(categorySelectors.isLoadingRefreshCategories);
+  const isLastPage = useAppSelector(categorySelectors.isLastPage);
+
   const [isFailed, setIsFailed] = React.useState<boolean>(false);
 
   const { warnBeforeDelete, renderWarningModal } = useWarnedDelete();
@@ -46,6 +49,14 @@ const CategoryScreen: React.FC = () => {
       screen: 'CategoryForm',
       params: {},
     });
+  };
+
+  const _onRefresh = () => {
+    dispatch(categorySlice.actions.refresh({}));
+  };
+
+  const _onNextPage = () => {
+    dispatch(categorySlice.actions.readNextPage({}));
   };
 
   const _renderCategoryItem = useCallback(
@@ -79,11 +90,19 @@ const CategoryScreen: React.FC = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContentContainer}
         ListHeaderComponent={CategoryListHeader}
+        ListFooterComponent={isLastPage ? null : ListFooterComponent}
+        refreshing={isRefreshing}
+        onRefresh={_onRefresh}
+        onEndReached={_onNextPage}
       />
       <FloatingAddButton onPress={_onPressAddCategory} />
       {renderWarningModal()}
     </View>
   );
+};
+
+const ListFooterComponent = () => {
+  return <ActivityIndicator />;
 };
 
 export default CategoryScreen;
