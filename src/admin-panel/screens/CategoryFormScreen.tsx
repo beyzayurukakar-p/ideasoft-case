@@ -4,8 +4,15 @@ import AppTextInput from '../../common/components/inputs/AppTextInput';
 import { categoryFormScreenStyles as styles } from './CategoryFormScreen.styles';
 import AppSwitch from '../../common/components/inputs/AppSwitch';
 import FormActions from '../components/form-actions/FormActions';
+import { useNavigation } from '@react-navigation/native';
+import { useAppDispatch, useAppSelector } from '../../common/store';
+import { categorySelectors, categorySlice } from '../states/categorySlice';
 
 const CategoryFormScreen: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const nav = useNavigation();
+
+  const isLoading = useAppSelector(categorySelectors.isLoadingAddCategory);
   const [name, setName] = useState<string>('');
   const [status, setStatus] = useState<boolean>(true);
 
@@ -21,7 +28,18 @@ const CategoryFormScreen: React.FC = () => {
 
   const _onPressAddUpdate = () => {
     _validate(() => {
-      console.log({ name, status });
+      dispatch(
+        categorySlice.actions.addCategory({
+          category: {
+            name,
+            status: status ? 1 : 0,
+          },
+          onSuccess: () => {
+            console.log('add successful, going back');
+            nav.goBack();
+          },
+        })
+      );
     });
   };
 
@@ -47,7 +65,7 @@ const CategoryFormScreen: React.FC = () => {
       <FormActions
         actionType="add"
         onPressAction={_onPressAddUpdate}
-        isLoading={false}
+        isLoading={isLoading}
       />
     </View>
   );
