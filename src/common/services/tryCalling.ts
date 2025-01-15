@@ -33,7 +33,7 @@ export const tryCalling = async <Args extends Array<any>, ReturnValue>(
 export const tryCallingWithSuccess = async <Args extends Array<any>, ReturnValue>(
   fn: (...args: Args) => Promise<ReturnValue>,
   ...args: Args
-) => {
+): Promise<[ReturnValue | undefined, string | undefined]> => {
   const [data, error] = await tryCalling(fn, ...args);
   if (!error && data) {
     Toast.show({
