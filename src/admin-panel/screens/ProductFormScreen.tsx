@@ -1,32 +1,34 @@
+import { StaticScreenProps } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
+import { useProductForm } from '../hooks/useProductForm';
 import AppTextInput from '../../common/components/inputs/AppTextInput';
+import FormActions from '../components/form-actions/FormActions';
 import { formScreenStyles as styles } from './formScreen.styles';
 import AppSwitch from '../../common/components/inputs/AppSwitch';
-import FormActions from '../components/form-actions/FormActions';
-import { StaticScreenProps } from '@react-navigation/native';
-import { useCategoryForm } from '../hooks/useCategoryForm';
 
 type ScreenProps = StaticScreenProps<{
-  categoryId?: number;
+  productId?: number;
 }>;
 
-const CategoryFormScreen: React.FC<ScreenProps> = ({
+const ProductFormScreen: React.FC<ScreenProps> = ({
   route: {
-    params: { categoryId },
+    params: { productId },
   },
 }) => {
   const {
     formType,
     name,
-    onChangeName,
     nameError,
+    onChangeName,
+    stockCode,
+    stockCodeError,
+    onChangeStockCode,
     status,
     onChangeStatus,
     onPressAddUpdate,
     isLoading,
-  } = useCategoryForm(categoryId);
-
+  } = useProductForm(productId);
   return (
     <View style={styles.container}>
       <AppTextInput
@@ -41,6 +43,21 @@ const CategoryFormScreen: React.FC<ScreenProps> = ({
         value={status}
         onValueChange={onChangeStatus}
       />
+      <AppTextInput
+        label="Stok kodu"
+        value={stockCode}
+        onChangeText={onChangeStockCode}
+        placeholder="Stok kodunu yazın..."
+        errorText={stockCodeError}
+      />
+      <AppTextInput
+        label="Stoktaki Miktar"
+        value={stockCode}
+        onChangeText={onChangeStockCode}
+        placeholder="Stok kodunu yazın..."
+        errorText={stockCodeError}
+        keyboardType="number-pad"
+      />
       <FormActions
         actionType={formType}
         onPressAction={onPressAddUpdate}
@@ -50,4 +67,4 @@ const CategoryFormScreen: React.FC<ScreenProps> = ({
   );
 };
 
-export default CategoryFormScreen;
+export default ProductFormScreen;

@@ -80,7 +80,7 @@ export const useCategoryForm = (categoryId?: number) => {
           category: {
             name: (name as string).trim(),
             status: status ? 1 : 0,
-            id: category?.id as number,
+            id: categoryId as number,
           },
           onSuccess: _goBackToList,
         })

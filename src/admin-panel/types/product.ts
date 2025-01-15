@@ -12,13 +12,17 @@ export type ProductAddRequest = WithoutIdCreatedAt<
 >;
 
 /** Product's shape in the redux 'add' action's payload */
-export type ProductAddPayload = ProductAddRequest;
+export type ProductAddPayload = Pick<
+  Product,
+  'name' | 'sku' | 'status' | 'stockAmount' | 'price' | 'currencyId'
+> &
+  Partial<Pick<Product, 'categories' | 'stockTypeLabel'>>;
 
 /** Product's shape in the API request body for 'update' */
 export type ProductUpdateRequest = WithId<Partial<ProductAddRequest>>;
 
 /** Product's shape in the redux 'update' action's payload */
-export type ProductUpdatePayload = ProductUpdateRequest;
+export type ProductUpdatePayload = WithId<Partial<ProductAddPayload>>;
 
 /* For responses */
 
@@ -62,6 +66,7 @@ export type Product = {
   sku: string;
   stockAmount: number;
   price: number;
+  currencyId: number;
   currencyAbbr: string;
   status: number;
   stockTypeLabel: StockTypeLabels;

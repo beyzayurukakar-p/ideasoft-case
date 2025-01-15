@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, KeyboardTypeOptions } from 'react-native';
 import { appTextInputStyles as styles } from './AppTextInput.styles';
 
 type AppTextInputProps = {
@@ -8,6 +8,7 @@ type AppTextInputProps = {
   onChangeText: (text: string) => void;
   placeholder?: string;
   errorText?: string | null;
+  keyboardType?: KeyboardTypeOptions;
 };
 
 const AppTextInput: React.FC<AppTextInputProps> = ({
@@ -16,6 +17,7 @@ const AppTextInput: React.FC<AppTextInputProps> = ({
   onChangeText,
   placeholder,
   errorText,
+  keyboardType,
 }) => {
   return (
     <View style={styles.container}>
@@ -25,6 +27,7 @@ const AppTextInput: React.FC<AppTextInputProps> = ({
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
+        keyboardType={keyboardType}
       />
       {errorText ? <Text style={styles.errorText}>{errorText}</Text> : null}
     </View>

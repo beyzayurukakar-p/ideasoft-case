@@ -8,6 +8,7 @@ import CategoryDetailScreen from '../../admin-panel/screens/CategoryDetailScreen
 import { StaticParamList } from '@react-navigation/native';
 import ProductDetailScreen from '../../admin-panel/screens/ProductDetailScreen';
 import CategoryFormScreen from '../../admin-panel/screens/CategoryFormScreen';
+import ProductFormScreen from '../../admin-panel/screens/ProductFormScreen';
 
 const tabs = createBottomTabNavigator({
   screens: {
@@ -56,6 +57,9 @@ export const adminPanelNavigator = createStackNavigator({
     },
     CategoryForm: {
       screen: CategoryFormScreen,
+    },
+    ProductForm: {
+      screen: ProductFormScreen,
     },
   },
   screenOptions: {

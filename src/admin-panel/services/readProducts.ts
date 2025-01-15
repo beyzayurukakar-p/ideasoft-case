@@ -26,6 +26,7 @@ export const readProducts = async (): Promise<Product[]> => {
       status: productRes.status,
       stockAmount: productRes.stockAmount,
       stockTypeLabel: productRes.stockTypeLabel,
+      currencyId: productRes.currency.id,
       currencyAbbr: productRes.currency.abbr,
       categories: productRes.categories,
       createdAt: productRes.createdAt,

@@ -1,5 +1,11 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product, CategoryProducts, ProductsNormalized } from '../types/product';
+import {
+  Product,
+  CategoryProducts,
+  ProductsNormalized,
+  ProductAddPayload,
+  ProductUpdatePayload,
+} from '../types/product';
 import { ServiceCallbacks } from '../../common/services/types';
 import { RootState } from '../../common/store/types';
 
@@ -19,12 +25,18 @@ export const productSlice = createSlice({
   reducers: {
     // These four are dispatched by UI and listened by listeners
     readProducts: (_state, _action: PayloadAction<ServiceCallbacks<Product[]>>) => {},
-    addProduct: () => {},
+    addProduct: (
+      _state,
+      _action: PayloadAction<ServiceCallbacks<Product> & { product: ProductAddPayload }>
+    ) => {},
     deleteProduct: (
       _state,
       _action: PayloadAction<{ id: Product['id'] } & ServiceCallbacks<void>>
     ) => {},
-    updateProduct: () => {},
+    updateProduct: (
+      _state,
+      _action: PayloadAction<ServiceCallbacks<Product> & { product: ProductUpdatePayload }>
+    ) => {},
 
     // These four are dispatched by listeners and update state
     _setProducts: (

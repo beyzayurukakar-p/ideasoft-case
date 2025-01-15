@@ -9,9 +9,12 @@ import { listScreenStyles as styles } from './listScreen.styles';
 import FullscreenLoading from '../../common/components/feedbacks/FullscreenLoading';
 import FullscreenRetry from '../../common/components/feedbacks/FullscreenRetry';
 import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 
 const ProductScreen: React.FC = () => {
   const dispatch = useAppDispatch();
+  const nav = useNavigation<RootStackNavigationProp>();
   const products = useAppSelector(productSelectors.products);
   const isLoading = useAppSelector(productSelectors.isLoadingReadProducts);
   const [isFailed, setIsFailed] = React.useState<boolean>(false);
@@ -35,7 +38,12 @@ const ProductScreen: React.FC = () => {
     _fetch();
   };
 
-  const _onPressAddProduct = () => {};
+  const _onPressAddProduct = () => {
+    nav.navigate('AdminPanel', {
+      screen: 'ProductForm',
+      params: {},
+    });
+  };
 
   if (isLoading) {
     return <FullscreenLoading />;
