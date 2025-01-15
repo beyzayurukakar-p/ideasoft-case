@@ -6,13 +6,13 @@ import { WithId, WithoutIdCreatedAt } from './typeUtils';
 export type CategoryAddRequest = WithoutIdCreatedAt<CategoryResponse>;
 
 /** Category's shape in the redux 'add' action's payload */
-export type CategoryAddPayload = CategoryAddRequest;
+export type CategoryAddPayload = Pick<Category, 'name' | 'status'>;
 
 /** Category's shape in the API request body for 'update' */
 export type CategoryUpdateRequest = WithId<Partial<Omit<CategoryResponse, 'id'>>>;
 
 /** Category's shape in the redux 'update' action's payload */
-export type CategoryUpdatePayload = CategoryUpdateRequest;
+export type CategoryUpdatePayload = WithId<Partial<Omit<Category, 'id'>>>;
 
 /* For responses */
 
