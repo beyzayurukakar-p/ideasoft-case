@@ -7,11 +7,11 @@ import { formatDateExtensive } from '../../common/utils/dateUtils';
 import DetailActions from '../components/detail-actions/DetailActions';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 import { productSelectors, productSlice } from '../states/productSlice';
-import AppButton from '../../common/components/buttons/AppButton';
 import TextField from '../components/detail-fields/TextField';
 import Separator from '../components/detail-fields/Separator';
 import StatusField from '../components/detail-fields/StatusField';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
+import CategoryPills from '../components/category-pills/CategoryPills';
 
 type ScreenProps = StaticScreenProps<{
   productId: number;
@@ -68,17 +68,10 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
 
   const _renderCategories = () => {
     return (
-      <View style={styles.categoriesContainer}>
-        {product?.categories.map((category) => (
-          <AppButton
-            key={category.id}
-            label={category.name}
-            onPress={() => _onPressCategory(category.id)}
-            appearance="outlined"
-            style={styles.categoryButton}
-          />
-        ))}
-      </View>
+      <CategoryPills
+        categories={product?.categories}
+        onPress={_onPressCategory}
+      />
     );
   };
 
