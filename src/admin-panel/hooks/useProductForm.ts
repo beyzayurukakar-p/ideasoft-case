@@ -15,14 +15,19 @@ export const useProductForm = (productId?: number) => {
     productId ? productSelectors.productById(state, productId) : undefined
   );
 
-  // States
+  // Field states
   const [name, setName] = useState<string | undefined>(product?.name || undefined);
   const [stockCode, setStockCode] = useState<string | undefined>(product?.sku || undefined);
   const [status, setStatus] = useState<boolean>(
     product?.status !== undefined ? product?.status === 1 : true
   );
+  const [stockAmount, setStockAmount] = useState<number | undefined>(
+    product?.stockAmount || undefined
+  );
+  // Error states
   const [nameError, setNameError] = useState<string | null>(null);
   const [stockCodeError, setStockCodeError] = useState<string | null>(null);
+  const [stockAmountError, setStockAmountError] = useState<string | null>(null);
 
   // Derived values
   const formType: 'update' | 'add' = productId ? 'update' : 'add';
@@ -46,11 +51,16 @@ export const useProductForm = (productId?: number) => {
       setStockCodeError('Bu alan zorunludur.');
       validated = false;
     }
+    if (!stockAmount || stockAmount < 0) {
+      setStockAmountError('Bu alan zorunludur.');
+      validated = false;
+    }
     if (validated) {
       callback();
     }
   };
 
+  // Change handlers
   const _onChangeName = (text: string) => {
     setName(text);
     setNameError(null);
@@ -58,6 +68,12 @@ export const useProductForm = (productId?: number) => {
   const _onChangeStockCode = (text: string) => {
     setStockCode(text);
     setStockCodeError(null);
+  };
+  const _onChangeStockAmount = (amount: string) => {
+    if (Number.isInteger(Number(amount))) {
+      setStockAmount(Number(amount));
+      setStockAmountError(null);
+    }
   };
 
   const _goBackToList = () => {
@@ -81,7 +97,7 @@ export const useProductForm = (productId?: number) => {
             status: status ? 1 : 0,
             price: 100,
             currencyId: 1,
-            stockAmount: 100,
+            stockAmount: stockAmount as number,
           },
           onSuccess: _goBackToList,
         })
@@ -100,7 +116,7 @@ export const useProductForm = (productId?: number) => {
             status: status ? 1 : 0,
             price: 100,
             currencyId: 1,
-            stockAmount: 100,
+            stockAmount: stockAmount as number,
             id: productId as number,
           },
           onSuccess: _goBackToList,
@@ -123,6 +139,10 @@ export const useProductForm = (productId?: number) => {
     stockCode,
     stockCodeError,
     onChangeStockCode: _onChangeStockCode,
+
+    stockAmount,
+    stockAmountError,
+    onChangeStockAmount: _onChangeStockAmount,
 
     status,
     onChangeStatus: setStatus,

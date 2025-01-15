@@ -24,6 +24,9 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
     stockCode,
     stockCodeError,
     onChangeStockCode,
+    stockAmount,
+    stockAmountError,
+    onChangeStockAmount,
     status,
     onChangeStatus,
     onPressAddUpdate,
@@ -35,7 +38,7 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
         label="İsim"
         value={name}
         onChangeText={onChangeName}
-        placeholder="Kategorinin ismini yazın..."
+        placeholder="Ürünün ismini yazın..."
         errorText={nameError}
       />
       <AppSwitch
@@ -47,15 +50,15 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
         label="Stok kodu"
         value={stockCode}
         onChangeText={onChangeStockCode}
-        placeholder="Stok kodunu yazın..."
+        placeholder="Ürünün stok kodunu yazın..."
         errorText={stockCodeError}
       />
       <AppTextInput
         label="Stoktaki Miktar"
-        value={stockCode}
-        onChangeText={onChangeStockCode}
-        placeholder="Stok kodunu yazın..."
-        errorText={stockCodeError}
+        value={stockAmount?.toString()}
+        onChangeText={onChangeStockAmount}
+        placeholder="Stoktaki ürün miktarını yazın..."
+        errorText={stockAmountError}
         keyboardType="number-pad"
       />
       <FormActions
