@@ -5,14 +5,14 @@ import AppButton from '../../../common/components/buttons/AppButton';
 import { categoryPillsStyles as styles } from './CategoryPills.styles';
 
 type CategoryPillsProps = {
-  categories: Category[];
+  categories?: Category[];
   onPress?: (id: number) => void;
 };
 
 const CategoryPills: React.FC<CategoryPillsProps> = ({ categories, onPress }) => {
   return (
     <View style={styles.categoriesContainer}>
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <AppButton
           key={category.id}
           label={category.name}

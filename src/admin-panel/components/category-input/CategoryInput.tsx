@@ -10,7 +10,7 @@ import CategoryPills from '../category-pills/CategoryPills';
 import CategorySearch from './CategorySearch';
 
 type CategoryInputProps = {
-  value: Category[];
+  value?: Category[];
   onChangeValue: (value: Category[]) => void;
 };
 
@@ -20,7 +20,7 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) =
   const _onPressPill = (id: number) => {
     // Removes category
     const copyValue: Category[] = [];
-    value.forEach((category) => {
+    value?.forEach((category) => {
       if (category.id === id) {
         return;
       }
@@ -35,9 +35,11 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) =
     (selectedCategory: Category) => {
       setIsModalVisible(false);
       // Add category, if not already included
-      const foundCategoryIndex = value.findIndex((category) => category.id === selectedCategory.id);
-      if (foundCategoryIndex < 0) {
-        const copyValue = [...value, selectedCategory];
+      const foundCategoryIndex = value?.findIndex(
+        (category) => category.id === selectedCategory.id
+      );
+      if (foundCategoryIndex === undefined || foundCategoryIndex < 0) {
+        const copyValue = [...(value || []), selectedCategory];
         onChangeValue(copyValue);
       }
     },

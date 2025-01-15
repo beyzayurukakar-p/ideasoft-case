@@ -4,6 +4,7 @@ import { productSelectors, productSlice } from '../states/productSlice';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 import { Category } from '../types/category';
+import { StockTypeLabels } from '../constants/stockTypeLabels';
 
 export const useProductForm = (productId?: number) => {
   const dispatch = useAppDispatch();
@@ -32,7 +33,9 @@ export const useProductForm = (productId?: number) => {
   const [currency, setCurrency] = useState<number | string | undefined>(
     product?.currencyId || undefined
   );
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[] | undefined>(
+    product?.categories || undefined
+  );
   // Error states
   const [nameError, setNameError] = useState<string | null>(null);
   const [stockCodeError, setStockCodeError] = useState<string | null>(null);
@@ -127,6 +130,7 @@ export const useProductForm = (productId?: number) => {
             price: price as number,
             currencyId: currency as number,
             stockAmount: stockAmount as number,
+            categories,
           },
           onSuccess: _goBackToList,
         })
@@ -147,6 +151,8 @@ export const useProductForm = (productId?: number) => {
             currencyId: currency as number,
             stockAmount: stockAmount as number,
             id: productId as number,
+            categories,
+            stockTypeLabel: stockTypeLabel as StockTypeLabels,
           },
           onSuccess: _goBackToList,
         })
