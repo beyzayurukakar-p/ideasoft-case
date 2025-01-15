@@ -4,15 +4,15 @@ import { COLORS } from '../../styling/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { dimensions } from '../../styling/dimensions';
 
-type FullscreenReloadProps = {
-  onPressReload: () => void;
+type FullscreenRetryProps = {
+  onPressRetry: () => void;
 };
 
-const FullscreenReload: React.FC<FullscreenReloadProps> = ({ onPressReload }) => {
+const FullscreenRetry: React.FC<FullscreenRetryProps> = ({ onPressRetry }) => {
   return (
     <View style={styles.loadingContainer}>
       <TouchableOpacity
-        onPress={onPressReload}
+        onPress={onPressRetry}
         style={styles.touchableContainer}
         activeOpacity={0.5}
       >
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FullscreenReload;
+export default FullscreenRetry;

@@ -6,8 +6,8 @@ import { categorySelectors, categorySlice } from '../states/categorySlice';
 import { Category } from '../types/category';
 import CategoryItem from '../components/category-item/CategoryItem';
 import { listScreenStyles as styles } from './listScreen.styles';
-import FullscreenLoading from '../../common/components/loading/FullscreenLoading';
-import FullscreenReload from '../../common/components/loading/FullscreenReload';
+import FullscreenLoading from '../../common/components/feedbacks/FullscreenLoading';
+import FullscreenRetry from '../../common/components/feedbacks/FullscreenRetry';
 import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 import { useNavigation } from '@react-navigation/native';
@@ -39,7 +39,7 @@ const CategoryScreen: React.FC = () => {
     _fetch();
   }, [_fetch]);
 
-  const _reload = () => {
+  const _retry = () => {
     setIsFailed(false);
     _fetch();
   };
@@ -77,7 +77,7 @@ const CategoryScreen: React.FC = () => {
   }
 
   if (isFailed) {
-    return <FullscreenReload onPressReload={_reload} />;
+    return <FullscreenRetry onPressRetry={_retry} />;
   }
 
   return (

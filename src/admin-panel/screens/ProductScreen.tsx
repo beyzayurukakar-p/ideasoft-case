@@ -6,8 +6,8 @@ import { productSelectors, productSlice } from '../states/productSlice';
 import { Product } from '../types/product';
 import ProductItem from '../components/product-item/ProductItem';
 import { listScreenStyles as styles } from './listScreen.styles';
-import FullscreenLoading from '../../common/components/loading/FullscreenLoading';
-import FullscreenReload from '../../common/components/loading/FullscreenReload';
+import FullscreenLoading from '../../common/components/feedbacks/FullscreenLoading';
+import FullscreenRetry from '../../common/components/feedbacks/FullscreenRetry';
 import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
 
 const ProductScreen: React.FC = () => {
@@ -30,7 +30,7 @@ const ProductScreen: React.FC = () => {
     _fetch();
   }, [_fetch]);
 
-  const _reload = () => {
+  const _retry = () => {
     setIsFailed(false);
     _fetch();
   };
@@ -42,7 +42,7 @@ const ProductScreen: React.FC = () => {
   }
 
   if (isFailed) {
-    return <FullscreenReload onPressReload={_reload} />;
+    return <FullscreenRetry onPressRetry={_retry} />;
   }
 
   return (
