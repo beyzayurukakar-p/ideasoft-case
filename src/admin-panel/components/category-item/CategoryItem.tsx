@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Category } from '../../types/category';
-import { useDispatch } from 'react-redux';
 import { categorySlice } from '../../states/categorySlice';
 import { categoryItemStyles as styles } from './CategoryItem.styles';
 import SwipeableWithDelete from '../../../common/components/swipeable/SwipeableWithDelete';
 import { COLORS } from '../../../common/styling/colors';
 import { useNavigation } from '@react-navigation/native';
+import { useAppDispatch } from '../../../common/store';
 
 type CategoryItemProps = {
   category: Category;
@@ -21,7 +21,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
 }) => {
   const { id, name, status } = category;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const nav = useNavigation();
   const [disabled, setDisabled] = useState<boolean>(false);
 

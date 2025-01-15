@@ -4,10 +4,10 @@ import { Product } from '../../types/product';
 import { productItemStyles as styles } from './ProductItem.styles';
 import { COLORS } from '../../../common/styling/colors';
 import { IMAGES } from '../../../common/assets';
-import { useDispatch } from 'react-redux';
 import { productSlice } from '../../states/productSlice';
 import SwipeableWithDelete from '../../../common/components/swipeable/SwipeableWithDelete';
 import { useNavigation } from '@react-navigation/native';
+import { useAppDispatch } from '../../../common/store';
 
 type ProductItemProps = {
   product: Product;
@@ -21,7 +21,7 @@ type ProductItemProps = {
 const ProductItem: React.FC<ProductItemProps> = ({ product, demonstrateSwipeOnStart }) => {
   const { id, name, price, sku, currencyAbbr, status, imageThumbUrl } = product;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const nav = useNavigation();
   const [disabled, setDisabled] = useState<boolean>(false);
 
