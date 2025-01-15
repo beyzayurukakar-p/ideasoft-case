@@ -32,8 +32,10 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
     status,
     onChangeStatus,
     stockTypeLabel,
-    stockTypeLabelError,
     onChangeStockTypeLabel,
+    price,
+    priceError,
+    onChangePrice,
     onPressAddUpdate,
     isLoading,
   } = useProductForm(productId);
@@ -71,8 +73,15 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
         options={stockTypeLabelOptions}
         onValueChange={onChangeStockTypeLabel}
         selectedValue={stockTypeLabel}
-        errorText={stockTypeLabelError}
         placeholder="Bir stok tipi seçin..."
+      />
+      <AppTextInput
+        label="Fiyat"
+        value={price?.toString()}
+        onChangeText={onChangePrice}
+        placeholder="Ürünün fiyatını yazın..."
+        errorText={priceError}
+        keyboardType="numeric"
       />
       <FormActions
         actionType={formType}

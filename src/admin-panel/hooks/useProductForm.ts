@@ -27,11 +27,12 @@ export const useProductForm = (productId?: number) => {
   const [stockTypeLabel, setStockTypeLabel] = useState<string | undefined>(
     product?.stockTypeLabel || undefined
   );
+  const [price, setPrice] = useState<number | undefined>(product?.price || undefined);
   // Error states
   const [nameError, setNameError] = useState<string | null>(null);
   const [stockCodeError, setStockCodeError] = useState<string | null>(null);
   const [stockAmountError, setStockAmountError] = useState<string | null>(null);
-  const [stockTypeLabelError, setStockTypeLabelError] = useState<string | null>(null);
+  const [priceError, setPriceError] = useState<string | null>(null);
 
   // Derived values
   const formType: 'update' | 'add' = productId ? 'update' : 'add';
@@ -59,8 +60,8 @@ export const useProductForm = (productId?: number) => {
       setStockAmountError('Bu alan zorunludur.');
       validated = false;
     }
-    if (!stockTypeLabel) {
-      setStockTypeLabelError('Bu alan zorunludur.');
+    if (!price || price < 0) {
+      setPriceError('Bu alan zorunludur.');
       validated = false;
     }
     if (validated) {
@@ -83,6 +84,12 @@ export const useProductForm = (productId?: number) => {
       setStockAmountError(null);
     }
   };
+  const _onChangePrice = (value: string) => {
+    if (Number.isInteger(Number(value))) {
+      setPrice(Number(value));
+      setPriceError(null);
+    }
+  };
 
   const _goBackToList = () => {
     // Goes back to category list
@@ -103,7 +110,7 @@ export const useProductForm = (productId?: number) => {
             name: (name as string).trim(),
             sku: (stockCode as string).trim(),
             status: status ? 1 : 0,
-            price: 100,
+            price: price as number,
             currencyId: 1,
             stockAmount: stockAmount as number,
           },
@@ -122,7 +129,7 @@ export const useProductForm = (productId?: number) => {
             name: (name as string).trim(),
             sku: (stockCode as string).trim(),
             status: status ? 1 : 0,
-            price: 100,
+            price: price as number,
             currencyId: 1,
             stockAmount: stockAmount as number,
             id: productId as number,
@@ -156,8 +163,11 @@ export const useProductForm = (productId?: number) => {
     onChangeStatus: setStatus,
 
     stockTypeLabel,
-    stockTypeLabelError,
     onChangeStockTypeLabel: setStockTypeLabel,
+
+    price,
+    priceError,
+    onChangePrice: _onChangePrice,
 
     isLoading,
     onPressAddUpdate: _onPressAddUpdate,
