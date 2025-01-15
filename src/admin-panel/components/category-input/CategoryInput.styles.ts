@@ -35,7 +35,7 @@ export const categoryInputStyles = StyleSheet.create({
     paddingHorizontal: dimensions.pageMargin * 2,
     borderWidth: dimensions.measure(2),
     borderColor: COLORS.border,
-    borderTopLeftRadius: dimensions.measure(10),
-    borderTopRightRadius: dimensions.measure(10),
+    borderTopLeftRadius: dimensions.measure(20),
+    borderTopRightRadius: dimensions.measure(20),
   },
 });

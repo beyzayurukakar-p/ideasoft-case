@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Modal, TouchableOpacity, View } from 'react-native';
 import { Category } from '../../types/category';
 import { categoryInputStyles as styles } from './CategoryInput.styles';
@@ -7,6 +7,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { dimensions } from '../../../common/styling/dimensions';
 import { COLORS } from '../../../common/styling/colors';
 import CategoryPills from '../category-pills/CategoryPills';
+import CategorySearch from './CategorySearch';
 
 type CategoryInputProps = {
   value: Category[];
@@ -29,6 +30,19 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) =
 
     onChangeValue(copyValue);
   };
+
+  const _onSelectCategory = useCallback(
+    (selectedCategory: Category) => {
+      setIsModalVisible(false);
+      // Add category, if not already included
+      const foundCategoryIndex = value.findIndex((category) => category.id === selectedCategory.id);
+      if (foundCategoryIndex < 0) {
+        const copyValue = [...value, selectedCategory];
+        onChangeValue(copyValue);
+      }
+    },
+    [value, onChangeValue]
+  );
 
   return (
     <View style={styles.container}>
@@ -61,7 +75,9 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) =
           activeOpacity={1}
           style={styles.modalContainer}
         >
-          <View style={styles.modalContent} />
+          <View style={styles.modalContent}>
+            <CategorySearch onSelectCategory={_onSelectCategory} />
+          </View>
         </TouchableOpacity>
       </Modal>
     </View>

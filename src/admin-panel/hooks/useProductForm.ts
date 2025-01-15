@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../common/store';
 import { productSelectors, productSlice } from '../states/productSlice';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
+import { Category } from '../types/category';
 
 export const useProductForm = (productId?: number) => {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ export const useProductForm = (productId?: number) => {
   const [currency, setCurrency] = useState<number | string | undefined>(
     product?.currencyId || undefined
   );
+  const [categories, setCategories] = useState<Category[]>([]);
   // Error states
   const [nameError, setNameError] = useState<string | null>(null);
   const [stockCodeError, setStockCodeError] = useState<string | null>(null);
@@ -87,15 +89,19 @@ export const useProductForm = (productId?: number) => {
     setStockCodeError(null);
   };
   const _onChangeStockAmount = (amount: string) => {
-    if (Number.isInteger(Number(amount))) {
+    setStockAmountError(null);
+    if (amount.trim().length === 0) {
+      setStockAmount(undefined);
+    } else if (Number.isInteger(Number(amount))) {
       setStockAmount(Number(amount));
-      setStockAmountError(null);
     }
   };
   const _onChangePrice = (value: string) => {
-    if (Number.isInteger(Number(value))) {
+    setPriceError(null);
+    if (value.trim().length === 0) {
+      setPrice(undefined);
+    } else if (Number.isInteger(Number(value))) {
       setPrice(Number(value));
-      setPriceError(null);
     }
   };
 
@@ -180,6 +186,9 @@ export const useProductForm = (productId?: number) => {
     currency,
     currencyError,
     onChangeCurrency: setCurrency,
+
+    categories,
+    onChangeCategories: setCategories,
 
     isLoading,
     onPressAddUpdate: _onPressAddUpdate,

@@ -9,7 +9,7 @@ import DetailActions from '../components/detail-actions/DetailActions';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 import TouchableText from '../../common/components/buttons/TouchableText';
 import TextField from '../components/detail-fields/TextField';
-import Separator from '../components/detail-fields/Separator';
+import Separator from '../../common/components/separator/Separator';
 import StatusField from '../components/detail-fields/StatusField';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 

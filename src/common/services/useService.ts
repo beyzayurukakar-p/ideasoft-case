@@ -55,9 +55,15 @@ export const useService = <RF extends RequesterFunction>(requesterFunc: RF) => {
     [requesterFunc]
   );
 
+  const reset = useCallback(() => {
+    setData(null);
+    setLoading(false);
+  }, []);
+
   return {
     loading,
     data,
     request,
+    reset,
   };
 };

@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, ViewStyle } from 'react-native';
 import { COLORS } from '../../styling/colors';
 
-const FullscreenLoading: React.FC = () => {
+type FullscreenLoadingProps = { style?: ViewStyle };
+
+const FullscreenLoading: React.FC<FullscreenLoadingProps> = ({ style }) => {
   return (
-    <View style={styles.loadingContainer}>
+    <View style={[styles.loadingContainer, style]}>
       <ActivityIndicator
         size="large"
         color={COLORS.primary}

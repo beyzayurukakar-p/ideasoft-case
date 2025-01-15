@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { detailFieldsStyles as styles } from './detailFields.styles';
+import { separatorStyles as styles } from './Separator.styles';
 
 const Separator: React.FC = () => {
   return <View style={styles.separator} />;

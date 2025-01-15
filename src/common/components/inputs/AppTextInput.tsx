@@ -5,7 +5,7 @@ import Label from './Label';
 import ErrorText from './ErrorText';
 
 type AppTextInputProps = TextInputProps & {
-  label: string;
+  label?: string;
   value?: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
@@ -27,7 +27,7 @@ const AppTextInput: React.FC<AppTextInputProps> = ({
       style={styles.container}
       onLayout={onLayout}
     >
-      <Label>{label}</Label>
+      {label ? <Label>{label}</Label> : null}
       <TextInput
         style={[styles.input, errorText ? styles.inputWithError : null]}
         value={value}

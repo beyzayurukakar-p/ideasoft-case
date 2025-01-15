@@ -1,6 +1,6 @@
 import { StaticScreenProps } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
-import { Keyboard, ScrollView, TouchableOpacity, LayoutChangeEvent } from 'react-native';
+import { ScrollView, View, LayoutChangeEvent } from 'react-native';
 import { useProductForm } from '../hooks/useProductForm';
 import AppTextInput from '../../common/components/inputs/AppTextInput';
 import FormActions from '../components/form-actions/FormActions';
@@ -42,6 +42,8 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
     currency,
     currencyError,
     onChangeCurrency,
+    categories,
+    onChangeCategories,
     onPressAddUpdate,
     isLoading,
   } = useProductForm(productId);
@@ -67,11 +69,7 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
   };
 
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={Keyboard.dismiss}
-      activeOpacity={1}
-    >
+    <View style={styles.container}>
       <ScrollView
         ref={scrollRef}
         contentContainerStyle={styles.scrollContentContainer}
@@ -136,8 +134,8 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
           errorText={currencyError}
         />
         <CategoryInput
-          value={[]}
-          onChangeValue={() => {}}
+          value={categories}
+          onChangeValue={onChangeCategories}
         />
       </ScrollView>
       <FormActions
@@ -145,7 +143,7 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
         onPressAction={onPressAddUpdate}
         isLoading={isLoading}
       />
-    </TouchableOpacity>
+    </View>
   );
 };
 

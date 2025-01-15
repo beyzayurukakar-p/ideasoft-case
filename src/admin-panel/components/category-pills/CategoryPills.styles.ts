@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { dimensions } from '../../../common/styling/dimensions';
+import { COLORS } from '../../../common/styling/colors';
 
 export const categoryPillsStyles = StyleSheet.create({
   categoriesContainer: {
@@ -9,5 +10,6 @@ export const categoryPillsStyles = StyleSheet.create({
   },
   categoryButton: {
     height: dimensions.measure(30),
+    backgroundColor: COLORS.elevated,
   },
 });
