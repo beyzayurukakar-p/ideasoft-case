@@ -11,6 +11,7 @@ import AppButton from '../../common/components/buttons/AppButton';
 import TextField from '../components/detail-fields/TextField';
 import Separator from '../components/detail-fields/Separator';
 import StatusField from '../components/detail-fields/StatusField';
+import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 
 type ScreenProps = StaticScreenProps<{
   productId: number;
@@ -26,7 +27,7 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
   const isLoading = useAppSelector(productSelectors.isLoadingDeleteProduct);
 
   const dispatch = useAppDispatch();
-  const nav = useNavigation();
+  const nav = useNavigation<RootStackNavigationProp>();
 
   const hasCategories = product?.categories !== undefined && product.categories.length > 0;
 
@@ -38,7 +39,12 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
         productSlice.actions.deleteProduct({
           id: productId,
           onSuccess: () => {
-            nav.goBack();
+            nav.popTo('AdminPanel', {
+              screen: 'Tabs',
+              params: {
+                screen: 'Product',
+              },
+            });
           },
         })
       );
