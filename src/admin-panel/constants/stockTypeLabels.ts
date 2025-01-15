@@ -11,4 +11,9 @@ export const STOCK_TYPE_LABELS = {
   pair: 'pair',
 };
 
+export const stockTypeLabelOptions = Object.keys(STOCK_TYPE_LABELS).map((key) => ({
+  value: key,
+  label: key,
+}));
+
 export type StockTypeLabels = keyof typeof STOCK_TYPE_LABELS;

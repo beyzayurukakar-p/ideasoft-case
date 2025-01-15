@@ -24,10 +24,14 @@ export const useProductForm = (productId?: number) => {
   const [stockAmount, setStockAmount] = useState<number | undefined>(
     product?.stockAmount || undefined
   );
+  const [stockTypeLabel, setStockTypeLabel] = useState<string | undefined>(
+    product?.stockTypeLabel || undefined
+  );
   // Error states
   const [nameError, setNameError] = useState<string | null>(null);
   const [stockCodeError, setStockCodeError] = useState<string | null>(null);
   const [stockAmountError, setStockAmountError] = useState<string | null>(null);
+  const [stockTypeLabelError, setStockTypeLabelError] = useState<string | null>(null);
 
   // Derived values
   const formType: 'update' | 'add' = productId ? 'update' : 'add';
@@ -53,6 +57,10 @@ export const useProductForm = (productId?: number) => {
     }
     if (!stockAmount || stockAmount < 0) {
       setStockAmountError('Bu alan zorunludur.');
+      validated = false;
+    }
+    if (!stockTypeLabel) {
+      setStockTypeLabelError('Bu alan zorunludur.');
       validated = false;
     }
     if (validated) {
@@ -146,6 +154,10 @@ export const useProductForm = (productId?: number) => {
 
     status,
     onChangeStatus: setStatus,
+
+    stockTypeLabel,
+    stockTypeLabelError,
+    onChangeStockTypeLabel: setStockTypeLabel,
 
     isLoading,
     onPressAddUpdate: _onPressAddUpdate,

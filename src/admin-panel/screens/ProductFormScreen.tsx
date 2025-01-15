@@ -6,6 +6,8 @@ import AppTextInput from '../../common/components/inputs/AppTextInput';
 import FormActions from '../components/form-actions/FormActions';
 import { formScreenStyles as styles } from './formScreen.styles';
 import AppSwitch from '../../common/components/inputs/AppSwitch';
+import Dropdown from '../../common/components/inputs/Dropdown';
+import { stockTypeLabelOptions } from '../constants/stockTypeLabels';
 
 type ScreenProps = StaticScreenProps<{
   productId?: number;
@@ -29,6 +31,9 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
     onChangeStockAmount,
     status,
     onChangeStatus,
+    stockTypeLabel,
+    stockTypeLabelError,
+    onChangeStockTypeLabel,
     onPressAddUpdate,
     isLoading,
   } = useProductForm(productId);
@@ -60,6 +65,14 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
         placeholder="Stoktaki ürün miktarını yazın..."
         errorText={stockAmountError}
         keyboardType="number-pad"
+      />
+      <Dropdown
+        label="Stok Tipi"
+        options={stockTypeLabelOptions}
+        onValueChange={onChangeStockTypeLabel}
+        selectedValue={stockTypeLabel}
+        errorText={stockTypeLabelError}
+        placeholder="Bir stok tipi seçin..."
       />
       <FormActions
         actionType={formType}
