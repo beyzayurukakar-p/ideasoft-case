@@ -3,6 +3,7 @@ import { ProductResponse } from '../types/product';
 import { client } from '../../common/services/client';
 import { Product } from '../types/product';
 import { PRODUCTS_URL } from './urls';
+import { getImageUrl } from './getImageUrl';
 
 export const PAGE_LIMIT = 20;
 
@@ -23,8 +24,12 @@ export const readProducts = async (params: { page: number }): Promise<Product[]>
       id: productRes.id,
       name: productRes.name,
       fullName: productRes.fullName,
-      imageThumbUrl: productRes.images[0]?.thumbUrl,
-      imageOriginalUrl: productRes.images[0]?.originalUrl,
+      images: productRes.images.map((image) => ({
+        id: image.id,
+        filename: image.filename,
+        extension: image.extension,
+        url: getImageUrl(image),
+      })),
       sku: productRes.sku,
       price: productRes.price1,
       status: productRes.status,

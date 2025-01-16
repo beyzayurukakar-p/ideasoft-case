@@ -1,6 +1,6 @@
 import { StockTypeLabels } from '../constants/stockTypeLabels';
 import { Category, CategoryResponse } from './category';
-import { WithId, WithoutIdCreatedAt } from './typeUtils';
+import { WithId } from './typeUtils';
 
 /* For requests */
 
@@ -10,23 +10,32 @@ export type ProductAddRequest = Pick<
   'name' | 'price1' | 'sku' | 'status' | 'stockAmount'
 > &
   Partial<Pick<ProductResponse, 'categories' | 'stockTypeLabel'>> & {
-    images?: Array<WithoutIdCreatedAt<ImageResponse & { attachment?: string }>>;
-  } & {
     currency: WithId<Partial<CurrencyResponse>>;
-  };
+  } & { images?: ProductImageRequest[] };
 
 /** Product's shape in the redux 'add' action's payload */
 export type ProductAddPayload = Pick<
   Product,
   'name' | 'sku' | 'status' | 'stockAmount' | 'price' | 'currencyId'
 > &
-  Partial<Pick<Product, 'categories' | 'stockTypeLabel'>>;
+  Partial<Pick<Product, 'categories' | 'stockTypeLabel'>> & { images?: ProductImageRequest[] };
 
 /** Product's shape in the API request body for 'update' */
-export type ProductUpdateRequest = WithId<Partial<ProductAddRequest>>;
+export type ProductUpdateRequest = WithId<
+  Partial<ProductAddRequest & { images: WithId<ProductImageRequest>[] }>
+>;
 
 /** Product's shape in the redux 'update' action's payload */
-export type ProductUpdatePayload = WithId<Partial<ProductAddPayload>>;
+export type ProductUpdatePayload = WithId<
+  Partial<ProductAddPayload & { images: WithId<ProductImageRequest>[] }>
+>;
+
+export type ProductImageRequest = {
+  filename: string;
+  extension: string;
+  sortOrder: number;
+  attachment: string; // base64
+};
 
 /* For responses */
 
@@ -41,7 +50,7 @@ export type ProductResponse = {
   currency: CurrencyResponse;
   status: number; // 1: Active, 0: Inactive
   stockTypeLabel: StockTypeLabels;
-  images: ImageResponse[];
+  images: ProductImageResponse[];
   categories: CategoryResponse[];
   createdAt: string;
 };
@@ -54,8 +63,10 @@ export type CurrencyResponse = {
 };
 
 /** Image's shape in the API response */
-export type ImageResponse = {
+export type ProductImageResponse = {
   id: number;
+  filename: string;
+  extension: string;
   thumbUrl: string;
   originalUrl: string;
 };
@@ -74,11 +85,17 @@ export type Product = {
   currencyAbbr: string;
   status: number;
   stockTypeLabel: StockTypeLabels;
-  imageThumbUrl: string;
-  imageOriginalUrl: string;
+  images: ProductImage[];
   categories: Category[];
   createdAt: string;
   deleted?: boolean;
+};
+
+export type ProductImage = {
+  id: number;
+  filename: string;
+  extension: string;
+  url: string;
 };
 
 export type ProductsNormalized = Record<number, Product>;

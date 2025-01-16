@@ -1,6 +1,6 @@
 import Axios, { AxiosInstance } from 'axios';
 
-const BASE_URL = 'https://testcase.myideasoft.com/';
+export const BASE_URL = 'https://testcase.myideasoft.com/';
 
 // TODO: This should be stored in .env file
 const TOKEN = 'AX5FTZ7UBAABUDT6XYYPW7LX';

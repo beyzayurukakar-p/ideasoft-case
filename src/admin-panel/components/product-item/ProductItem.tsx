@@ -24,7 +24,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
   demonstrateSwipeOnStart,
   warnBeforeDelete,
 }) => {
-  const { id, name, price, sku, currencyAbbr, status, imageThumbUrl } = product;
+  const { id, name, price, sku, currencyAbbr, status, images } = product;
 
   const dispatch = useAppDispatch();
   const nav = useNavigation();
@@ -52,7 +52,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
       },
     });
   };
-
   return (
     <View style={disabled ? styles.disabledContainer : null}>
       <SwipeableWithDelete
@@ -69,7 +68,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           {/* image */}
           <View style={styles.imageContainer}>
             <Image
-              source={imageThumbUrl ? { uri: imageThumbUrl } : IMAGES.nopic_image()}
+              source={images.length > 0 ? { uri: images[0].url } : IMAGES.nopic_image()}
               style={styles.image}
             />
           </View>

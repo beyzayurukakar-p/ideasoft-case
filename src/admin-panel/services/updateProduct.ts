@@ -7,6 +7,7 @@ import {
   ProductUpdateRequest,
 } from '../types/product';
 import { PRODUCTS_URL } from './urls';
+import { getImageUrl } from './getImageUrl';
 
 /**
  * Updates a product
@@ -35,8 +36,12 @@ export const updateProduct = async (product: ProductUpdatePayload): Promise<Prod
     id: productRes.id,
     name: productRes.name,
     fullName: productRes.fullName,
-    imageThumbUrl: productRes.images[0]?.thumbUrl,
-    imageOriginalUrl: productRes.images[0]?.originalUrl,
+    images: productRes.images.map((image) => ({
+      id: image.id,
+      filename: image.filename,
+      extension: image.extension,
+      url: getImageUrl(image),
+    })),
     sku: productRes.sku,
     price: productRes.price1,
     status: productRes.status,

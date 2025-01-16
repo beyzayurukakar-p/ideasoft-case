@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import { client } from '../../common/services/client';
 import { PRODUCTS_URL } from './urls';
 import { Product, ProductAddPayload, ProductAddRequest, ProductResponse } from '../types/product';
+import { getImageUrl } from './getImageUrl';
 
 /**
  * Adds a product
@@ -26,8 +27,12 @@ export const addProduct = async (product: ProductAddPayload): Promise<Product> =
     id: productRes.id,
     name: productRes.name,
     fullName: productRes.fullName,
-    imageThumbUrl: productRes.images[0]?.thumbUrl,
-    imageOriginalUrl: productRes.images[0]?.originalUrl,
+    images: productRes.images.map((image) => ({
+      id: image.id,
+      filename: image.filename,
+      extension: image.extension,
+      url: getImageUrl(image),
+    })),
     sku: productRes.sku,
     price: productRes.price1,
     status: productRes.status,
