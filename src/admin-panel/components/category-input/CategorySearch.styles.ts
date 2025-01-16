@@ -6,6 +6,14 @@ export const categorySearchStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  closeIconContainer: {
+    position: 'absolute',
+    top: 0,
+    right: -dimensions.measure(15),
+  },
+  input: {
+    marginTop: dimensions.measure(40),
+  },
   list: {
     flex: 1,
     marginTop: dimensions.measure(15),

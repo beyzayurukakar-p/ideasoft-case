@@ -107,6 +107,10 @@ export const useProductForm = (productId?: number) => {
       setPrice(Number(value));
     }
   };
+  const _onChangeCurrency = (value: string | number) => {
+    setCurrency(value);
+    setCurrencyError(null);
+  };
 
   // Add action
   const _add = () => {
@@ -181,7 +185,7 @@ export const useProductForm = (productId?: number) => {
 
     currency,
     currencyError,
-    onChangeCurrency: setCurrency,
+    onChangeCurrency: _onChangeCurrency,
 
     categories,
     onChangeCategories: setCategories,

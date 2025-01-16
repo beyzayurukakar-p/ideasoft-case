@@ -17,6 +17,10 @@ type CategoryInputProps = {
 const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
+  const _closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   const _onPressPill = (id: number) => {
     // Removes category
     const copyValue: Category[] = [];
@@ -33,7 +37,7 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) =
 
   const _onSelectCategory = useCallback(
     (selectedCategory: Category) => {
-      setIsModalVisible(false);
+      _closeModal();
       // Add category, if not already included
       const foundCategoryIndex = value?.findIndex(
         (category) => category.id === selectedCategory.id
@@ -70,15 +74,16 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) =
         visible={isModalVisible}
         transparent={true}
         animationType="slide"
-        onRequestClose={() => setIsModalVisible(false)}
       >
         <TouchableOpacity
-          onPress={() => setIsModalVisible(false)}
           activeOpacity={1}
           style={styles.modalContainer}
         >
           <View style={styles.modalContent}>
-            <CategorySearch onSelectCategory={_onSelectCategory} />
+            <CategorySearch
+              onSelectCategory={_onSelectCategory}
+              onRequestClose={_closeModal}
+            />
           </View>
         </TouchableOpacity>
       </Modal>

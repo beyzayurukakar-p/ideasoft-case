@@ -7,13 +7,17 @@ import { searchCategories } from '../../services/searchCategories';
 import { Category } from '../../types/category';
 import Separator from '../../../common/components/separator/Separator';
 import FullscreenLoading from '../../../common/components/feedbacks/FullscreenLoading';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { dimensions } from '../../../common/styling/dimensions';
+import { COLORS } from '../../../common/styling/colors';
 
 type CategorySearchProps = {
   onSelectCategory: (category: Category) => void;
+  onRequestClose: () => void;
 };
 
 // TODO: error message behind modal
-const CategorySearch: React.FC<CategorySearchProps> = ({ onSelectCategory }) => {
+const CategorySearch: React.FC<CategorySearchProps> = ({ onSelectCategory, onRequestClose }) => {
   const [searchText, setSearchText] = useState('');
 
   const { data, loading, request: search, reset: resetServiceState } = useService(searchCategories);
@@ -67,6 +71,7 @@ const CategorySearch: React.FC<CategorySearchProps> = ({ onSelectCategory }) => 
         onChangeText={setSearchText}
         value={searchText}
         placeholder="Kategori aramak için en az 2 harf girin..."
+        style={styles.input}
       />
       {loading ? (
         _renderLoading()
@@ -78,8 +83,22 @@ const CategorySearch: React.FC<CategorySearchProps> = ({ onSelectCategory }) => 
           ItemSeparatorComponent={Separator}
           ListEmptyComponent={data === null ? null : NoResult}
           style={styles.list}
+          contentContainerStyle={styles.listContentContainer}
+          showsVerticalScrollIndicator={false}
         />
       )}
+      <TouchableOpacity
+        style={styles.closeIconContainer}
+        activeOpacity={0.5}
+        onPress={onRequestClose}
+        hitSlop={{ bottom: 20, top: 20, left: 20, right: 20 }}
+      >
+        <MaterialCommunityIcons
+          name="close"
+          size={dimensions.measure(30)}
+          color={COLORS.subtextOnBackground}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, TextInputProps, LayoutChangeEvent } from 'react-native';
+import { View, TextInput, TextInputProps, LayoutChangeEvent, ViewStyle } from 'react-native';
 import { appTextInputStyles as styles } from './AppTextInput.styles';
 import Label from './Label';
 import ErrorText from './ErrorText';
@@ -11,6 +11,7 @@ type AppTextInputProps = TextInputProps & {
   placeholder?: string;
   errorText?: string | null;
   onLayout?: (event: LayoutChangeEvent) => void;
+  style?: ViewStyle;
 };
 
 const AppTextInput: React.FC<AppTextInputProps> = ({
@@ -20,11 +21,12 @@ const AppTextInput: React.FC<AppTextInputProps> = ({
   placeholder,
   errorText,
   onLayout,
+  style,
   ...restProps
 }) => {
   return (
     <View
-      style={styles.container}
+      style={[styles.container, style]}
       onLayout={onLayout}
     >
       {label ? <Label>{label}</Label> : null}
