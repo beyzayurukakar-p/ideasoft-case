@@ -120,14 +120,6 @@ export const productSlice = createSlice({
       if (state.productsNormalized[productId]) {
         state.productsNormalized[productId].deleted = true;
       }
-      // const indexOfId = state.productIds.indexOf(productId);
-      // if (indexOfId > -1) {
-      //   state.productIds.splice(indexOfId, 1);
-      // }
-      // const indexOfIdInRecents = state.recentlyAddedIds.indexOf(productId);
-      // if (indexOfIdInRecents > -1) {
-      //   state.recentlyAddedIds.splice(indexOfIdInRecents, 1);
-      // }
     },
     _updateProduct: (state, action: PayloadAction<Product>) => {
       const product = action.payload;

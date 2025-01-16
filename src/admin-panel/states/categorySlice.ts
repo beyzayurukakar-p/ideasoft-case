@@ -97,14 +97,6 @@ export const categorySlice = createSlice({
       if (state.categoriesNormalized[categoryId]) {
         state.categoriesNormalized[categoryId].deleted = true;
       }
-      // const indexOfId = state.categoryIds.indexOf(categoryId);
-      // if (indexOfId > -1) {
-      //   state.categoryIds.splice(indexOfId, 1);
-      // }
-      // const indexOfIdInRecents = state.recentlyAddedIds.indexOf(categoryId);
-      // if (indexOfIdInRecents > -1) {
-      //   state.recentlyAddedIds.splice(indexOfIdInRecents, 1);
-      // }
     },
     _updateCategory: (state, action: PayloadAction<Category>) => {
       const category = action.payload;

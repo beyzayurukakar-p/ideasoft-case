@@ -41,25 +41,25 @@ const ProductScreen: React.FC = () => {
     _fetch();
   }, [_fetch]);
 
-  const _retry = () => {
+  const _retry = useCallback(() => {
     setIsFailed(false);
     _fetch();
-  };
+  }, [_fetch]);
 
-  const _onPressAddProduct = () => {
+  const _onPressAddProduct = useCallback(() => {
     nav.navigate('AdminPanel', {
       screen: 'ProductForm',
       params: {},
     });
-  };
+  }, [nav]);
 
-  const _onRefresh = () => {
+  const _onRefresh = useCallback(() => {
     dispatch(productSlice.actions.refresh({}));
-  };
+  }, [dispatch]);
 
-  const _onNextPage = () => {
+  const _onNextPage = useCallback(() => {
     dispatch(productSlice.actions.readNextPage({}));
-  };
+  }, [dispatch]);
 
   const _renderProductItem = useCallback(
     (params: { item: Product; index: number }) => {

@@ -40,25 +40,25 @@ const CategoryScreen: React.FC = () => {
     _fetch();
   }, [_fetch]);
 
-  const _retry = () => {
+  const _retry = useCallback(() => {
     setIsFailed(false);
     _fetch();
-  };
+  }, [_fetch]);
 
-  const _onPressAddCategory = () => {
+  const _onPressAddCategory = useCallback(() => {
     nav.navigate('AdminPanel', {
       screen: 'CategoryForm',
       params: {},
     });
-  };
+  }, [nav]);
 
-  const _onRefresh = () => {
+  const _onRefresh = useCallback(() => {
     dispatch(categorySlice.actions.refresh({}));
-  };
+  }, [dispatch]);
 
-  const _onNextPage = () => {
+  const _onNextPage = useCallback(() => {
     dispatch(categorySlice.actions.readNextPage({}));
-  };
+  }, [dispatch]);
 
   const _renderCategoryItem = useCallback(
     (params: { item: Category; index: number }) => {
