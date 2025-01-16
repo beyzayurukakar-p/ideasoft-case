@@ -7,7 +7,6 @@ import { categorySelectors, categorySlice } from '../states/categorySlice';
 import { formatDateExtensive } from '../../common/utils/dateUtils';
 import DetailActions from '../components/detail-actions/DetailActions';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
-import TouchableText from '../../common/components/buttons/TouchableText';
 import TextField from '../components/detail-fields/TextField';
 import Separator from '../../common/components/separator/Separator';
 import StatusField from '../components/detail-fields/StatusField';
@@ -71,13 +70,6 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
       <TextField
         label="Oluşturma Tarihi:"
         value={formatDateExtensive(category.createdAt)}
-      />
-      <Separator />
-      <TouchableText
-        label="Kategorideki Ürünleri Gör"
-        // TODO: Create a screen for products of the category
-        onPress={() => {}}
-        style={styles.seeProductTouchable}
       />
       <DetailActions
         onPressDelete={_onPressDelete}
