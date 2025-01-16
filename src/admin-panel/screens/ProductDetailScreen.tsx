@@ -1,6 +1,6 @@
 import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView, FlatList, Image } from 'react-native';
 import { productDetailScreenStyles as styles } from './ProductDetailScreen.styles';
 import { useAppDispatch, useAppSelector } from '../../common/store';
 import { formatDateExtensive } from '../../common/utils/dateUtils';
@@ -30,6 +30,7 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
   const nav = useNavigation<RootStackNavigationProp>();
 
   const hasCategories = product?.categories !== undefined && product.categories.length > 0;
+  const hasImages = product?.images !== undefined && product.images.length > 0;
 
   const { warnBeforeDelete, renderWarningModal } = useWarnedDelete();
 
@@ -69,8 +70,26 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
   const _renderCategories = () => {
     return (
       <CategoryPills
-        categories={product?.categories}
+        categories={product.categories}
         onPress={_onPressCategory}
+      />
+    );
+  };
+
+  const _renderImages = () => {
+    return (
+      <FlatList
+        horizontal
+        data={product.images}
+        keyExtractor={(image) => image.id.toString()}
+        renderItem={({ item: image }) => {
+          return (
+            <Image
+              source={{ uri: image.url }}
+              style={styles.imageItem}
+            />
+          );
+        }}
       />
     );
   };
@@ -92,7 +111,11 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
           status={product.status}
         />
         <Separator />
-        <Text>TODO: Görseller</Text>
+        <TextField
+          label="Görseller:"
+          value={hasImages ? undefined : 'Görsel bulunmuyor.'}
+          renderValue={hasImages ? _renderImages : undefined}
+        />
         <Separator />
         <TextField
           label="Tam isim:"

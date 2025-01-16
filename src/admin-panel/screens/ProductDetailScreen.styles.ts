@@ -7,4 +7,12 @@ export const productDetailScreenStyles = StyleSheet.create({
   scrollContentContainer: {
     paddingBottom: dimensions.measure(200),
   },
+  imageItem: {
+    width: dimensions.measure(70),
+    height: undefined,
+    aspectRatio: 1,
+    resizeMode: 'contain',
+    borderRadius: dimensions.borderRadius,
+    marginRight: dimensions.measure(10),
+  },
 });
