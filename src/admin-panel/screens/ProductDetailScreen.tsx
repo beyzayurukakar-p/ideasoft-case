@@ -42,7 +42,7 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
       dispatch(
         productSlice.actions.deleteProduct({
           id: productId,
-          onSuccess: nav.popToTop,
+          onSuccess: nav.goBack,
         })
       );
     });
@@ -77,11 +77,14 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
 
   const _renderImageItem = useCallback(({ item: image }: { item: ExistingProductImage }) => {
     return (
-      <Image
-        source={{ uri: image.url }}
-        style={styles.imageItem}
-        placeholder={IMAGES.nopic_image()}
-      />
+      <View style={styles.imageContainer}>
+        <Image
+          source={{ uri: image.url }}
+          style={styles.image}
+          placeholder={IMAGES.nopic_image()}
+          contentFit="fill"
+        />
+      </View>
     );
   }, []);
 

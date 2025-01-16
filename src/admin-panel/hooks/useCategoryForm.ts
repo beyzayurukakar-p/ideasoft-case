@@ -56,7 +56,7 @@ export const useCategoryForm = (categoryId?: number) => {
             name: (name as string).trim(),
             status: status ? 1 : 0,
           },
-          onSuccess: nav.popToTop,
+          onSuccess: nav.goBack,
         })
       );
     });
@@ -72,7 +72,7 @@ export const useCategoryForm = (categoryId?: number) => {
             status: status ? 1 : 0,
             id: categoryId as number,
           },
-          onSuccess: nav.popToTop,
+          onSuccess: nav.goBack,
         })
       );
     });

@@ -129,7 +129,7 @@ export const useProductForm = (productId?: number) => {
             categories,
             images,
           },
-          onSuccess: nav.popToTop,
+          onSuccess: nav.goBack,
         })
       );
     });
@@ -152,7 +152,7 @@ export const useProductForm = (productId?: number) => {
             images,
             stockTypeLabel: stockTypeLabel as StockTypeLabels,
           },
-          onSuccess: nav.popToTop,
+          onSuccess: nav.goBack,
         })
       );
     });

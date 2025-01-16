@@ -21,9 +21,8 @@ export const productItemStyles = StyleSheet.create({
     overflow: 'hidden',
   },
   image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    width: '105%',
+    height: '105%',
   },
   rightContainer: {
     flexGrow: 1,

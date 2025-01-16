@@ -36,9 +36,7 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
       dispatch(
         categorySlice.actions.deleteCategory({
           id: categoryId,
-          onSuccess: () => {
-            nav.popToTop();
-          },
+          onSuccess: nav.goBack,
         })
       );
     });

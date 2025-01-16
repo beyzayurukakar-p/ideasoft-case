@@ -72,6 +72,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
               source={{ uri: images?.[0]?.url }}
               placeholder={IMAGES.nopic_image()}
               style={styles.image}
+              contentFit="fill"
             />
           </View>
           <View style={styles.rightContainer}>

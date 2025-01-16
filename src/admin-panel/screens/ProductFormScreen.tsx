@@ -87,11 +87,16 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
           errorText={nameError}
           onLayout={(e) => _onLayout('name', e)}
           onFocus={() => _onFocus('name')}
+          autoCorrect={false}
         />
         <AppSwitch
           label="Durum"
           value={status}
           onValueChange={onChangeStatus}
+        />
+        <ImageInput
+          value={images}
+          onChangeValue={onChangeImages}
         />
         <AppTextInput
           label="Stok kodu"
@@ -101,6 +106,8 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
           errorText={stockCodeError}
           onLayout={(e) => _onLayout('stockCode', e)}
           onFocus={() => _onFocus('stockCode')}
+          autoCapitalize="none"
+          autoCorrect={false}
         />
         <AppTextInput
           label="Stoktaki Miktar"
@@ -141,11 +148,6 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
         <CategoryInput
           value={categories}
           onChangeValue={onChangeCategories}
-        />
-        <Separator />
-        <ImageInput
-          value={images}
-          onChangeValue={onChangeImages}
         />
       </ScrollView>
       <FormActions

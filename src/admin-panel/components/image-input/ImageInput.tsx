@@ -23,6 +23,14 @@ const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
         return;
       }
 
+      // Check if same filename exists
+      const foundIndex = value?.findIndex((val) => {
+        return val.filename === image.filename;
+      });
+      if (foundIndex && foundIndex > -1) {
+        return;
+      }
+
       const copyValue = [...(value || [])];
 
       copyValue.push(image);
@@ -55,6 +63,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
             source={{ uri: image.url }}
             style={styles.image}
             placeholder={IMAGES.nopic_image()}
+            contentFit="contain"
           />
           <TouchableOpacity
             style={styles.imageDeleteTouchable}
