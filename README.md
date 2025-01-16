@@ -1,4 +1,6 @@
-# Installation
+**!! Note:** Please see `./docs` for documentation.
+
+## Installation
 
 Follow these steps to set up the project locally:
 

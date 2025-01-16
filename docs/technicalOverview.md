@@ -1,4 +1,17 @@
-# Architecture Overview
+# Technical Overview
+
+Content
+
+- [Tools and Libraries](#tools-and-libraries)
+- [Folder Structure](#folder-structure)
+- [State Management](#state-management)
+- [Navigation](#navigation)
+- [Styling](#styling)
+- [Testing](#testing)
+- [Continuous Integration](#continuous-integration)
+- [Known Issues](#known-issues)
+
+
 
 # Tools and Libraries
 

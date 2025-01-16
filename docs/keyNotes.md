@@ -2,8 +2,8 @@
 
 Content:
 
-- Handling Async API Requests
-- Data format in Redux State
+- [Handling Async API Requests](#handling-api-data--async-request-flows)
+- [Data format in Redux State](#data-format-in-redux-state)
 
 ## Handling API Data & Async Request Flows
 
