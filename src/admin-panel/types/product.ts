@@ -21,14 +21,10 @@ export type ProductAddPayload = Pick<
   Partial<Pick<Product, 'categories' | 'stockTypeLabel'>> & { images?: ProductImageRequest[] };
 
 /** Product's shape in the API request body for 'update' */
-export type ProductUpdateRequest = WithId<
-  Partial<ProductAddRequest & { images: WithId<ProductImageRequest>[] }>
->;
+export type ProductUpdateRequest = WithId<Partial<ProductAddRequest>>;
 
 /** Product's shape in the redux 'update' action's payload */
-export type ProductUpdatePayload = WithId<
-  Partial<ProductAddPayload & { images: WithId<ProductImageRequest>[] }>
->;
+export type ProductUpdatePayload = WithId<Partial<ProductAddPayload>>;
 
 export type ProductImageRequest = {
   filename: string;

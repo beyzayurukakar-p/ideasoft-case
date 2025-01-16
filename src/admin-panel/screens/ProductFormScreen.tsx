@@ -11,6 +11,8 @@ import { stockTypeLabelOptions } from '../constants/stockTypeLabels';
 import { currencyOptions } from '../constants/currencies';
 import { dimensions } from '../../common/styling/dimensions';
 import CategoryInput from '../components/category-input/CategoryInput';
+import ImageInput from '../components/image-input/ImageInput';
+import Separator from '../../common/components/separator/Separator';
 
 type ScreenProps = StaticScreenProps<{
   productId?: number;
@@ -44,6 +46,8 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
     onChangeCurrency,
     categories,
     onChangeCategories,
+    images,
+    onChangeImages,
     onPressAddUpdate,
     isLoading,
   } = useProductForm(productId);
@@ -133,9 +137,15 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
           placeholder="Para birimini seçin..."
           errorText={currencyError}
         />
+        <Separator />
         <CategoryInput
           value={categories}
           onChangeValue={onChangeCategories}
+        />
+        <Separator />
+        <ImageInput
+          value={images}
+          onChangeValue={onChangeImages}
         />
       </ScrollView>
       <FormActions

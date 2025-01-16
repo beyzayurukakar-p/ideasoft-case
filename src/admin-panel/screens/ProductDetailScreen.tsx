@@ -1,5 +1,5 @@
 import { StaticScreenProps, useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, ScrollView, FlatList, Image } from 'react-native';
 import { productDetailScreenStyles as styles } from './ProductDetailScreen.styles';
 import { useAppDispatch, useAppSelector } from '../../common/store';
@@ -12,6 +12,7 @@ import Separator from '../../common/components/separator/Separator';
 import StatusField from '../components/detail-fields/StatusField';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 import CategoryPills from '../components/category-pills/CategoryPills';
+import { ProductImage } from '../types/product';
 
 type ScreenProps = StaticScreenProps<{
   productId: number;
@@ -29,8 +30,8 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
   const dispatch = useAppDispatch();
   const nav = useNavigation<RootStackNavigationProp>();
 
-  const hasCategories = product?.categories !== undefined && product.categories.length > 0;
-  const hasImages = product?.images !== undefined && product.images.length > 0;
+  const hasCategories = product?.categories !== undefined && product?.categories.length > 0;
+  const hasImages = product?.images !== undefined && product?.images.length > 0;
 
   const { warnBeforeDelete, renderWarningModal } = useWarnedDelete();
 
@@ -63,36 +64,39 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
     });
   };
 
-  if (!product) {
-    return null;
-  }
-
   const _renderCategories = () => {
     return (
       <CategoryPills
-        categories={product.categories}
+        categories={product?.categories}
         onPress={_onPressCategory}
       />
     );
   };
 
+  const _renderImageItem = useCallback(({ item: image }: { item: ProductImage }) => {
+    return (
+      <Image
+        source={{ uri: image.url }}
+        style={styles.imageItem}
+      />
+    );
+  }, []);
+
   const _renderImages = () => {
     return (
       <FlatList
         horizontal
-        data={product.images}
+        data={product?.images}
         keyExtractor={(image) => image.id.toString()}
-        renderItem={({ item: image }) => {
-          return (
-            <Image
-              source={{ uri: image.url }}
-              style={styles.imageItem}
-            />
-          );
-        }}
+        renderItem={_renderImageItem}
+        showsHorizontalScrollIndicator={false}
       />
     );
   };
+
+  if (!product) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>

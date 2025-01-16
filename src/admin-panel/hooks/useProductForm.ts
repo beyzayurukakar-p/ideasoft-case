@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 import { Category } from '../types/category';
 import { StockTypeLabels } from '../constants/stockTypeLabels';
+import { InputImage } from '../components/image-input/ImageInput';
+import { ProductImageRequest } from '../types/product';
 
 export const useProductForm = (productId?: number) => {
   const dispatch = useAppDispatch();
@@ -36,6 +38,7 @@ export const useProductForm = (productId?: number) => {
   const [categories, setCategories] = useState<Category[] | undefined>(
     product?.categories || undefined
   );
+  const [images, setImages] = useState<InputImage[] | undefined>(product?.images || undefined);
   // Error states
   const [nameError, setNameError] = useState<string | null>(null);
   const [stockCodeError, setStockCodeError] = useState<string | null>(null);
@@ -125,6 +128,7 @@ export const useProductForm = (productId?: number) => {
             currencyId: currency as number,
             stockAmount: stockAmount as number,
             categories,
+            images: images as ProductImageRequest[],
           },
           onSuccess: nav.popToTop,
         })
@@ -146,6 +150,7 @@ export const useProductForm = (productId?: number) => {
             stockAmount: stockAmount as number,
             id: productId as number,
             categories,
+            images: images as ProductImageRequest[],
             stockTypeLabel: stockTypeLabel as StockTypeLabels,
           },
           onSuccess: nav.popToTop,
@@ -189,6 +194,9 @@ export const useProductForm = (productId?: number) => {
 
     categories,
     onChangeCategories: setCategories,
+
+    images,
+    onChangeImages: setImages,
 
     isLoading,
     onPressAddUpdate: _onPressAddUpdate,
