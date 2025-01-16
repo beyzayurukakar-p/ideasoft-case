@@ -18,6 +18,7 @@ export const productItemStyles = StyleSheet.create({
     borderColor: COLORS.border,
     height: IMAGE_SIZE,
     width: IMAGE_SIZE,
+    overflow: 'hidden',
   },
   image: {
     width: '100%',

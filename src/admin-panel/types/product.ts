@@ -1,3 +1,4 @@
+import { InputImage } from '../components/image-input/types';
 import { StockTypeLabels } from '../constants/stockTypeLabels';
 import { Category, CategoryResponse } from './category';
 import { WithId } from './typeUtils';
@@ -11,27 +12,22 @@ export type ProductAddRequest = Pick<
 > &
   Partial<Pick<ProductResponse, 'categories' | 'stockTypeLabel'>> & {
     currency: WithId<Partial<CurrencyResponse>>;
-  } & { images?: ProductImageRequest[] };
+  } & { images?: (ExistingProductImage | NewProductImage)[] };
 
 /** Product's shape in the redux 'add' action's payload */
 export type ProductAddPayload = Pick<
   Product,
   'name' | 'sku' | 'status' | 'stockAmount' | 'price' | 'currencyId'
 > &
-  Partial<Pick<Product, 'categories' | 'stockTypeLabel'>> & { images?: ProductImageRequest[] };
+  Partial<Pick<Product, 'categories' | 'stockTypeLabel'>> & {
+    images?: InputImage[];
+  };
 
 /** Product's shape in the API request body for 'update' */
 export type ProductUpdateRequest = WithId<Partial<ProductAddRequest>>;
 
 /** Product's shape in the redux 'update' action's payload */
 export type ProductUpdatePayload = WithId<Partial<ProductAddPayload>>;
-
-export type ProductImageRequest = {
-  filename: string;
-  extension: string;
-  sortOrder: number;
-  attachment: string; // base64
-};
 
 /* For responses */
 
@@ -81,17 +77,24 @@ export type Product = {
   currencyAbbr: string;
   status: number;
   stockTypeLabel: StockTypeLabels;
-  images: ProductImage[];
+  images: ExistingProductImage[];
   categories: Category[];
   createdAt: string;
   deleted?: boolean;
 };
 
-export type ProductImage = {
+export type ExistingProductImage = {
   id: number;
   filename: string;
   extension: string;
   url: string;
+};
+
+export type NewProductImage = {
+  filename: string;
+  extension: string;
+  attachment: string;
+  sortOrder: number;
 };
 
 export type ProductsNormalized = Record<number, Product>;

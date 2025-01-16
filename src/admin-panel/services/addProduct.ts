@@ -3,6 +3,7 @@ import { client } from '../../common/services/client';
 import { PRODUCTS_URL } from './urls';
 import { Product, ProductAddPayload, ProductAddRequest, ProductResponse } from '../types/product';
 import { getImageUrl } from './getImageUrl';
+import { SelectedProductImage } from '../components/image-input/types';
 
 /**
  * Adds a product
@@ -20,6 +21,17 @@ export const addProduct = async (product: ProductAddPayload): Promise<Product> =
     stockAmount: product.stockAmount,
     stockTypeLabel: product.stockTypeLabel,
   };
+  // Add sort order to images
+  body.images = product.images?.map((image, index) => {
+    const _image = image as SelectedProductImage;
+    return {
+      filename: _image.filename,
+      extension: _image.extension,
+      attachment: _image.attachment,
+      sortOrder: index + 1,
+    };
+  });
+
   const response: AxiosResponse<ProductResponse> = await client.post(PRODUCTS_URL, body);
 
   const productRes = response.data;

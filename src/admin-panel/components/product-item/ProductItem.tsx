@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
 import { Product } from '../../types/product';
 import { productItemStyles as styles } from './ProductItem.styles';
 import { COLORS } from '../../../common/styling/colors';
@@ -68,7 +69,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
           {/* image */}
           <View style={styles.imageContainer}>
             <Image
-              source={images.length > 0 ? { uri: images[0].url } : IMAGES.nopic_image()}
+              source={{ uri: images?.[0]?.url }}
+              placeholder={IMAGES.nopic_image()}
               style={styles.image}
             />
           </View>

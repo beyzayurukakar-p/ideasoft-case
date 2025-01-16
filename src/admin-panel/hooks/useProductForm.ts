@@ -5,8 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 import { Category } from '../types/category';
 import { StockTypeLabels } from '../constants/stockTypeLabels';
-import { InputImage } from '../components/image-input/ImageInput';
-import { ProductImageRequest } from '../types/product';
+import { InputImage } from '../components/image-input/types';
 
 export const useProductForm = (productId?: number) => {
   const dispatch = useAppDispatch();
@@ -128,7 +127,7 @@ export const useProductForm = (productId?: number) => {
             currencyId: currency as number,
             stockAmount: stockAmount as number,
             categories,
-            images: images as ProductImageRequest[],
+            images,
           },
           onSuccess: nav.popToTop,
         })
@@ -150,7 +149,7 @@ export const useProductForm = (productId?: number) => {
             stockAmount: stockAmount as number,
             id: productId as number,
             categories,
-            images: images as ProductImageRequest[],
+            images,
             stockTypeLabel: stockTypeLabel as StockTypeLabels,
           },
           onSuccess: nav.popToTop,

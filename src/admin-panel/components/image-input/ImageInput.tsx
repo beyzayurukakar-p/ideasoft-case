@@ -1,17 +1,15 @@
 import React, { useCallback } from 'react';
-import { FlatList, Image, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
+import { Image } from 'expo-image';
 import { imageInputStyles as styles } from './ImageInput.styles';
 import Label from '../../../common/components/inputs/Label';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { dimensions } from '../../../common/styling/dimensions';
 import { COLORS } from '../../../common/styling/colors';
-import { ProductImage, ProductImageRequest } from '../../types/product';
-
-export type InputImage = Partial<
-  Pick<ProductImageRequest & ProductImage, 'url' | 'id' | 'sortOrder' | 'attachment'>
-> &
-  Omit<ProductImageRequest & ProductImage, 'url' | 'id' | 'sortOrder' | 'attachment'>;
+import { pickImage } from './pickImage';
+import { InputImage } from './types';
+import { IMAGES } from '../../../common/assets';
 
 type ImageInputProps = {
   value?: InputImage[];
@@ -19,7 +17,18 @@ type ImageInputProps = {
 };
 
 const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
-  const _onPressAdd = () => {};
+  const _onPressAdd = () => {
+    pickImage().then((image) => {
+      if (!image) {
+        return;
+      }
+
+      const copyValue = [...(value || [])];
+
+      copyValue.push(image);
+      onChangeValue(copyValue);
+    });
+  };
 
   const _onPressDelete = useCallback(
     (filename: string) => {
@@ -45,6 +54,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
           <Image
             source={{ uri: image.url }}
             style={styles.image}
+            placeholder={IMAGES.nopic_image()}
           />
           <TouchableOpacity
             style={styles.imageDeleteTouchable}

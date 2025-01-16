@@ -1,6 +1,7 @@
 import { StaticScreenProps, useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import { View, ScrollView, FlatList, Image } from 'react-native';
+import { View, ScrollView, FlatList } from 'react-native';
+import { Image } from 'expo-image';
 import { productDetailScreenStyles as styles } from './ProductDetailScreen.styles';
 import { useAppDispatch, useAppSelector } from '../../common/store';
 import { formatDateExtensive } from '../../common/utils/dateUtils';
@@ -12,7 +13,8 @@ import Separator from '../../common/components/separator/Separator';
 import StatusField from '../components/detail-fields/StatusField';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 import CategoryPills from '../components/category-pills/CategoryPills';
-import { ProductImage } from '../types/product';
+import { ExistingProductImage } from '../types/product';
+import { IMAGES } from '../../common/assets';
 
 type ScreenProps = StaticScreenProps<{
   productId: number;
@@ -73,11 +75,12 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
     );
   };
 
-  const _renderImageItem = useCallback(({ item: image }: { item: ProductImage }) => {
+  const _renderImageItem = useCallback(({ item: image }: { item: ExistingProductImage }) => {
     return (
       <Image
         source={{ uri: image.url }}
         style={styles.imageItem}
+        placeholder={IMAGES.nopic_image()}
       />
     );
   }, []);

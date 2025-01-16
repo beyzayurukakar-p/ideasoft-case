@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { client } from '../../common/services/client';
 import {
+  ExistingProductImage,
   Product,
   ProductResponse,
   ProductUpdatePayload,
@@ -8,6 +9,7 @@ import {
 } from '../types/product';
 import { PRODUCTS_URL } from './urls';
 import { getImageUrl } from './getImageUrl';
+import { SelectedProductImage } from '../components/image-input/types';
 
 /**
  * Updates a product
@@ -17,14 +19,46 @@ export const updateProduct = async (product: ProductUpdatePayload): Promise<Prod
     id: product.id,
   };
 
-  undefined !== product.categories && (body.categories = product.categories);
-  undefined !== product.currencyId && (body.currency = { id: product.currencyId });
-  undefined !== product.name && (body.name = product.name);
-  undefined !== product.price && (body.price1 = product.price);
-  undefined !== product.sku && (body.sku = product.sku);
-  undefined !== product.status && (body.status = product.status);
-  undefined !== product.stockAmount && (body.stockAmount = product.stockAmount);
-  undefined !== product.stockTypeLabel && (body.stockTypeLabel = product.stockTypeLabel);
+  if (product.categories !== undefined) {
+    body.categories = product.categories;
+  }
+  if (product.currencyId !== undefined) {
+    body.currency = { id: product.currencyId };
+  }
+  if (product.name !== undefined) {
+    body.name = product.name;
+  }
+  if (product.price !== undefined) {
+    body.price1 = product.price;
+  }
+  if (product.sku !== undefined) {
+    body.sku = product.sku;
+  }
+  if (product.status !== undefined) {
+    body.status = product.status;
+  }
+  if (product.stockAmount !== undefined) {
+    body.stockAmount = product.stockAmount;
+  }
+  if (product.stockTypeLabel !== undefined) {
+    body.stockTypeLabel = product.stockTypeLabel;
+  }
+  if (product.images !== undefined) {
+    body.images = product.images?.map((image, index) => {
+      if ('id' in image) {
+        const _image = image as ExistingProductImage;
+        return _image;
+      } else {
+        const _image = image as SelectedProductImage;
+        return {
+          filename: _image.filename,
+          extension: _image.extension,
+          attachment: _image.attachment,
+          sortOrder: index + 1,
+        };
+      }
+    });
+  }
 
   const response: AxiosResponse<ProductResponse> = await client.put(
     `${PRODUCTS_URL}/${product.id}`,
