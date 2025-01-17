@@ -1,5 +1,5 @@
-import ProductScreen from '../../admin-panel/screens/ProductScreen';
-import CategoryScreen from '../../admin-panel/screens/CategoryScreen';
+import ProductListScreen from '../../admin-panel/screens/ProductListScreen';
+import CategoryListScreen from '../../admin-panel/screens/CategoryListScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { dimensions } from '../styling/dimensions';
 import { COLORS } from '../styling/colors';
@@ -13,13 +13,13 @@ import ProductFormScreen from '../../admin-panel/screens/ProductFormScreen';
 const tabs = createBottomTabNavigator({
   screens: {
     Product: {
-      screen: ProductScreen,
+      screen: ProductListScreen,
       options: {
         title: 'Ürünler',
       },
     },
     Category: {
-      screen: CategoryScreen,
+      screen: CategoryListScreen,
       options: {
         title: 'Kategoriler',
       },

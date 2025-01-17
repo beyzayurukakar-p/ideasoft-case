@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { detailFieldsStyles as styles } from './detailFields.styles';
+import { detailFieldStyles as styles } from './detailFieldStyles';
 import { COLORS } from '../../../common/styling/colors';
 
 type StatusFieldProps = {
@@ -8,7 +8,7 @@ type StatusFieldProps = {
 };
 
 /**
- * A component that displays a label and a status value in a horizontal layout.
+ * A component that displays a label and a status circle (green or red) in a horizontal layout.
  * It is used to display the status field in detail screens `CategoryDetailScreen` and `ProductDetailScreen`.
  */
 const StatusField: React.FC<StatusFieldProps> = ({ label, status }) => {

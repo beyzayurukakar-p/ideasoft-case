@@ -151,7 +151,7 @@ export const productSlice = createSlice({
 });
 
 export const productSelectors = {
-  // Memoized selector to get all products
+  /** Memoized selector to get all products */
   products: createSelector(
     (state: RootState) => state.product.productIds,
     (state: RootState) => state.product.productsNormalized,
@@ -167,6 +167,7 @@ export const productSelectors = {
       return products;
     }
   ),
+  /** Memoized selector to get recently added categories */
   recentlyAddedProducts: createSelector(
     (state: RootState) => state.product.recentlyAddedIds,
     (state: RootState) => state.product.productsNormalized,

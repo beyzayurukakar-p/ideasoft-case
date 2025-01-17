@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { categoryDetailScreenStyles as styles } from './CategoryDetailScreen.styles';
 import { useAppDispatch, useAppSelector } from '../../common/store';
 import { categorySelectors, categorySlice } from '../states/categorySlice';
-import { formatDateExtensive } from '../../common/utils/dateUtils';
+import { formatDateExtensive } from '../utils/dateUtils';
 import DetailActions from '../components/detail-actions/DetailActions';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 import TextField from '../components/detail-fields/TextField';
@@ -16,7 +16,7 @@ type ScreenProps = StaticScreenProps<{
   categoryId: number;
 }>;
 
-/** Screen component to display all the fields of a category */
+/** Screen component to display all the details of a category */
 const CategoryDetailScreen: React.FC<ScreenProps> = ({
   route: {
     params: { categoryId },
@@ -30,6 +30,7 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
 
   const { warnBeforeDelete, renderWarningModal } = useWarnedDelete();
 
+  // Handles the 'delete category' button press
   const _onPressDelete = () => {
     warnBeforeDelete(() => {
       dispatch(
@@ -41,6 +42,7 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
     });
   };
 
+  // Handles the 'edit category' button press
   const _onPressEdit = () => {
     nav.navigate('AdminPanel', {
       screen: 'CategoryForm',
@@ -50,6 +52,7 @@ const CategoryDetailScreen: React.FC<ScreenProps> = ({
     });
   };
 
+  // When this category is deleted, this screen might be visible for a moment
   if (!category) {
     return null;
   }

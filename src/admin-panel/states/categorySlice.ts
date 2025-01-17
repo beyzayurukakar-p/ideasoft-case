@@ -85,7 +85,7 @@ export const categorySlice = createSlice({
       Object.assign(state.categoriesNormalized, categoriesNormalized);
       state.categoryIds.push(...categoryIdList);
       state.currentPage = page;
-      state.recentlyAddedIds.length = 0;
+      state.recentlyAddedIds.length = 0; // Empty recently added list
     },
     _addCategory: (state, action: PayloadAction<Category>) => {
       const category = action.payload;
@@ -114,7 +114,7 @@ export const categorySlice = createSlice({
 });
 
 export const categorySelectors = {
-  // Memoized selector to get all categories
+  /** Memoized selector to get all categories */
   categories: createSelector(
     (state: RootState) => state.category.categoryIds,
     (state: RootState) => state.category.categoriesNormalized,
@@ -130,6 +130,7 @@ export const categorySelectors = {
       return categories;
     }
   ),
+  /** Memoized selector to get recently added categories */
   recentlyAddedCategories: createSelector(
     (state: RootState) => state.category.recentlyAddedIds,
     (state: RootState) => state.category.categoriesNormalized,

@@ -10,6 +10,9 @@ type AppSwitchProps = {
   onValueChange: (value: boolean) => void;
 };
 
+/**
+ * AppSwitch component renders a labeled switch input.
+ */
 const AppSwitch: React.FC<AppSwitchProps> = ({ label, value, onValueChange }) => {
   return (
     <View style={styles.container}>

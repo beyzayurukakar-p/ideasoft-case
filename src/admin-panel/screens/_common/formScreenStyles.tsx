@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { dimensions } from '../../common/styling/dimensions';
-import { COLORS } from '../../common/styling/colors';
+import { dimensions } from '../../../common/styling/dimensions';
+import { COLORS } from '../../../common/styling/colors';
 
 export const formScreenStyles = StyleSheet.create({
   container: {

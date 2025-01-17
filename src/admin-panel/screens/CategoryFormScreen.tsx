@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import AppTextInput from '../../common/components/inputs/AppTextInput';
-import { formScreenStyles as styles } from './formScreen.styles';
+import { formScreenStyles as styles } from './_common/formScreenStyles';
 import AppSwitch from '../../common/components/inputs/AppSwitch';
 import FormActions from '../components/form-actions/FormActions';
 import { StaticScreenProps } from '@react-navigation/native';
@@ -11,6 +11,7 @@ type ScreenProps = StaticScreenProps<{
   categoryId?: number;
 }>;
 
+/** Screen component for adding or updating a category. */
 const CategoryFormScreen: React.FC<ScreenProps> = ({
   route: {
     params: { categoryId },

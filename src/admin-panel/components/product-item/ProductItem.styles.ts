@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { dimensions } from '../../../common/styling/dimensions';
 import { COLORS } from '../../../common/styling/colors';
-import { commonStyles } from '../common.styles';
+import { commonStyles } from '../_common/commonStyles';
 
 export const ITEM_HEIGHT = dimensions.measure(100);
 const IMAGE_SIZE = ITEM_HEIGHT * 0.7;

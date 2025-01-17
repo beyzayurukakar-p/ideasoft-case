@@ -16,6 +16,11 @@ type ImageInputProps = {
   onChangeValue: (value: InputImage[]) => void;
 };
 
+/**
+ * ImageInput component allows users to add and remove images.
+ * It displays a list of images and provides an option to add new images or delete existing ones.
+ * Used in Product Form.
+ */
 const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
   const _onPressAdd = () => {
     pickImage().then((image) => {
@@ -23,7 +28,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
         return;
       }
 
-      // Check if same filename exists
+      // Add new image to list if not already exists
       const foundIndex = value?.findIndex((val) => {
         return val.filename === image.filename;
       });
@@ -40,7 +45,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
 
   const _onPressDelete = useCallback(
     (filename: string) => {
-      // Removes category
+      // Remove image
       const copyValue: InputImage[] = [];
       value?.forEach((image) => {
         if (image.filename === filename) {
@@ -65,6 +70,8 @@ const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
             placeholder={IMAGES.nopic_image()}
             contentFit="contain"
           />
+
+          {/* Image delete button */}
           <TouchableOpacity
             style={styles.imageDeleteTouchable}
             onPress={() => _onPressDelete(image.filename)}
@@ -85,6 +92,8 @@ const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <Label>Görseller</Label>
+
+        {/* Add button */}
         <TouchableOpacity
           style={styles.addTouchable}
           activeOpacity={0.5}
@@ -97,6 +106,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ value, onChangeValue }) => {
           />
         </TouchableOpacity>
       </View>
+
       <FlatList
         horizontal
         data={value}

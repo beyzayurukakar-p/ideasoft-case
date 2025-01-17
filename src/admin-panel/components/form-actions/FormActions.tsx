@@ -8,11 +8,18 @@ import React from 'react';
 import { dimensions } from '../../../common/styling/dimensions';
 
 type FormActionsProps = {
+  /** The type of action to be performed (add or update) */
   actionType: 'add' | 'update';
+
+  /** The function to call when the action button is pressed */
   onPressAction: () => void;
   isLoading?: boolean;
 };
 
+/**
+ * FormActions component provides action buttons for adding or updating forms.
+ * It also shows a loading indicator when an action is in progress.
+ */
 const FormActions: React.FC<FormActionsProps> = ({ actionType, onPressAction, isLoading }) => {
   const { bottom } = useSafeAreaInsets();
 

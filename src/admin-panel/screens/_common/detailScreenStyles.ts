@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from '../../common/styling/colors';
-import { dimensions } from '../../common/styling/dimensions';
+import { COLORS } from '../../../common/styling/colors';
+import { dimensions } from '../../../common/styling/dimensions';
 
 export const detailScreenStyles = StyleSheet.create({
   container: {

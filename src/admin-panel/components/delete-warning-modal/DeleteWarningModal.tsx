@@ -6,19 +6,22 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { dimensions } from '../../../common/styling/dimensions';
 import { COLORS } from '../../../common/styling/colors';
 
-interface DeleteWarningModalProps {
+type DeleteWarningModalProps = {
   visible: boolean;
-  onClose: () => void;
+  onCancel: () => void;
   onDelete: () => void;
-}
+};
 
-const DeleteWarningModal: React.FC<DeleteWarningModalProps> = ({ visible, onClose, onDelete }) => {
+/**
+ * A modal component that displays a warning message and provides options to cancel or confirm deletion.
+ */
+const DeleteWarningModal: React.FC<DeleteWarningModalProps> = ({ visible, onCancel, onDelete }) => {
   return (
     <Modal
       transparent={true}
       animationType="fade"
       visible={visible}
-      onRequestClose={onClose}
+      onRequestClose={onCancel}
       testID="warning-modal"
     >
       <View style={styles.modalContainer}>
@@ -34,7 +37,7 @@ const DeleteWarningModal: React.FC<DeleteWarningModalProps> = ({ visible, onClos
           <View style={styles.buttonContainer}>
             <AppButton
               label={'Vazgeç'}
-              onPress={onClose}
+              onPress={onCancel}
               style={styles.cancelButton}
               testID={`warning-modal-cancel`}
             />

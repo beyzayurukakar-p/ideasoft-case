@@ -8,6 +8,10 @@ type FullscreenRetryProps = {
   onPressRetry: () => void;
 };
 
+/**
+ * FullscreenRetry component displays a full-screen retry button.
+ * It is used to allow users to retry an action when an error occurs.
+ */
 const FullscreenRetry: React.FC<FullscreenRetryProps> = ({ onPressRetry }) => {
   return (
     <View style={styles.loadingContainer}>

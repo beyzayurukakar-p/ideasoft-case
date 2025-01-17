@@ -13,16 +13,22 @@ import { COLORS } from '../../../common/styling/colors';
 
 type CategorySearchProps = {
   onSelectCategory: (category: Category) => void;
+
+  /** Callback function to handle the request to close the search modal */
   onRequestClose: () => void;
 };
 
-// TODO: error message behind modal
+/**
+ * CategorySearch component allows users to search for categories and select one from the search results.
+ * It displays a search input and a list of categories matching the search text.
+ */
 const CategorySearch: React.FC<CategorySearchProps> = ({ onSelectCategory, onRequestClose }) => {
   const [searchText, setSearchText] = useState('');
 
   const { data, loading, request: search, reset: resetServiceState } = useService(searchCategories);
 
   useEffect(() => {
+    // Search text debounce
     const timeout = setTimeout(() => {
       if (searchText.length >= 2) {
         search({ searchText });
@@ -36,7 +42,10 @@ const CategorySearch: React.FC<CategorySearchProps> = ({ onSelectCategory, onReq
 
   const _onPressCategory = useCallback(
     (category: Category) => {
+      // Call callback that handles category selection
       onSelectCategory(category);
+
+      // Reset state
       setSearchText('');
       resetServiceState();
     },
@@ -87,6 +96,8 @@ const CategorySearch: React.FC<CategorySearchProps> = ({ onSelectCategory, onReq
           showsVerticalScrollIndicator={false}
         />
       )}
+
+      {/* Close Button */}
       <TouchableOpacity
         style={styles.closeIconContainer}
         activeOpacity={0.5}

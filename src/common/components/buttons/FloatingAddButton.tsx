@@ -10,6 +10,11 @@ type FloatingAddButtonProps = {
   onPress: () => void;
   testID?: string;
 };
+
+/**
+ * FloatingAddButton component renders a floating button with a plus icon.
+ * It is typically used to trigger an action, such as adding a new item.
+ */
 const FloatingAddButton: React.FC<FloatingAddButtonProps> = ({ onPress, testID }) => {
   const { bottom } = useSafeAreaInsets();
   return (

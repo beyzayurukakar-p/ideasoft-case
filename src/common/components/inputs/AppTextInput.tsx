@@ -14,6 +14,9 @@ type AppTextInputProps = TextInputProps & {
   style?: ViewStyle;
 };
 
+/**
+ * A custom text input component with a label and error text.
+ */
 const AppTextInput: React.FC<AppTextInputProps> = ({
   label,
   value,

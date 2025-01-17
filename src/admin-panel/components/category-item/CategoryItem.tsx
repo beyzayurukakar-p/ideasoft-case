@@ -10,10 +10,18 @@ import { useAppDispatch } from '../../../common/store';
 
 type CategoryItemProps = {
   category: Category;
+
+  /** Whether to demonstrate swipeability on mount. */
   demonstrateSwipeOnStart: boolean;
+
+  /** A function to warn before deleting the category. */
   warnBeforeDelete: (onDelete: () => void) => void;
 };
 
+/**
+ * A component that displays a category item with swipe-to-delete functionality.
+ * It shows the category name and status, and allows navigation to the category detail screen.
+ */
 const CategoryItem: React.FC<CategoryItemProps> = ({
   category,
   demonstrateSwipeOnStart,

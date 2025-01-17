@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { detailFieldsStyles as styles } from './detailFields.styles';
+import { detailFieldStyles as styles } from './detailFieldStyles';
 
 type TextFieldProps = {
   label: string;

@@ -4,6 +4,9 @@ import { COLORS } from '../../styling/colors';
 
 type FullscreenLoadingProps = { style?: ViewStyle };
 
+/**
+ * FullscreenLoading component displays a full-screen loading indicator.
+ */
 const FullscreenLoading: React.FC<FullscreenLoadingProps> = ({ style }) => {
   return (
     <View

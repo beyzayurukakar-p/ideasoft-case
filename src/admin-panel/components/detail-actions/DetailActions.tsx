@@ -13,6 +13,10 @@ type DetailActionsProps = {
   isLoading?: boolean;
 };
 
+/**
+ * DetailActions component provides action buttons for deleting and editing details.
+ * It also shows a loading indicator when an action is in progress.
+ */
 const DetailActions: React.FC<DetailActionsProps> = ({ onPressDelete, onPressEdit, isLoading }) => {
   const { bottom } = useSafeAreaInsets();
 

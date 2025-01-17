@@ -2,13 +2,13 @@ import { AxiosResponse } from 'axios';
 import { ProductResponse } from '../types/product';
 import { client } from '../../common/services/client';
 import { Product } from '../types/product';
-import { PRODUCTS_URL } from './urls';
-import { getImageUrl } from './getImageUrl';
+import { PRODUCTS_URL } from '../constants/urls';
+import { getImageUrl } from '../utils/getImageUrl';
 
 export const PAGE_LIMIT = 20;
 
 /**
- * Fetches products
+ * Reads products (by page)
  * @returns Array of products (Promise). Or throws error.
  */
 export const readProducts = async (params: { page: number }): Promise<Product[]> => {

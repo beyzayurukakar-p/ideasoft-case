@@ -1,12 +1,13 @@
 import { AxiosResponse } from 'axios';
 import { client } from '../../common/services/client';
-import { PRODUCTS_URL } from './urls';
+import { PRODUCTS_URL } from '../constants/urls';
 import { Product, ProductAddPayload, ProductAddRequest, ProductResponse } from '../types/product';
-import { getImageUrl } from './getImageUrl';
+import { getImageUrl } from '../utils/getImageUrl';
 import { SelectedProductImage } from '../components/image-input/types';
 
 /**
  * Adds a product
+ * @returns New product (Promise). Or throws error.
  */
 export const addProduct = async (product: ProductAddPayload): Promise<Product> => {
   const body: ProductAddRequest = {

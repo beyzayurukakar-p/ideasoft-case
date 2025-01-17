@@ -7,18 +7,22 @@ import {
   ProductUpdatePayload,
   ProductUpdateRequest,
 } from '../types/product';
-import { PRODUCTS_URL } from './urls';
-import { getImageUrl } from './getImageUrl';
+import { PRODUCTS_URL } from '../constants/urls';
+import { getImageUrl } from '../utils/getImageUrl';
 import { SelectedProductImage } from '../components/image-input/types';
 
 /**
  * Updates a product
+ * @returns Updated category (Promise). Or throws error.
  */
 export const updateProduct = async (product: ProductUpdatePayload): Promise<Product> => {
   const body: ProductUpdateRequest = {
     id: product.id,
   };
 
+  /*
+  These checks make sure existing data is not overwritten by mistake
+  */
   if (product.categories !== undefined) {
     body.categories = product.categories;
   }
@@ -44,11 +48,14 @@ export const updateProduct = async (product: ProductUpdatePayload): Promise<Prod
     body.stockTypeLabel = product.stockTypeLabel;
   }
   if (product.images !== undefined) {
+    // Add sort order to images
     body.images = product.images?.map((image, index) => {
       if ('id' in image) {
+        // This image was already in product
         const _image = image as ExistingProductImage;
         return _image;
       } else {
+        // This image is picked and new
         const _image = image as SelectedProductImage;
         return {
           filename: _image.filename,

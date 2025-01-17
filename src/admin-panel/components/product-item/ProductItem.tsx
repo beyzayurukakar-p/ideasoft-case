@@ -12,13 +12,18 @@ import { useAppDispatch } from '../../../common/store';
 
 type ProductItemProps = {
   product: Product;
+
+  /** Whether to demonstrate swipeability on mount. */
   demonstrateSwipeOnStart: boolean;
+
+  /** A function to warn before deleting the category. */
   warnBeforeDelete: (onDelete: () => void) => void;
 };
 
 /**
- * This component is used by the product list as an item component.
- * Supports swiping left to view delete button.
+ * A component that displays a product item with swipe-to-delete functionality.
+ * It shows the product image, name, stock code, price, and status,
+ * and allows navigation to the product detail screen.
  */
 const ProductItem: React.FC<ProductItemProps> = ({
   product,

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../common/store';
 import { categorySelectors, categorySlice } from '../states/categorySlice';
 import { Category } from '../types/category';
 import CategoryItem from '../components/category-item/CategoryItem';
-import { listScreenStyles as styles } from './listScreen.styles';
+import { listScreenStyles as styles } from './_common/listScreenStyles';
 import FullscreenLoading from '../../common/components/feedbacks/FullscreenLoading';
 import FullscreenRetry from '../../common/components/feedbacks/FullscreenRetry';
 import FloatingAddButton from '../../common/components/buttons/FloatingAddButton';
@@ -14,7 +14,19 @@ import { useNavigation } from '@react-navigation/native';
 import CategoryListHeader from '../components/list-header/CategoryListHeader';
 import { dimensions } from '../../common/styling/dimensions';
 
-const CategoryScreen: React.FC = () => {
+/**
+ * Screen component for displaying and managing categories.
+ *
+ * This screen includes:
+ * - A list of categories with swipe-to-delete functionality.
+ * - A floating button to add a new category.
+ * - Loading and retry states.
+ *
+ * The component lifecycle includes:
+ * - Fetching categories on mount.
+ * - Handling refresh and pagination.
+ */
+const CategoryListScreen: React.FC = () => {
   const dispatch = useAppDispatch();
   const nav = useNavigation();
   const categories = useAppSelector(categorySelectors.categories);
@@ -22,11 +34,13 @@ const CategoryScreen: React.FC = () => {
   const isRefreshing = useAppSelector(categorySelectors.isRefreshing);
   const isLastPage = useAppSelector(categorySelectors.isLastPage);
 
+  // Has reading failed
   const [isFailed, setIsFailed] = React.useState<boolean>(false);
 
   const { warnBeforeDelete, renderWarningModal } = useWarnedDelete();
 
   const _fetch = useCallback(() => {
+    // Dispatch an action to read categories (page 1)
     dispatch(
       categorySlice.actions.readCategories({
         onError: () => {
@@ -37,10 +51,12 @@ const CategoryScreen: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    // Read first page on mount
     _fetch();
   }, [_fetch]);
 
   const _retry = useCallback(() => {
+    // Try to read categories again
     setIsFailed(false);
     _fetch();
   }, [_fetch]);
@@ -56,8 +72,10 @@ const CategoryScreen: React.FC = () => {
     dispatch(categorySlice.actions.refresh({}));
   }, [dispatch]);
 
-  const _onNextPage = useCallback(() => {
+  const _onEndReached = useCallback(() => {
+    // Load next page
     if (categories.length === 0) {
+      // No-op if the first read hasn't happened yet
       return;
     }
     dispatch(categorySlice.actions.readNextPage({}));
@@ -97,7 +115,7 @@ const CategoryScreen: React.FC = () => {
         ListFooterComponent={isLastPage ? null : ListFooterComponent}
         refreshing={isRefreshing}
         onRefresh={_onRefresh}
-        onEndReached={_onNextPage}
+        onEndReached={_onEndReached}
         testID={'category-list'}
       />
       <FloatingAddButton
@@ -113,4 +131,4 @@ const ListFooterComponent = () => {
   return <ActivityIndicator />;
 };
 
-export default CategoryScreen;
+export default CategoryListScreen;

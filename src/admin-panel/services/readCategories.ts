@@ -2,12 +2,12 @@ import { AxiosResponse } from 'axios';
 import { CategoryResponse } from '../types/category';
 import { client } from '../../common/services/client';
 import { Category } from '../types/category';
-import { CATEGORIES_URL } from './urls';
+import { CATEGORIES_URL } from '../constants/urls';
 
 export const PAGE_LIMIT = 20;
 
 /**
- * Fetches categories
+ * Reads categories (by page)
  * @returns Array of categories (Promise). Or throws error.
  */
 export const readCategories = async (params: { page: number }): Promise<Category[]> => {

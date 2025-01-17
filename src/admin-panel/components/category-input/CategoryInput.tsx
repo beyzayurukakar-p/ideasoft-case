@@ -14,6 +14,10 @@ type CategoryInputProps = {
   onChangeValue: (value: Category[]) => void;
 };
 
+/**
+ * CategoryInput component allows users to select categories
+ * by searching in a separate modal.
+ */
 const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -21,19 +25,22 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) =
     setIsModalVisible(false);
   };
 
-  const _onPressPill = (id: number) => {
-    // Removes category
-    const copyValue: Category[] = [];
-    value?.forEach((category) => {
-      if (category.id === id) {
-        return;
-      }
+  const _onPressPill = useCallback(
+    (id: number) => {
+      // Remove category
+      const copyValue: Category[] = [];
+      value?.forEach((category) => {
+        if (category.id === id) {
+          return;
+        }
 
-      copyValue.push(category);
-    });
+        copyValue.push(category);
+      });
 
-    onChangeValue(copyValue);
-  };
+      onChangeValue(copyValue);
+    },
+    [value, onChangeValue]
+  );
 
   const _onSelectCategory = useCallback(
     (selectedCategory: Category) => {
@@ -54,6 +61,8 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) =
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <Label>Kategoriler</Label>
+
+        {/* Add button */}
         <TouchableOpacity
           style={styles.addTouchable}
           activeOpacity={0.5}
@@ -66,10 +75,14 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ value, onChangeValue }) =
           />
         </TouchableOpacity>
       </View>
+
+      {/* List of selected categories */}
       <CategoryPills
         categories={value}
         onPress={_onPressPill}
       />
+
+      {/* Search modal */}
       <Modal
         visible={isModalVisible}
         transparent={true}

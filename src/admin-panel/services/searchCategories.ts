@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { CategoryResponse } from '../types/category';
 import { client } from '../../common/services/client';
 import { Category } from '../types/category';
-import { CATEGORIES_URL } from './urls';
+import { CATEGORIES_URL } from '../constants/urls';
 
 export const PAGE_LIMIT = 20;
 

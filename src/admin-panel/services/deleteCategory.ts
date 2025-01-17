@@ -1,5 +1,5 @@
 import { client } from '../../common/services/client';
-import { CATEGORIES_URL } from './urls';
+import { CATEGORIES_URL } from '../constants/urls';
 
 /**
  * Deletes a category by ID

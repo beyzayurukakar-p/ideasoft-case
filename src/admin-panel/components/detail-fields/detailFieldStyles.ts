@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { dimensions } from '../../../common/styling/dimensions';
 import { COLORS } from '../../../common/styling/colors';
 
-export const detailFieldsStyles = StyleSheet.create({
+export const detailFieldStyles = StyleSheet.create({
   labelText: {
     fontSize: dimensions.measure(13),
     color: COLORS.primary,

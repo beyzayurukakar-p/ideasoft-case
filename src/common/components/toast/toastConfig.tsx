@@ -1,5 +1,8 @@
 import { ErrorToast, InfoToast, SuccessToast, type ToastConfig } from 'react-native-toast-message';
 
+/**
+ * Configuration object for different types of toast messages.
+ */
 export const toastConfig: ToastConfig = {
   success: (props) => (
     <SuccessToast

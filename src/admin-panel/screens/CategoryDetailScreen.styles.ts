@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { detailScreenStyles } from './detailScreen.styles';
+import { detailScreenStyles } from './_common/detailScreenStyles';
 import { dimensions } from '../../common/styling/dimensions';
 
 export const categoryDetailScreenStyles = StyleSheet.create({

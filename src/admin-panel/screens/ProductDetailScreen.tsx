@@ -4,7 +4,7 @@ import { View, ScrollView, FlatList } from 'react-native';
 import { Image } from 'expo-image';
 import { productDetailScreenStyles as styles } from './ProductDetailScreen.styles';
 import { useAppDispatch, useAppSelector } from '../../common/store';
-import { formatDateExtensive } from '../../common/utils/dateUtils';
+import { formatDateExtensive } from '../utils/dateUtils';
 import DetailActions from '../components/detail-actions/DetailActions';
 import { useWarnedDelete } from '../hooks/useWarnedDelete';
 import { productSelectors, productSlice } from '../states/productSlice';
@@ -20,7 +20,7 @@ type ScreenProps = StaticScreenProps<{
   productId: number;
 }>;
 
-/** Screen component to display all the fields of a product */
+/** Screen component to display all the details of a product */
 const ProductDetailScreen: React.FC<ScreenProps> = ({
   route: {
     params: { productId },
@@ -37,6 +37,7 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
 
   const { warnBeforeDelete, renderWarningModal } = useWarnedDelete();
 
+  // Handles the 'delete product' button press
   const _onPressDelete = () => {
     warnBeforeDelete(() => {
       dispatch(
@@ -48,6 +49,7 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
     });
   };
 
+  // Handles the 'edit product' button press
   const _onPressEdit = () => {
     nav.navigate('AdminPanel', {
       screen: 'ProductForm',
@@ -57,14 +59,18 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
     });
   };
 
-  const _onPressCategory = (categoryId: number) => {
-    nav.navigate('AdminPanel', {
-      screen: 'CategoryDetail',
-      params: {
-        categoryId,
-      },
-    });
-  };
+  // Handles the press on 'category pills'
+  const _onPressCategory = useCallback(
+    (categoryId: number) => {
+      nav.navigate('AdminPanel', {
+        screen: 'CategoryDetail',
+        params: {
+          categoryId,
+        },
+      });
+    },
+    [nav]
+  );
 
   const _renderCategories = () => {
     return (
@@ -100,6 +106,7 @@ const ProductDetailScreen: React.FC<ScreenProps> = ({
     );
   };
 
+  // When this product is deleted, this screen might be visible for a moment
   if (!product) {
     return null;
   }

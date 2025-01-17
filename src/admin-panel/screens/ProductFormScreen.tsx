@@ -4,7 +4,7 @@ import { ScrollView, View, LayoutChangeEvent } from 'react-native';
 import { useProductForm } from '../hooks/useProductForm';
 import AppTextInput from '../../common/components/inputs/AppTextInput';
 import FormActions from '../components/form-actions/FormActions';
-import { formScreenStyles as styles } from './formScreen.styles';
+import { formScreenStyles as styles } from './_common/formScreenStyles';
 import AppSwitch from '../../common/components/inputs/AppSwitch';
 import Dropdown from '../../common/components/inputs/Dropdown';
 import { stockTypeLabelOptions } from '../constants/stockTypeLabels';
@@ -18,6 +18,7 @@ type ScreenProps = StaticScreenProps<{
   productId?: number;
 }>;
 
+/** Screen component for adding or updating a product. */
 const ProductFormScreen: React.FC<ScreenProps> = ({
   route: {
     params: { productId },
@@ -55,7 +56,7 @@ const ProductFormScreen: React.FC<ScreenProps> = ({
   const scrollRef = useRef<ScrollView>(null);
   const [inputsOnBottom, setInputsOnButtom] = useState<string[]>([]);
 
-  // A simple keyboard avoidance
+  // Very basic keyboard avoidance
   const _onLayout = (inputName: string, e: LayoutChangeEvent) => {
     // Save the names of the inputs that are on the bottom half of the screen
     const { y, height } = e.nativeEvent.layout;

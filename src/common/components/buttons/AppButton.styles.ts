@@ -2,7 +2,7 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { COLORS } from '../../styling/colors';
 import { dimensions } from '../../styling/dimensions';
 
-export type AppButtonAppearance = 'filled' | 'outlined' | 'textlink';
+export type AppButtonAppearance = 'filled' | 'outlined';
 
 export const createAppButtonStyles = (appearance: AppButtonAppearance) => {
   const filledTouchableContainer: ViewStyle = {

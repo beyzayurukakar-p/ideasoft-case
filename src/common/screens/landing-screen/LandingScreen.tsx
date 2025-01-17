@@ -3,6 +3,9 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { landingScreenStyles as styles } from './LandingScreen.styles';
 import { useNavigation } from '@react-navigation/native';
 
+/**
+ * LandingScreen component provides the initial screen with navigation options to the Storefront and Admin Panel.
+ */
 const LandingScreen: React.FC = () => {
   const nav = useNavigation();
 

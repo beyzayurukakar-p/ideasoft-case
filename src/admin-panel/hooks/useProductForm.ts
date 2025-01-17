@@ -7,6 +7,9 @@ import { Category } from '../types/category';
 import { StockTypeLabels } from '../constants/stockTypeLabels';
 import { InputImage } from '../components/image-input/types';
 
+/**
+ * Custom hook to manage the form state and actions for adding or updating a product.
+ */
 export const useProductForm = (productId?: number) => {
   const dispatch = useAppDispatch();
   const nav = useNavigation<RootStackNavigationProp>();

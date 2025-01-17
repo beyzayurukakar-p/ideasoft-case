@@ -6,10 +6,11 @@ import {
   CategoryUpdatePayload,
   CategoryUpdateRequest,
 } from '../types/category';
-import { CATEGORIES_URL } from './urls';
+import { CATEGORIES_URL } from '../constants/urls';
 
 /**
- * Updates a category
+ * Updates a category.
+ * @returns Updated category (Promise). Or throws error.
  */
 export const updateCategory = async (category: CategoryUpdatePayload): Promise<Category> => {
   const body: CategoryUpdateRequest = category;

@@ -10,6 +10,8 @@ interface AppButtonProps {
   rightIconSize?: number;
   onPress: () => void;
   disabled?: boolean;
+
+  /** The visual type of button: filled or outline */
   appearance?: AppButtonAppearance;
   style?: ViewStyle;
   testID?: string;

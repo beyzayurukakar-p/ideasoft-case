@@ -4,6 +4,9 @@ import { categorySelectors, categorySlice } from '../states/categorySlice';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackNavigationProp } from '../../common/navigation/rootNavigator';
 
+/**
+ * Custom hook to manage the form state and actions for adding or updating a category.
+ */
 export const useCategoryForm = (categoryId?: number) => {
   const dispatch = useAppDispatch();
   const nav = useNavigation<RootStackNavigationProp>();

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { detailScreenStyles } from './detailScreen.styles';
+import { detailScreenStyles } from './_common/detailScreenStyles';
 import { dimensions } from '../../common/styling/dimensions';
 import { COLORS } from '../../common/styling/colors';
 
