@@ -66,6 +66,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           style={styles.container}
           activeOpacity={0.6}
           disabled={disabled}
+          testID={`product-item-${id}`}
         >
           {/* image */}
           <View style={styles.imageContainer}>

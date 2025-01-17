@@ -99,9 +99,13 @@ const ProductScreen: React.FC = () => {
         refreshing={isRefreshing}
         onRefresh={_onRefresh}
         onEndReached={_onNextPage}
+        testID="product-list"
       />
       {renderWarningModal()}
-      <FloatingAddButton onPress={_onPressAddProduct} />
+      <FloatingAddButton
+        onPress={_onPressAddProduct}
+        testID={`product-add-button`}
+      />
     </View>
   );
 };

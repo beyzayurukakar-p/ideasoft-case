@@ -3,26 +3,20 @@ import { Navigation } from '../common/navigation/rootNavigator';
 import { renderWithProviders } from '../common/test-utils/testUtils';
 import { fullscreenLoadingTestID } from '../common/components/feedbacks/FullscreenLoading';
 import axios from 'axios';
-import { categoriesFirstPage } from '../common/test-utils/request-mock-data/getCategories';
+import { productsFirstPage } from '../common/test-utils/request-mock-data/getProducts';
 import { retryButtonTestID } from '../common/components/feedbacks/FullscreenRetry';
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-const navigateToCategoryList = async () => {
+const navigateToProductList = async () => {
   await waitFor(() => {
     const adminPanelButton = screen.queryByText('Admin Panel');
     expect(adminPanelButton).toBeOnTheScreen();
     fireEvent.press(adminPanelButton);
   });
-
-  await waitFor(() => {
-    const categoryTabButton = screen.queryByText('Kategoriler');
-    expect(categoryTabButton).toBeOnTheScreen();
-    fireEvent.press(categoryTabButton);
-  });
 };
 
-describe('Category List', () => {
+describe('Product List', () => {
   beforeEach(() => {
     renderWithProviders(<Navigation />);
     mockedAxios.get.mockReset();
@@ -33,9 +27,9 @@ describe('Category List', () => {
   it('renders loading indicator', async () => {
     mockedAxios.get.mockImplementation((url: string) => {
       return new Promise((resolve) => {
-        if (url.includes('categories')) {
+        if (url.includes('products')) {
           setTimeout(() => {
-            resolve({ data: categoriesFirstPage });
+            resolve({ data: productsFirstPage });
           }, 1000);
         } else {
           resolve({ data: [] });
@@ -43,7 +37,7 @@ describe('Category List', () => {
       });
     });
 
-    await navigateToCategoryList();
+    await navigateToProductList();
 
     await waitFor(
       () => {
@@ -61,7 +55,7 @@ describe('Category List', () => {
     mockedAxios.get.mockClear();
     mockedAxios.get.mockImplementation((url: string) => {
       return new Promise((resolve, reject) => {
-        if (url.includes('categories')) {
+        if (url.includes('products')) {
           mockFn();
           reject();
         } else {
@@ -70,7 +64,7 @@ describe('Category List', () => {
       });
     });
 
-    await navigateToCategoryList();
+    await navigateToProductList();
 
     await waitFor(() => {
       expect(mockFn).toHaveBeenCalledTimes(1);
@@ -92,10 +86,10 @@ describe('Category List', () => {
     mockedAxios.get.mockClear();
     mockedAxios.get.mockImplementation((url: string) => {
       return new Promise((resolve) => {
-        if (url.includes('categories')) {
+        if (url.includes('products')) {
           mockFn();
           resolve({
-            data: categoriesFirstPage,
+            data: productsFirstPage,
           });
         } else {
           resolve({ data: [] });
@@ -103,10 +97,10 @@ describe('Category List', () => {
       });
     });
 
-    await navigateToCategoryList();
+    await navigateToProductList();
 
     await waitFor(() => {
-      const scrollview = screen.getByTestId('category-list');
+      const scrollview = screen.getByTestId('product-list');
       expect(scrollview).toBeOnTheScreen();
       fireEvent(scrollview, 'refresh');
     });
@@ -119,10 +113,10 @@ describe('Category List', () => {
     const mockFn = jest.fn();
     mockedAxios.get.mockImplementation((url: string) => {
       return new Promise((resolve) => {
-        if (url.includes('categories')) {
+        if (url.includes('products')) {
           mockFn();
           resolve({
-            data: url.includes('page=1') ? categoriesFirstPage : [],
+            data: url.includes('page=1') ? productsFirstPage : [],
           });
         } else {
           resolve({
@@ -132,10 +126,10 @@ describe('Category List', () => {
       });
     });
 
-    await navigateToCategoryList();
+    await navigateToProductList();
 
     await waitFor(() => {
-      const scrollview = screen.getByTestId('category-list');
+      const scrollview = screen.getByTestId('product-list');
       expect(scrollview).toBeOnTheScreen();
       fireEvent(scrollview, 'endReached');
     });
@@ -144,22 +138,22 @@ describe('Category List', () => {
       expect(mockFn).toHaveBeenCalledTimes(1);
     });
   });
-  it('deletes a category when pressed on delete button', async () => {
+  it('deletes a product when pressed on delete button', async () => {
     const mockFn = jest.fn();
-    mockedAxios.get.mockResolvedValue({ data: categoriesFirstPage });
+    mockedAxios.get.mockResolvedValue({ data: productsFirstPage });
     mockedAxios.delete.mockImplementation(() => {
       mockFn();
       return Promise.resolve({ data: true });
     });
 
-    await navigateToCategoryList();
+    await navigateToProductList();
 
     // Find an item
-    const { id } = categoriesFirstPage[0];
+    const { id } = productsFirstPage[0];
 
     // Press the delete button
     await waitFor(() => {
-      const itemDeleteButton = screen.queryByTestId(`delete-category-${id}`);
+      const itemDeleteButton = screen.queryByTestId(`delete-product-${id}`);
       expect(itemDeleteButton).toBeOnTheScreen();
       fireEvent.press(itemDeleteButton);
     });
@@ -173,9 +167,9 @@ describe('Category List', () => {
 
     // Expect item to be still there and press the delete button
     await waitFor(() => {
-      const item = screen.queryByTestId(`category-item-${id}`);
+      const item = screen.queryByTestId(`product-item-${id}`);
       expect(item).toBeOnTheScreen();
-      const itemDeleteButton = screen.queryByTestId(`delete-category-${id}`);
+      const itemDeleteButton = screen.queryByTestId(`delete-product-${id}`);
       expect(itemDeleteButton).toBeOnTheScreen();
       fireEvent.press(itemDeleteButton);
     });
@@ -189,43 +183,43 @@ describe('Category List', () => {
 
     await waitFor(() => {
       expect(mockFn).toHaveBeenCalled();
-      const item = screen.queryByTestId(`category-item-${id}`);
+      const item = screen.queryByTestId(`product-item-${id}`);
       expect(item).toBeNull();
     });
   });
-  it('navigates to Detail Screen when pressed on a category', async () => {
-    mockedAxios.get.mockResolvedValue({ data: categoriesFirstPage });
+  it('navigates to Detail Screen when pressed on a product', async () => {
+    mockedAxios.get.mockResolvedValue({ data: productsFirstPage });
 
-    await navigateToCategoryList();
+    await navigateToProductList();
 
     // Find an item
-    const { id } = categoriesFirstPage[1];
+    const { id } = productsFirstPage[1];
 
     // Press item
     await waitFor(() => {
-      const item = screen.queryByTestId(`category-item-${id}`);
+      const item = screen.queryByTestId(`product-item-${id}`);
       expect(item).toBeOnTheScreen();
       fireEvent.press(item);
     });
 
     await waitFor(() => {
-      expect(screen.queryByText('Kategori Detayı')).toBeOnTheScreen();
+      expect(screen.queryByText('Ürün Detayı')).toBeOnTheScreen();
     });
   });
   it('navigates to Add Form when pressed on plus button', async () => {
-    mockedAxios.get.mockResolvedValue({ data: categoriesFirstPage });
+    mockedAxios.get.mockResolvedValue({ data: productsFirstPage });
 
-    await navigateToCategoryList();
+    await navigateToProductList();
 
     // Press item
     await waitFor(() => {
-      const item = screen.queryByTestId(`category-add-button`);
+      const item = screen.queryByTestId(`product-add-button`);
       expect(item).toBeOnTheScreen();
       fireEvent.press(item);
     });
 
     await waitFor(() => {
-      expect(screen.queryByText('Yeni Kategori')).toBeOnTheScreen();
+      expect(screen.queryByText('Yeni Ürün')).toBeOnTheScreen();
       expect(screen.queryByText('İsim')).toBeOnTheScreen();
       expect(screen.queryByText('Durum')).toBeOnTheScreen();
       expect(screen.queryByText('Ekle')).toBeOnTheScreen();
