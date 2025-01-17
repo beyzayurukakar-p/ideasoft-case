@@ -11,7 +11,7 @@
 - Includes several screens for viewing, adding, editing and deleting products and categories.
 
 ### Viewing Products
-- **ProductScreen**: 
+- **ProductListScreen**: 
 
     Displays:
     - A list of products
@@ -47,7 +47,7 @@
     - Categories: Input for adding/removing categories. Adding includes debounced search & select.
 
 ### Viewing Categories
-- **CategoryScreen**:
+- **CategoryListScreen**:
 
     Displays:
     - A list of products
