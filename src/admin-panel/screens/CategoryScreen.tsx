@@ -95,6 +95,7 @@ const CategoryScreen: React.FC = () => {
         refreshing={isRefreshing}
         onRefresh={_onRefresh}
         onEndReached={_onNextPage}
+        testID={'category-list'}
       />
       <FloatingAddButton onPress={_onPressAddCategory} />
       {renderWarningModal()}

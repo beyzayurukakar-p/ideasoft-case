@@ -6,7 +6,10 @@ type FullscreenLoadingProps = { style?: ViewStyle };
 
 const FullscreenLoading: React.FC<FullscreenLoadingProps> = ({ style }) => {
   return (
-    <View style={[styles.loadingContainer, style]}>
+    <View
+      style={[styles.loadingContainer, style]}
+      testID={fullscreenLoadingTestID}
+    >
       <ActivityIndicator
         size="large"
         color={COLORS.primary}
@@ -24,4 +27,5 @@ const styles = StyleSheet.create({
   },
 });
 
+export const fullscreenLoadingTestID = 'fullscreen-loading';
 export default FullscreenLoading;

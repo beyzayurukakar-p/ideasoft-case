@@ -15,6 +15,7 @@ const FullscreenRetry: React.FC<FullscreenRetryProps> = ({ onPressRetry }) => {
         onPress={onPressRetry}
         style={styles.touchableContainer}
         activeOpacity={0.5}
+        testID={retryButtonTestID}
       >
         <Ionicons
           name="reload-circle-outline"
@@ -46,4 +47,5 @@ const styles = StyleSheet.create({
   },
 });
 
+export const retryButtonTestID = 'retry-button';
 export default FullscreenRetry;
