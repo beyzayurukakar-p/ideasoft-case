@@ -54,12 +54,14 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
         demonstrateOnStart={demonstrateSwipeOnStart}
         disabled={disabled}
         onPressDelete={_onPressDelete}
+        testID={`delete-category-${id}`}
       >
         <TouchableOpacity
           onPress={_onPressItem}
           style={styles.container}
           activeOpacity={0.6}
           disabled={disabled}
+          testID={`category-item-${id}`}
         >
           {/* name */}
           <Text

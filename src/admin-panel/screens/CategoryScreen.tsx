@@ -57,8 +57,11 @@ const CategoryScreen: React.FC = () => {
   }, [dispatch]);
 
   const _onNextPage = useCallback(() => {
+    if (categories.length === 0) {
+      return;
+    }
     dispatch(categorySlice.actions.readNextPage({}));
-  }, [dispatch]);
+  }, [categories, dispatch]);
 
   const _renderCategoryItem = useCallback(
     (params: { item: Category; index: number }) => {
@@ -97,7 +100,10 @@ const CategoryScreen: React.FC = () => {
         onEndReached={_onNextPage}
         testID={'category-list'}
       />
-      <FloatingAddButton onPress={_onPressAddCategory} />
+      <FloatingAddButton
+        onPress={_onPressAddCategory}
+        testID={`category-add-button`}
+      />
       {renderWarningModal()}
     </View>
   );

@@ -8,8 +8,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type FloatingAddButtonProps = {
   onPress: () => void;
+  testID?: string;
 };
-const FloatingAddButton: React.FC<FloatingAddButtonProps> = ({ onPress }) => {
+const FloatingAddButton: React.FC<FloatingAddButtonProps> = ({ onPress, testID }) => {
   const { bottom } = useSafeAreaInsets();
   return (
     <View
@@ -24,6 +25,7 @@ const FloatingAddButton: React.FC<FloatingAddButtonProps> = ({ onPress }) => {
         onPress={onPress}
         activeOpacity={0.7}
         style={styles.touchable}
+        testID={testID}
       >
         <FontAwesome5
           name="plus"

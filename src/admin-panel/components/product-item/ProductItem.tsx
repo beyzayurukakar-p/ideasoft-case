@@ -59,6 +59,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         demonstrateOnStart={demonstrateSwipeOnStart}
         disabled={disabled}
         onPressDelete={_onPressDelete}
+        testID={`delete-product-${id}`}
       >
         <TouchableOpacity
           onPress={_onPressItem}

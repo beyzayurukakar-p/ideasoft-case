@@ -12,6 +12,7 @@ interface AppButtonProps {
   disabled?: boolean;
   appearance?: AppButtonAppearance;
   style?: ViewStyle;
+  testID?: string;
 }
 
 /**
@@ -27,6 +28,7 @@ const AppButton: React.FC<AppButtonProps> = ({
   onPress,
   appearance = 'filled',
   style,
+  testID,
 }) => {
   const [styles] = useState(() => {
     return createAppButtonStyles(appearance);
@@ -72,6 +74,7 @@ const AppButton: React.FC<AppButtonProps> = ({
       style={[styles.touchableContainer, style]}
       onPress={onPress}
       activeOpacity={appearance === 'filled' ? 0.8 : 0.5}
+      testID={testID}
     >
       {noIcons ? null : <View style={styles.iconContainer}>{_renderLeftIcon()}</View>}
       <View style={styles.labelContainer}>

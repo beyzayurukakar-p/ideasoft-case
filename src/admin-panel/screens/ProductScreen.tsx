@@ -58,8 +58,11 @@ const ProductScreen: React.FC = () => {
   }, [dispatch]);
 
   const _onNextPage = useCallback(() => {
+    if (products.length === 0) {
+      return;
+    }
     dispatch(productSlice.actions.readNextPage({}));
-  }, [dispatch]);
+  }, [products, dispatch]);
 
   const _renderProductItem = useCallback(
     (params: { item: Product; index: number }) => {

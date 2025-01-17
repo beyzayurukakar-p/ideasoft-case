@@ -12,6 +12,7 @@ type SwipeableWithDeleteProps = PropsWithChildren<{
 
   onPressDelete?: () => void;
   disabled?: boolean;
+  testID?: string;
 }>;
 
 /**
@@ -24,6 +25,7 @@ const SwipeableWithDelete: React.FC<SwipeableWithDeleteProps> = ({
   demonstrateOnStart,
   onPressDelete,
   disabled,
+  testID,
 }) => {
   // To prevent re-demonstration when this value changes, keep it in ref
   const demonstrateOnStartRef = useRef(demonstrateOnStart);
@@ -60,6 +62,7 @@ const SwipeableWithDelete: React.FC<SwipeableWithDeleteProps> = ({
         onPress={_onPressDelete}
         style={styles.deleteTouchable}
         disabled={disabled}
+        testID={testID}
       >
         <FontAwesome5
           name="trash-alt"

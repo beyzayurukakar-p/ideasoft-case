@@ -19,6 +19,7 @@ const DeleteWarningModal: React.FC<DeleteWarningModalProps> = ({ visible, onClos
       animationType="fade"
       visible={visible}
       onRequestClose={onClose}
+      testID="warning-modal"
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
@@ -35,11 +36,13 @@ const DeleteWarningModal: React.FC<DeleteWarningModalProps> = ({ visible, onClos
               label={'Vazgeç'}
               onPress={onClose}
               style={styles.cancelButton}
+              testID={`warning-modal-cancel`}
             />
             <AppButton
               label={'Sil'}
               onPress={onDelete}
               style={styles.deleteButton}
+              testID={`warning-modal-delete`}
             />
           </View>
         </View>
