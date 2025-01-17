@@ -1,6 +1,5 @@
 import Toast from 'react-native-toast-message';
 import { GENERIC_ERROR_MESSAGE, GENERIC_SUCCESS_MESSAGE } from './constants';
-import { isAxiosError } from 'axios';
 
 /** This function is used to call an async function and handle the error */
 export const tryCalling = async <Args extends Array<any>, ReturnValue>(
@@ -14,9 +13,7 @@ export const tryCalling = async <Args extends Array<any>, ReturnValue>(
     const data = await fn(...args);
     returnVal[0] = data;
   } catch (error) {
-    if (isAxiosError(error)) {
-      // console.log(error.request, error.response);
-    } else {
+    if (__DEV__) {
       console.error(error);
     }
 
