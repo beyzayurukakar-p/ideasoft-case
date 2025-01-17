@@ -1,10 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { WebView } from 'react-native-webview';
 
 const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home Screen</Text>
-      <Text>Welcome to the storefront home screen.</Text>
+      <WebView
+        source={{ uri: 'https://testcase.myideasoft.com/' }}
+        style={styles.webview}
+      />
     </View>
   );
 };
@@ -12,13 +16,9 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  webview: {
+    flex: 1,
   },
 });
 
