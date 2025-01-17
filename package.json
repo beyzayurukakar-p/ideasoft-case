@@ -37,7 +37,7 @@
     "@commitlint/config-conventional": "^19.6.0",
     "@evilmartians/lefthook": "^1.10.1",
     "@react-native/eslint-config": "^0.76.5",
-    "@testing-library/react-native": "^13.0.0",
+    "@testing-library/react-native": "^13.0.1",
     "@types/jest": "^29.5.14",
     "@types/react": "~18.3.12",
     "commitlint": "^19.6.1",
@@ -98,11 +98,15 @@
   ],
   "jest": {
     "preset": "jest-expo",
+    "setupFiles": [
+      "<rootDir>/jest/setupFile.ts",
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
     "setupFilesAfterEnv": [
       "<rootDir>/jest/setupFileAfterEnv.ts"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*)"
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg|react-redux|@react-native)"
     ]
   },
   "private": true,
