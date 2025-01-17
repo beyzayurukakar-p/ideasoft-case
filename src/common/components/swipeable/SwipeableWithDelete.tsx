@@ -35,13 +35,20 @@ const SwipeableWithDelete: React.FC<SwipeableWithDeleteProps> = ({
   useEffect(() => {
     // Demonstration on mount
     if (!demonstrateOnStartRef.current) return;
-    setTimeout(() => {
+
+    let innerTimeout: NodeJS.Timeout;
+    const outerTimeout = setTimeout(() => {
       swipeableRef?.current?.openRight();
 
-      setTimeout(() => {
+      innerTimeout = setTimeout(() => {
         swipeableRef?.current?.close();
       }, 700);
     }, 300);
+
+    return () => {
+      clearTimeout(innerTimeout);
+      clearTimeout(outerTimeout);
+    };
   }, []);
 
   const _onSwipeableOpen = () => {

@@ -8,6 +8,7 @@ const HomeScreen: React.FC = () => {
       <WebView
         source={{ uri: 'https://testcase.myideasoft.com/' }}
         style={styles.webview}
+        testID="webview"
       />
     </View>
   );

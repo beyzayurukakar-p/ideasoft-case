@@ -33,7 +33,7 @@ describe('Landing Screen', () => {
     }
 
     await waitFor(() => {
-      const storefrontHomeText = screen.queryByText('Welcome to the storefront home screen.');
+      const storefrontHomeText = screen.queryByTestId('webview');
       expect(storefrontHomeText).toBeOnTheScreen();
     });
   });

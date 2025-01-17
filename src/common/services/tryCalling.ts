@@ -13,7 +13,7 @@ export const tryCalling = async <Args extends Array<any>, ReturnValue>(
     const data = await fn(...args);
     returnVal[0] = data;
   } catch (error) {
-    if (__DEV__) {
+    if (__DEV__ && !process.env.JEST_WORKER_ID) {
       console.error(error);
     }
 
