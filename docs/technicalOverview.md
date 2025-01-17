@@ -94,6 +94,7 @@ With: **Typescript**
 6. API Key Storage: API keys should be stored as environment veriables.
 7. Unserializable Action Payloads: 'onSuccess' and 'onError' callbacks in action payloads may cause issues. There should be a system that watches the redux flow and calls these callbacks.
 8. Toast behind Modal: When a modal is visible on the screen, the Toast component stays behind it, while the user expects to see it on top of everything. 
+9. Insufficient Tests: Only list screens are tested. Add/Update flows also need testing.
 9. ** Serverside Paging Issue: Paging in the serverside needs to accept skip/offset parameter. The reason is this issue: the client asks for page 1, then user deletes a couple of items, the client asks for page 2, the new page 2 starts with a couple of items later. So a couple of items are never shown in the UI until user reloads the list.
 
 
